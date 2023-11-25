@@ -81,36 +81,60 @@ function wp_road_map_taxonomies_page() {
     }
 
     // Check if the form has been submitted
-    if (isset($_POST['wp_road_map_nonce'], $_POST['taxonomy_name'])) {
+    if (isset($_POST['wp_road_map_nonce'], $_POST['taxonomy_slug'])) {
         // Verify nonce
         if (!wp_verify_nonce($_POST['wp_road_map_nonce'], 'wp_road_map_add_taxonomy')) {
             die('Invalid nonce...'); 
         }
 
         // Sanitize and validate inputs
-        $taxonomy_name = sanitize_key($_POST['taxonomy_name']);
-        $taxonomy_label = sanitize_text_field($_POST['taxonomy_label']);
+        $taxonomy_slug = sanitize_key($_POST['taxonomy_slug']);
         $hierarchical = isset($_POST['hierarchical']) ? (bool) $_POST['hierarchical'] : false;
         $public = isset($_POST['public']) ? (bool) $_POST['public'] : false;
+        $taxonomy_singular = sanitize_text_field($_POST['taxonomy_singular']);
+        $taxonomy_plural = sanitize_text_field($_POST['taxonomy_plural']);
+        
 
         // Get existing taxonomies
         $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
 
         // Check if taxonomy already exists
-        if (isset($custom_taxonomies[$taxonomy_name])) {
+        if (isset($custom_taxonomies[$taxonomy_slug])) {
             echo '<div class="notice notice-error is-dismissible"><p>This taxonomy already exists.</p></div>';
         } else {
             // Register the taxonomy
-            $taxonomy_data = array(
-                'label' => $taxonomy_label,
-                'public' => $public,
-                'hierarchical' => $hierarchical,
+            $labels = array(
+                'name' => _x( $taxonomy_plural, 'taxonomy general name' ),
+                'singular_name' => _x( $taxonomy_singular, 'taxonomy singuler name' ),
+                'search_items' => __( 'Search ' . $taxonomy_plural ),
+                'all_items' => __( 'All ' . $taxonomy_plural ),
+                'parent_item' => __( 'Parent ' . $taxonomy_singular ),
+                'parent_item_colon' => __( 'Parent ' . $taxonomy_singular . ':' ),
+                'edit_item' => __( 'Edit ' . $taxonomy_singular ),
+                'update_item' => __( 'Update ' . $taxonomy_singular ),
+                'add_new_item' => __( 'Add New ' . $taxonomy_singular ),
+                'new_item_name' => __( 'New ' . $taxonomy_singular . ' Name' ),
+                'menu_name' => __( $taxonomy_plural ),
             );
 
-            register_taxonomy($taxonomy_name, 'idea', $taxonomy_data);
+            $taxonomy_data = array(
+                'label' => $taxonomy_label,
+                'labels' => $labels, 
+                'public' => $public,
+                'hierarchical' => $hierarchical,
+                'show_ui' => true,
+                'show_in_rest' => true,
+                'show_admin_column' => true,
+                'query_var' => true,
+                'rewrite' => array( 'slug' => 'subject' ),
+            );
+
+            register_taxonomy($taxonomy_slug, 'idea', $taxonomy_data);
+            error_log('Taxonomy registered: ' . $taxonomy_slug . ' with label: ' . $taxonomy_label);
+
 
             // Add the new taxonomy
-            $custom_taxonomies[$taxonomy_name] = $taxonomy_data;
+            $custom_taxonomies[$taxonomy_slug] = $taxonomy_data;
 
             // Update the option
             update_option('wp_road_map_custom_taxonomies', $custom_taxonomies);
@@ -126,25 +150,40 @@ function wp_road_map_taxonomies_page() {
         <form action="" method="post">
             <?php wp_nonce_field('wp_road_map_add_taxonomy', 'wp_road_map_nonce'); ?>
 
-            <label for="taxonomy_name">Name:</label>
-            <input type="text" id="taxonomy_name" name="taxonomy_name" required>
+                <div class="new_taxonomy_form_input">
+                    <label for="taxonomy_slug">Slug:</label>
+                    <input type="text" id="taxonomy_slug" name="taxonomy_slug" required>
+                </div>
 
-            <label for="taxonomy_label">Label:</label>
-            <input type="text" id="taxonomy_label" name="taxonomy_label" required>
+                <div class="new_taxonomy_form_input">
+                    <label for="taxonomy_singular">Singular Name:</label>
+                    <input type="text" id="taxonomy_singular" name="taxonomy_singular" required>
+                </div>
 
-            <label for="hierarchical">Hierarchical:</label>
-            <select id="hierarchical" name="hierarchical">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+                <div class="new_taxonomy_form_input">
+                    <label for="taxonomy_plural">Plural Name:</label>
+                    <input type="text" id="taxonomy_plural" name="taxonomy_plural" required>
+                </div>
+                
+                <div class="new_taxonomy_form_input">
+                    <label for="hierarchical">Hierarchical:</label>
+                    <select id="hierarchical" name="hierarchical">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-            <label for="public">Public:</label>
-            <select id="public" name="public">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+                <div class="new_taxonomy_form_input">
+                    <label for="public">Public:</label>
+                    <select id="public" name="public">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
-            <input type="submit" value="Add Taxonomy">
+                <div class="new_taxonomy_form_input">
+                    <input type="submit" value="Add Taxonomy">
+                </div>
         </form>
     </div>
     <?php
@@ -154,12 +193,12 @@ function wp_road_map_taxonomies_page() {
     if (!empty($custom_taxonomies)) {
         echo '<h2>Existing Taxonomies</h2>';
         echo '<ul>';
-        foreach ($custom_taxonomies as $taxonomy_name => $taxonomy_data) {
+        foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
             $delete_link = wp_nonce_url(
-                admin_url('admin.php?page=wp-road-map-taxonomies&action=delete&taxonomy=' . $taxonomy_name),
-                'delete_taxonomy_' . $taxonomy_name
+                admin_url('admin.php?page=wp-road-map-taxonomies&action=delete&taxonomy=' . $taxonomy_slug),
+                'delete_taxonomy_' . $taxonomy_slug
             );
-            echo '<li>' . esc_html($taxonomy_name) . ' - <a href="' . esc_url($delete_link) . '">Delete</a></li>';
+            echo '<li>' . esc_html($taxonomy_slug) . ' - <a href="' . esc_url($delete_link) . '">Delete</a></li>';
         }
         echo '</ul>';
     }
