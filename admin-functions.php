@@ -70,6 +70,16 @@ function wp_road_map_taxonomies_page() {
         return;
     }
 
+    // Handle taxonomy deletion
+    if (isset($_GET['action'], $_GET['taxonomy'], $_GET['_wpnonce']) && $_GET['action'] == 'delete') {
+        if (wp_verify_nonce($_GET['_wpnonce'], 'delete_taxonomy_' . $_GET['taxonomy'])) {
+            $taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+            unset($taxonomies[$_GET['taxonomy']]);
+            update_option('wp_road_map_custom_taxonomies', $taxonomies);
+            // Optionally, flush rewrite rules if necessary
+        }
+    }
+
     // Check if the form has been submitted
     if (isset($_POST['wp_road_map_nonce'], $_POST['taxonomy_name'])) {
         // Verify nonce
@@ -83,46 +93,36 @@ function wp_road_map_taxonomies_page() {
         $hierarchical = isset($_POST['hierarchical']) ? (bool) $_POST['hierarchical'] : false;
         $public = isset($_POST['public']) ? (bool) $_POST['public'] : false;
 
-        // Register the taxonomy (you might want to move this to a separate function)
-        if (!taxonomy_exists($taxonomy_name)) {
-            register_taxonomy(
-                $taxonomy_name,
-                'idea',
-                array(
-                    'label' => $taxonomy_label,
-                    'public' => $public,
-                    'hierarchical' => $hierarchical,
-                )
-            );
-            echo '<div class="notice notice-success is-dismissible"><p>Taxonomy created successfully.</p></div>';
-        } else {
+        // Get existing taxonomies
+        $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+
+        // Check if taxonomy already exists
+        if (isset($custom_taxonomies[$taxonomy_name])) {
             echo '<div class="notice notice-error is-dismissible"><p>This taxonomy already exists.</p></div>';
+        } else {
+            // Register the taxonomy
+            $taxonomy_data = array(
+                'label' => $taxonomy_label,
+                'public' => $public,
+                'hierarchical' => $hierarchical,
+            );
+
+            register_taxonomy($taxonomy_name, 'idea', $taxonomy_data);
+
+            // Add the new taxonomy
+            $custom_taxonomies[$taxonomy_name] = $taxonomy_data;
+
+            // Update the option
+            update_option('wp_road_map_custom_taxonomies', $custom_taxonomies);
+
+            echo '<div class="notice notice-success is-dismissible"><p>Taxonomy created successfully.</p></div>';
         }
-
-        // Inside your form submission handling
-if (!taxonomy_exists($taxonomy_name)) {
-    $taxonomy_data = array(
-        'label' => $taxonomy_label,
-        'public' => $public,
-        'hierarchical' => $hierarchical,
-    );
-
-    // Get existing taxonomies
-    $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
-    
-    // Add the new taxonomy
-    $custom_taxonomies[$taxonomy_name] = $taxonomy_data;
-    
-    // Update the option
-    update_option('wp_road_map_custom_taxonomies', $custom_taxonomies);
-}
-
     }
 
     // The form HTML
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="" method="post">
             <?php wp_nonce_field('wp_road_map_add_taxonomy', 'wp_road_map_nonce'); ?>
 
@@ -148,8 +148,24 @@ if (!taxonomy_exists($taxonomy_name)) {
         </form>
     </div>
     <?php
+
+    // Retrieve and display taxonomies
+    $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+    if (!empty($custom_taxonomies)) {
+        echo '<h2>Existing Taxonomies</h2>';
+        echo '<ul>';
+        foreach ($custom_taxonomies as $taxonomy_name => $taxonomy_data) {
+            $delete_link = wp_nonce_url(
+                admin_url('admin.php?page=wp-road-map-taxonomies&action=delete&taxonomy=' . $taxonomy_name),
+                'delete_taxonomy_' . $taxonomy_name
+            );
+            echo '<li>' . esc_html($taxonomy_name) . ' - <a href="' . esc_url($delete_link) . '">Delete</a></li>';
+        }
+        echo '</ul>';
+    }
 }
 add_action('admin_menu', 'wp_road_map_add_admin_menu');
+
 
 
 

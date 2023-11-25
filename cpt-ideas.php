@@ -32,7 +32,7 @@ function wp_road_map_register_post_type() {
         'hierarchical'       => false,
         'menu_position'      => null,
         'supports'           => array( 'title', 'editor', 'author', 'comments' ),
-        'taxonomies'         => array( 'category', 'post_tag' ) // You can define custom taxonomies here
+        'taxonomies'         => array( ) 
     );
 
     register_post_type( 'idea', $args );
