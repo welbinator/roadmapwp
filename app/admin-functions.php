@@ -82,6 +82,23 @@ function wp_road_map_settings_page() {
 
 // Function to display the Taxonomies management page
 function wp_road_map_taxonomies_page() {
+    // Check if a new term is being added
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_add_term_nonce']) && wp_verify_nonce($_POST['wp_road_map_add_term_nonce'], 'add_term_to_' . $_POST['taxonomy_slug'])) {
+        $new_term = sanitize_text_field($_POST['new_term']);
+        $taxonomy_slug = sanitize_key($_POST['taxonomy_slug']);
+
+        if (!empty($new_term)) {
+            if (!term_exists($new_term, $taxonomy_slug)) {
+                $inserted_term = wp_insert_term($new_term, $taxonomy_slug);
+                if (is_wp_error($inserted_term)) {
+                    $message = 'Error: ' . $inserted_term->get_error_message();
+                } else {
+                    $message = 'Term "' . esc_html($new_term) . '" added successfully.';
+                }
+            }
+        }
+    }
+
     // Check if the user has the right capability
     if (!current_user_can('manage_options')) {
         return;
@@ -136,7 +153,7 @@ function wp_road_map_taxonomies_page() {
                 $taxonomy_data = array(
                     'labels' => $labels, 
                     'public' => $public,
-                    'hierarchical' => $hierarchical,
+                    'hierarchical' => false,
                     'show_ui' => true,
                     'show_in_rest' => true,
                     'show_admin_column' => true,
@@ -189,14 +206,6 @@ function wp_road_map_taxonomies_page() {
                         <label for="taxonomy_plural">Plural Name:</label>
                         <input type="text" id="taxonomy_plural" name="taxonomy_plural" required>
                     </li>
-                    
-                    <li class="new_taxonomy_form_input">
-                        <label for="hierarchical">Hierarchical:</label>
-                        <select id="hierarchical" name="hierarchical">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
-                    </li>
 
                     <li class="new_taxonomy_form_input">
                         <label for="public">Public:</label>
@@ -219,19 +228,91 @@ function wp_road_map_taxonomies_page() {
     echo '<h2>Registered Taxonomies</h2>';
     $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
     if (!empty($custom_taxonomies)) {
+       
         echo '<ul>';
+
         foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
-            $delete_link = wp_nonce_url(
-                admin_url('admin.php?page=wp-road-map-taxonomies&action=delete&taxonomy=' . $taxonomy_slug),
-                'delete_taxonomy_' . $taxonomy_slug
-            );
-            echo '<li>' . esc_html($taxonomy_slug) . ' - <a href="' . esc_url($delete_link) . '">Delete</a></li>';
+            echo '<li>' . esc_html($taxonomy_slug);
+
+            // Form for adding terms to this taxonomy
+            echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
+            echo '<input type="text" name="new_term" placeholder="New Term" />';
+            echo '<input type="hidden" name="taxonomy_slug" value="' . esc_attr($taxonomy_slug) . '" />';
+            echo '<input type="submit" value="Add Term" />';
+            echo wp_nonce_field('add_term_to_' . $taxonomy_slug, 'wp_road_map_add_term_nonce');
+            echo '</form>';
+
+            echo '</li>';
         }
+
         echo '</ul>';
     }
 }
 
 add_action('admin_menu', 'wp_road_map_add_admin_menu');
+
+// shortcode
+function wp_road_map_new_idea_form_shortcode() {
+    $output = '';
+
+    // Check if the form has been submitted
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_new_idea_nonce']) && wp_verify_nonce($_POST['wp_road_map_new_idea_nonce'], 'wp_road_map_new_idea')) {
+        $title = sanitize_text_field($_POST['idea_title']);
+        $description = sanitize_textarea_field($_POST['idea_description']);
+
+        // Create new Idea post
+        $idea_id = wp_insert_post(array(
+            'post_title'    => $title,
+            'post_content'  => $description,
+            'post_status'   => 'publish',  // or 'pending' if you want to review submissions
+            'post_type'     => 'idea',
+        ));
+
+        // Handle taxonomies
+        if (isset($_POST['idea_taxonomies']) && is_array($_POST['idea_taxonomies'])) {
+            foreach ($_POST['idea_taxonomies'] as $tax_slug => $term_ids) {
+                $term_ids = array_map('intval', $term_ids); // Sanitize term IDs
+                wp_set_object_terms($idea_id, $term_ids, $tax_slug);
+            }
+        }
+
+        $output .= '<p>Thank you for your submission!</p>';
+    }
+
+    // Display the form
+    $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $output .= '<label for="idea_title">Title:</label>';
+    $output .= '<input type="text" name="idea_title" id="idea_title" required>';
+    $output .= '<label for="idea_description">Description:</label>';
+    $output .= '<textarea name="idea_description" id="idea_description" required></textarea>';
+
+    // Fetch taxonomies associated with the 'idea' post type
+    $taxonomies = get_object_taxonomies('idea', 'objects');
+    foreach ($taxonomies as $taxonomy) {
+        $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
+
+        if (!empty($terms) && !is_wp_error($terms)) {
+            $output .= '<label for="idea_taxonomy_' . esc_attr($taxonomy->name) . '">' . esc_html($taxonomy->labels->singular_name) . ':</label>';
+            $output .= '<select name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" id="idea_taxonomy_' . esc_attr($taxonomy->name) . '" multiple>';
+
+            foreach ($terms as $term) {
+                $output .= '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
+            }
+
+            $output .= '</select>';
+        }
+    }
+
+    // Nonce field for security
+    $output .= wp_nonce_field('wp_road_map_new_idea', 'wp_road_map_new_idea_nonce');
+
+    $output .= '<input type="submit" value="Submit Idea">';
+    $output .= '</form>';
+
+    return $output;
+}
+add_shortcode('new_idea_form', 'wp_road_map_new_idea_form_shortcode');
+
 
 
 
