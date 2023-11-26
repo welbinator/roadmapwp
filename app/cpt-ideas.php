@@ -19,6 +19,18 @@ function wp_road_map_register_post_type() {
         'not_found_in_trash' => __( 'No ideas found in Trash.', 'wp-road-map' )
     );
 
+    // Fetch all taxonomies associated with 'idea' post type
+    $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+    $taxonomies = array_keys($custom_taxonomies);
+
+    // Add default taxonomies if they aren't already included
+    if (!in_array('status', $taxonomies)) {
+        $taxonomies[] = 'status';  // Default taxonomy 'status'
+    }
+    if (!in_array('tag', $taxonomies)) {
+        $taxonomies[] = 'tag';  // Default taxonomy 'tag'
+    }
+
     $args = array(
         'labels'             => $labels,
         'public'             => true,
@@ -32,10 +44,55 @@ function wp_road_map_register_post_type() {
         'hierarchical'       => false,
         'menu_position'      => null,
         'supports'           => array( 'title', 'editor', 'author', 'comments' ),
-        'taxonomies'         => array( ) 
+        'taxonomies'         => $taxonomies 
     );
 
-    register_post_type( 'idea', $args );
+    register_post_type('idea', $args);
 }
 
-add_action( 'init', 'wp_road_map_register_post_type' );
+add_action('init', 'wp_road_map_register_post_type');
+
+
+// default taxonomies
+function wp_road_map_register_default_taxonomies() {
+    // Define default taxonomies
+    $default_taxonomies = array(
+        'status' => array(
+            'singular' => 'Status',
+            'plural' => 'Status'
+        ),
+        'tag' => array(
+            'singular' => 'Tag',
+            'plural' => 'Tags'
+        )
+    );
+
+    foreach ($default_taxonomies as $slug => $names) {
+        if (!taxonomy_exists($slug)) {
+            register_taxonomy(
+                $slug,
+                'idea',
+                array(
+                    'label' => $names['plural'],
+                    'labels' => array(
+                        'name' => $names['plural'],
+                        'singular_name' => $names['singular'],
+                        // ... other labels ...
+                    ),
+                    'public' => true,
+                    // 'hierarchical' => ($slug == 'status'),
+                    'hierarchical' => true,
+                    'show_ui' => true,
+                    'show_in_rest' => true,
+                    'show_admin_column' => true,
+                )
+            );
+        }
+    }
+}
+
+add_action('init', 'wp_road_map_register_default_taxonomies');
+
+
+
+

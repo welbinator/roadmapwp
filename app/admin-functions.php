@@ -12,7 +12,7 @@ add_action('wp', 'wp_road_map_check_for_shortcode');
 
 // enqueue admin styles
 function wp_road_map_enqueue_admin_styles($hook) {
-    error_log($hook);
+    // error_log($hook);
     // Check if we are on the specific admin page
     if ( 'roadmap_page_wp-road-map-taxonomies' !== $hook  && 'roadmap_page_wp-road-map-settings' !== $hook  ){
         return;
@@ -282,7 +282,7 @@ if (!empty($custom_taxonomies)) {
             'delete_taxonomy_' . $taxonomy_slug
         );
         echo ' <a href="' . esc_url($delete_url) . '" style="color:red;">Delete</a>';
-        
+
         // Display existing terms for this taxonomy
         $terms = get_terms(array(
             'taxonomy' => $taxonomy_slug,

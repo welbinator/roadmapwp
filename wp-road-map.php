@@ -25,4 +25,20 @@ require_once plugin_dir_path( __FILE__ ) . 'app/cpt-ideas.php';
 // Include initialization functions
 require_once plugin_dir_path( __FILE__ ) . 'init.php';
 
+function wp_road_map_on_activation() {
+    // Directly call the function that registers your taxonomies here
+    wp_road_map_register_default_taxonomies();
 
+    // Now add the terms
+    $status_terms = array('New Idea', 'Maybe', 'On Roadmap', 'Not Now', 'Closed');
+    foreach ($status_terms as $term) {
+        if (!term_exists($term, 'status')) {
+            $result = wp_insert_term($term, 'status');
+            if (is_wp_error($result)) {
+                error_log('Error inserting term ' . $term . ': ' . $result->get_error_message());
+            }
+        }
+    }
+}
+
+register_activation_hook(__FILE__, 'wp_road_map_on_activation');
