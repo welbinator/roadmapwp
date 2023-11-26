@@ -51,17 +51,32 @@ add_action('admin_menu', 'wp_road_map_add_admin_menu');
 
 // Function to display WP RoadMap settings page
 function wp_road_map_settings_page() {
+    // Fetch current settings
+    $options = get_option('wp_road_map_settings');
+    $allow_comments = isset($options['allow_comments']) ? $options['allow_comments'] : '';
+
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // Settings form fields go here
+            settings_fields('wp_road_map_settings');
+            do_settings_sections('wp_road_map_settings');
             ?>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">Allow comments on Ideas</th>
+                    <td>
+                        <input type="checkbox" name="wp_road_map_settings[allow_comments]" <?php checked('on', $allow_comments); ?>/>
+                    </td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
         </form>
     </div>
     <?php
 }
+
 
 // Function to display the Taxonomies management page
 function wp_road_map_taxonomies_page() {

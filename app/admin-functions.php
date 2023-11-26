@@ -97,24 +97,43 @@ add_submenu_page(
     // Remove duplicate RoadMap submenu item
     remove_submenu_page('wp-road-map', 'wp-road-map');
 }
-
-
-
 add_action('admin_menu', 'wp_road_map_add_admin_menu');
 
 // Function to display WP RoadMap settings page
 function wp_road_map_settings_page() {
+    // Fetch current settings
+    $options = get_option('wp_road_map_settings');
+    $allow_comments = isset($options['allow_comments']) ? $options['allow_comments'] : '';
+
     ?>
     <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // Settings form fields go here
+            settings_fields('wp_road_map_settings');
+            do_settings_sections('wp_road_map_settings');
             ?>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">Allow comments on Ideas</th>
+                    <td>
+                        <input type="checkbox" name="wp_road_map_settings[allow_comments]" <?php checked('on', $allow_comments); ?>/>
+                    </td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
         </form>
     </div>
     <?php
 }
+
+
+// registering settings
+function wp_road_map_register_settings() {
+    register_setting('wp_road_map_settings', 'wp_road_map_settings');
+}
+add_action('admin_init', 'wp_road_map_register_settings');
+
 
 // Function to display the Taxonomies management page
 function wp_road_map_taxonomies_page() {
@@ -485,6 +504,7 @@ function wp_road_map_display_ideas_shortcode() {
                             <p class="card-date"><?php the_date(); ?></p>
                             <p class="card-meta">Tags: <?php echo get_the_term_list(get_the_ID(), 'idea-tag', '', ', '); ?></p>
                             <p class="card-description"><?php the_excerpt(); ?></p>
+                            <hr style="margin-block: 30px;" />
                         </div>
                     <?php endwhile; ?>
                 </div>

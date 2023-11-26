@@ -70,10 +70,15 @@
     text-align: center;
 }
 
+.card p {
+    text-align: left;
+}
+
 .card-title {
     font-size: 20px;
     font-weight: bold;
     margin: 0;
+    text-align: left;
 }
 
 .card-date {
