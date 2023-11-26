@@ -62,7 +62,7 @@ function wp_road_map_register_default_taxonomies() {
             'plural' => 'Status',
             'public' => true  // Make status taxonomy private
         ),
-        'tag' => array(
+        'idea-tag' => array(
             'singular' => 'Tag',
             'plural' => 'Tags',
             'public' => true  // Keep tag taxonomy public

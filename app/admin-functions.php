@@ -120,12 +120,12 @@ function wp_road_map_settings_page() {
 function wp_road_map_taxonomies_page() {
 
     // Check if a new tag is being added
-    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_add_term_nonce']) && wp_verify_nonce($_POST['wp_road_map_add_term_nonce'], 'add_term_to_tag')) {
-        $new_tag = sanitize_text_field($_POST['new_tag']);
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_add_term_nonce']) && wp_verify_nonce($_POST['wp_road_map_add_term_nonce'], 'add_term_to_idea_tag')) {
+        $new_idea_tag = sanitize_text_field($_POST['new_idea_tag']);
 
-        if (!empty($new_tag)) {
-            if (!term_exists($new_tag, 'tag')) {
-                $inserted_tag = wp_insert_term($new_tag, 'tag');
+        if (!empty($new_idea_tag)) {
+            if (!term_exists($new_idea_tag, 'idea-tag')) {
+                $inserted_tag = wp_insert_term($new_idea_tag, 'idea-tag');
                 if (is_wp_error($inserted_tag)) {
                     echo '<div class="notice notice-error is-dismissible"><p>Error adding tag: ' . esc_html($inserted_tag->get_error_message()) . '</p></div>';
                 } else {
@@ -300,21 +300,21 @@ echo '<h2>Tags</h2>';
     
 // Form for adding new tags
 echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
-echo '<input type="text" name="new_tag" placeholder="New Tag" />';
-echo '<input type="hidden" name="taxonomy_slug" value="tag" />';
+echo '<input type="text" name="new_idea_tag" placeholder="New Tag" />';
+echo '<input type="hidden" name="taxonomy_slug" value="idea-tag" />';
 echo '<input type="submit" value="Add Tag" />';
-echo wp_nonce_field('add_term_to_tag', 'wp_road_map_add_term_nonce');
+echo wp_nonce_field('add_term_to_idea_tag', 'wp_road_map_add_term_nonce');
 echo '</form>';
 
 // Display existing tags
-$tags = get_terms(array(
-    'taxonomy' => 'tag',
+$idea_tags = get_terms(array(
+    'taxonomy' => 'idea-tag',
     'hide_empty' => false,
 ));
-if (!empty($tags) && !is_wp_error($tags)) {
+if (!empty($idea_tags) && !is_wp_error($idea_tags)) {
     echo '<ul class="terms-list">';
-    foreach ($tags as $tag) {
-        echo '<li>' . esc_html($tag->name) . '</li>';
+    foreach ($idea_tags as $idea_tag) {
+        echo '<li>' . esc_html($idea_tag->name) . '</li>';
     }
     echo '</ul>';
 } else {
@@ -483,7 +483,7 @@ function wp_road_map_display_ideas_shortcode() {
                         <div class="card">
                             <h3 class="card-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h3>
                             <p class="card-date"><?php the_date(); ?></p>
-                            <p class="card-meta">Tags: <?php echo get_the_term_list(get_the_ID(), 'tag', '', ', '); ?></p>
+                            <p class="card-meta">Tags: <?php echo get_the_term_list(get_the_ID(), 'idea-tag', '', ', '); ?></p>
                             <p class="card-description"><?php the_excerpt(); ?></p>
                         </div>
                     <?php endwhile; ?>
