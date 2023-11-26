@@ -14,6 +14,9 @@ Text Domain: wp-road-map
 global $wp_road_map_shortcode_loaded;
 $wp_road_map_shortcode_loaded = false;
 
+global $wp_road_map_ideas_shortcode_loaded;
+$wp_road_map_ideas_shortcode_loaded = false;
+
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 // Include admin functions

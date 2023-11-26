@@ -10,6 +10,15 @@ function wp_road_map_check_for_shortcode() {
 }
 add_action('wp', 'wp_road_map_check_for_shortcode');
 
+function wp_road_map_check_for_ideas_shortcode() {
+    global $wp_road_map_ideas_shortcode_loaded, $post;
+
+    if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'display_ideas')) {
+        $wp_road_map_ideas_shortcode_loaded = true;
+    }
+}
+add_action('wp', 'wp_road_map_check_for_ideas_shortcode');
+
 // enqueue admin styles
 function wp_road_map_enqueue_admin_styles($hook) {
     // error_log($hook);
@@ -29,8 +38,9 @@ add_action('admin_enqueue_scripts', 'wp_road_map_enqueue_admin_styles');
 // enqueue front end styles
 function wp_road_map_enqueue_frontend_styles() {
     global $wp_road_map_shortcode_loaded;
+    global $wp_road_map_ideas_shortcode_loaded;
 
-    if (!$wp_road_map_shortcode_loaded) {
+    if (!$wp_road_map_shortcode_loaded && !$wp_road_map_ideas_shortcode_loaded) {
         return;
     }
 
@@ -363,7 +373,7 @@ if (!empty($custom_taxonomies)) {
 
 }
 
-// shortcode
+// shortcode to display new idea form 
 function wp_road_map_new_idea_form_shortcode() {
     global $wp_road_map_shortcode_loaded;
     $wp_road_map_shortcode_loaded = true;
@@ -436,6 +446,61 @@ function wp_road_map_new_idea_form_shortcode() {
     return $output;
 }
 add_shortcode('new_idea_form', 'wp_road_map_new_idea_form_shortcode');
+
+// shortcode to display ideas
+function wp_road_map_display_ideas_shortcode() {
+    global $wp_road_map_ideas_shortcode_loaded;
+    $wp_road_map_ideas_shortcode_loaded = true;
+    ob_start(); // Start output buffering
+
+    ?>
+    <div class="grid-container">
+        <?php
+        // Define the statuses to loop through
+        $statuses = array('New Idea', 'Maybe', 'Not Now', 'On Roadmap');
+
+        // Iterate through each status
+        foreach ($statuses as $index => $status) {
+            // WP Query to fetch ideas with the current status
+            $args = array(
+                'post_type' => 'idea',
+                'posts_per_page' => -1, // Adjust the number as needed
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'status',
+                        'field'    => 'name',
+                        'terms'    => $status,
+                    ),
+                ),
+            );
+            $query = new WP_Query($args);
+
+            // Check if there are posts for the current status
+            if ($query->have_posts()) : ?>
+                <div class="grid-column column-<?php echo ($index + 1); ?>">
+                    <h2><?php echo esc_html($status); ?></h2> <!-- Heading for each status -->
+                    <?php while ($query->have_posts()) : $query->the_post(); ?>
+                        <div class="card">
+                            <h3 class="card-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <p class="card-date"><?php the_date(); ?></p>
+                            <p class="card-meta">Tags: <?php echo get_the_term_list(get_the_ID(), 'tag', '', ', '); ?></p>
+                            <p class="card-description"><?php the_excerpt(); ?></p>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            <?php endif; 
+            wp_reset_postdata(); // Reset post data
+        }
+        ?>
+    </div>
+    <?php
+
+    return ob_get_clean(); // Return the buffered output
+}
+
+add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
+
+
 
 
 

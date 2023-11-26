@@ -85,6 +85,7 @@ function wp_road_map_register_default_taxonomies() {
                     'hierarchical' => ($slug == 'status'),
                     'show_ui' => true,
                     'show_in_rest' => true,
+                    'show_admin_column' => true,
                 )
             );
         }
