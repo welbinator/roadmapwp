@@ -520,10 +520,21 @@ function wp_road_map_display_ideas_shortcode() {
                     <h2><?php echo esc_html($status); ?></h2> <!-- Heading for each status -->
                     <?php while ($query->have_posts()) : $query->the_post(); ?>
                         <div class="card">
-                            <h3 class="card-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                             <p class="card-date"><?php the_date(); ?></p>
                             <p class="card-meta">Tags: <?php echo get_the_term_list(get_the_ID(), 'idea-tag', '', ', '); ?></p>
                             <p class="card-description"><?php the_excerpt(); ?></p>
+
+                            <!-- Include voting box here -->
+                            <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+                                <button class="idea-vote-button">
+                                    ^
+                                </button>
+                                <div class="idea-vote-count">
+                                    <?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?>
+                                </div>
+                            </div>
+
                             <hr style="margin-block: 30px;" />
                         </div>
                     <?php endwhile; ?>
@@ -539,6 +550,7 @@ function wp_road_map_display_ideas_shortcode() {
 }
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
+
 
 // filter that dynamically enables or disables comments on idea posts
 function wp_road_map_filter_comments_open($open, $post_id) {
