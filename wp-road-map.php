@@ -66,36 +66,33 @@ function wp_road_map_handle_vote() {
     $post_id = intval($_POST['post_id']);
     $user_id = get_current_user_id();
 
-    // Check if the user is logged in
-    if (!$user_id) {
-        wp_send_json_error('User not logged in.');
-        wp_die();
-    }
+    // Generate a unique key for non-logged-in user
+    $user_key = $user_id ? 'user_' . $user_id : 'guest_' . md5($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']);
 
     // Retrieve the current vote count
     $current_votes = get_post_meta($post_id, 'idea_votes', true) ?: 0;
     
-    // Check if this user has already voted
-    $has_voted = get_user_meta($user_id, 'voted_for_idea_' . $post_id, true);
+    // Check if this user or guest has already voted
+    $has_voted = get_post_meta($post_id, 'voted_' . $user_key, true);
 
     if ($has_voted) {
-        // User has voted, remove their vote
+        // User or guest has voted, remove their vote
         $new_votes = max($current_votes - 1, 0);
-        delete_user_meta($user_id, 'voted_for_idea_' . $post_id);
+        delete_post_meta($post_id, 'voted_' . $user_key);
     } else {
-        // User hasn't voted, add their vote
+        // User or guest hasn't voted, add their vote
         $new_votes = $current_votes + 1;
-        update_user_meta($user_id, 'voted_for_idea_' . $post_id, true);
+        update_post_meta($post_id, 'voted_' . $user_key, true);
     }
 
     // Update the post meta with the new vote count
     update_post_meta($post_id, 'idea_votes', $new_votes);
 
-    // Send the new vote count and voting status back to the client
     wp_send_json_success(array('new_count' => $new_votes, 'voted' => !$has_voted));
 
     wp_die();
 }
+
 
 add_action('wp_ajax_wp_road_map_handle_vote', 'wp_road_map_handle_vote');
 add_action('wp_ajax_nopriv_wp_road_map_handle_vote', 'wp_road_map_handle_vote');
