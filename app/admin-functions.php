@@ -115,9 +115,9 @@ function wp_road_map_settings_page() {
             ?>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row">Allow comments on Ideas</th>
+                    <th scope="row">Allow Comments on Ideas</th>
                     <td>
-                        <input type="checkbox" name="wp_road_map_settings[allow_comments]" <?php checked('on', $allow_comments); ?>/>
+                        <input type="checkbox" name="wp_road_map_settings[allow_comments]" value="1" <?php checked(1, $allow_comments); ?>/>
                     </td>
                 </tr>
             </table>
@@ -527,11 +527,20 @@ function wp_road_map_display_ideas_shortcode() {
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
 
-
-
-
-
-
+// filter that dynamically enables or disables comments on idea posts
+function wp_road_map_filter_comments_open($open, $post_id) {
+    $post = get_post($post_id);
+    $options = get_option('wp_road_map_settings');
+    if ($post->post_type == 'idea') {
+        if (isset($options['allow_comments']) && $options['allow_comments'] == 1) {
+            return true; // Enable comments
+        } else {
+            return false; // Disable comments
+        }
+    }
+    return $open;
+}
+add_filter('comments_open', 'wp_road_map_filter_comments_open', 10, 2);
 
 
 

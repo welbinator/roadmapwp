@@ -3,10 +3,8 @@
 // Function to register the custom post type
 function wp_road_map_register_post_type() {
     $options = get_option('wp_road_map_settings');
-    $supports = array('title', 'editor', 'author');
-    if (isset($options['allow_comments']) && $options['allow_comments'] === 'on') {
-        $supports[] = 'comments';
-    }
+    $supports = array('title', 'editor', 'author'); // include 'comments' support
+
 
     $labels = array(
         'name'               => _x( 'Ideas', 'post type general name', 'wp-road-map' ),
@@ -49,8 +47,8 @@ function wp_road_map_register_post_type() {
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => null,
-        'taxonomies'         => $taxonomies ,
-        'supports' => $supports,
+        'taxonomies'         => $taxonomies,
+        'supports'           => array( 'title', 'editor', 'author' )
     );
 
     register_post_type('idea', $args);
