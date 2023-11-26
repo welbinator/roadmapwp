@@ -108,6 +108,10 @@ function wp_road_map_settings_page() {
 
 // Function to display the Taxonomies management page
 function wp_road_map_taxonomies_page() {
+
+    $message = '';
+
+    // Check if a new term is being added
     // Check if a new term is being added
     if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_add_term_nonce']) && wp_verify_nonce($_POST['wp_road_map_add_term_nonce'], 'add_term_to_' . $_POST['taxonomy_slug'])) {
         $new_term = sanitize_text_field($_POST['new_term']);
@@ -117,12 +121,19 @@ function wp_road_map_taxonomies_page() {
             if (!term_exists($new_term, $taxonomy_slug)) {
                 $inserted_term = wp_insert_term($new_term, $taxonomy_slug);
                 if (is_wp_error($inserted_term)) {
-                    $message = 'Error: ' . $inserted_term->get_error_message();
+                    $message = 'Error adding term: ' . $inserted_term->get_error_message();
                 } else {
-                    $message = 'Term "' . esc_html($new_term) . '" added successfully.';
+                    $message = 'Term "' . esc_html($new_term) . '" added successfully to ' . esc_html($taxonomy_slug) . '.';
                 }
+            } else {
+                $message = 'The term "' . esc_html($new_term) . '" already exists in ' . esc_html($taxonomy_slug) . '.';
             }
         }
+    }
+
+    // Display the message
+    if (!empty($message)) {
+        echo '<div class="notice notice-info"><p>' . $message . '</p></div>';
     }
 
     // Check if the user has the right capability
@@ -146,16 +157,17 @@ function wp_road_map_taxonomies_page() {
     if (isset($_POST['wp_road_map_nonce'], $_POST['taxonomy_slug'])) {
         // Verify nonce
         if (!wp_verify_nonce($_POST['wp_road_map_nonce'], 'wp_road_map_add_taxonomy')) {
-            $error_message = 'Invalid nonce...'; 
+            $error_message = 'Invalid nonce...';
         } else {
             // Sanitize and validate inputs
-            $raw_taxonomy_slug = $_POST['taxonomy_slug'];
+            $raw_taxonomy_slug = sanitize_key($_POST['taxonomy_slug']);
             
             // Validate slug: only letters, numbers, and underscores
             if (!preg_match('/^[a-zA-Z0-9_]+$/', $raw_taxonomy_slug)) {
                 $error_message = 'Invalid taxonomy slug. Only letters, numbers, and underscores are allowed.';
+            } elseif (taxonomy_exists($raw_taxonomy_slug)) {
+                $error_message = 'The taxonomy "' . esc_html($raw_taxonomy_slug) . '" already exists.';
             } else {
-                $taxonomy_slug = sanitize_key($raw_taxonomy_slug);
                 $hierarchical = isset($_POST['hierarchical']) ? (bool) $_POST['hierarchical'] : false;
                 $public = isset($_POST['public']) ? (bool) $_POST['public'] : false;
                 $taxonomy_singular = sanitize_text_field($_POST['taxonomy_singular']);
@@ -203,11 +215,11 @@ function wp_road_map_taxonomies_page() {
                 }
             }
         }
-    }
-
-    // Display error message if it exists
-    if (!empty($error_message)) {
-        echo '<div class="notice notice-error is-dismissible"><p>' . esc_html($error_message) . '</p></div>';
+    
+        // Display error message if it exists
+        if (!empty($error_message)) {
+            echo '<div class="notice notice-error is-dismissible"><p>' . esc_html($error_message) . '</p></div>';
+        }
     }
 
     // Form HTML
@@ -274,8 +286,6 @@ function wp_road_map_taxonomies_page() {
         echo '</ul>';
     }
 }
-
-add_action('admin_menu', 'wp_road_map_add_admin_menu');
 
 // shortcode
 function wp_road_map_new_idea_form_shortcode() {
