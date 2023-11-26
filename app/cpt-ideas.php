@@ -60,7 +60,7 @@ function wp_road_map_register_default_taxonomies() {
         'status' => array(
             'singular' => 'Status',
             'plural' => 'Status',
-            'public' => false  // Make status taxonomy private
+            'public' => true  // Make status taxonomy private
         ),
         'tag' => array(
             'singular' => 'Tag',

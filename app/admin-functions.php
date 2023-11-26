@@ -408,7 +408,7 @@ function wp_road_map_new_idea_form_shortcode() {
     $taxonomies = get_object_taxonomies('idea', 'objects');
     foreach ($taxonomies as $taxonomy) {
         // Check if the taxonomy is public before generating the HTML
-    if ($taxonomy->public) {
+    if ($taxonomy->name !== 'status') {
         $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
             if (!empty($terms) && !is_wp_error($terms)) {
