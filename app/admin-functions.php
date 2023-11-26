@@ -437,23 +437,27 @@ function wp_road_map_new_idea_form_shortcode() {
     $taxonomies = get_object_taxonomies('idea', 'objects');
     foreach ($taxonomies as $taxonomy) {
         // Check if the taxonomy is public before generating the HTML
-    if ($taxonomy->name !== 'status') {
-        $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
-
+        if ($taxonomy->name !== 'status') {
+            $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
+    
             if (!empty($terms) && !is_wp_error($terms)) {
-                $output .='<li class="new_taxonomy_form_input">';
-                $output .= '<label for="idea_taxonomy_' . esc_attr($taxonomy->name) . '">' . esc_html($taxonomy->labels->singular_name) . ':</label>';
-                $output .= '<select name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" id="idea_taxonomy_' . esc_attr($taxonomy->name) . '" multiple>';
-
+                $output .= '<li class="new_taxonomy_form_input">';
+                $output .= '<label>' . esc_html($taxonomy->labels->singular_name) . ':</label>';
+                $output .= '<div class="taxonomy-checkboxes">';
+    
                 foreach ($terms as $term) {
-                    $output .= '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
+                    $output .= '<label class="taxonomy-term-label">';
+                    $output .= '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->term_id) . '"> ';
+                    $output .= esc_html($term->name);
+                    $output .= '</label>';
                 }
-
-                $output .= '</select>';
+    
+                $output .= '</div>';
                 $output .= '</li>';
             }
         }
     }
+    
 
     // Nonce field for security
     $output .= wp_nonce_field('wp_road_map_new_idea', 'wp_road_map_new_idea_nonce');
