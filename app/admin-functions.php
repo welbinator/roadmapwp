@@ -227,6 +227,7 @@ function wp_road_map_taxonomies_page() {
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <div class="new_taxonomy_form">
+        <h2>Add New Taxonomy</h2>
             <form action="" method="post">
                 <?php wp_nonce_field('wp_road_map_add_taxonomy', 'wp_road_map_nonce'); ?>
                 <ul class="flex-outer">
@@ -260,6 +261,7 @@ function wp_road_map_taxonomies_page() {
             </form>
         </div>
     </div>
+    <hr style="margin-block: 50px;" />
     <?php
 
     // Retrieve and display taxonomies
@@ -270,7 +272,7 @@ function wp_road_map_taxonomies_page() {
         echo '<ul>';
 
         foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
-            echo '<li>' . esc_html($taxonomy_slug);
+            echo '<li><strong>Taxonomy slug:</strong> ' . esc_html($taxonomy_slug);
 
             // Form for adding terms to this taxonomy
             echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
