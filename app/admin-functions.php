@@ -420,6 +420,9 @@ function wp_road_map_new_idea_form_shortcode() {
             }
         }
         
+        // Redirect to the same page to prevent form resubmission on refresh/back navigation
+        wp_redirect(esc_url_raw($_SERVER['REQUEST_URI']));
+        exit;
 
         $output .= '<p>Thank you for your submission!</p>';
     }
