@@ -109,9 +109,27 @@ function wp_road_map_settings_page() {
 // Function to display the Taxonomies management page
 function wp_road_map_taxonomies_page() {
 
+    // Check if a new tag is being added
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_add_term_nonce']) && wp_verify_nonce($_POST['wp_road_map_add_term_nonce'], 'add_term_to_tag')) {
+        $new_tag = sanitize_text_field($_POST['new_tag']);
+
+        if (!empty($new_tag)) {
+            if (!term_exists($new_tag, 'tag')) {
+                $inserted_tag = wp_insert_term($new_tag, 'tag');
+                if (is_wp_error($inserted_tag)) {
+                    echo '<div class="notice notice-error is-dismissible"><p>Error adding tag: ' . esc_html($inserted_tag->get_error_message()) . '</p></div>';
+                } else {
+                    echo '<div class="notice notice-success is-dismissible"><p>Tag added successfully.</p></div>';
+                }
+            } else {
+                echo '<div class="notice notice-info is-dismissible"><p>The tag already exists.</p></div>';
+            }
+        }
+    }
+
+
     $message = '';
 
-    // Check if a new term is being added
     // Check if a new term is being added
     if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['wp_road_map_add_term_nonce']) && wp_verify_nonce($_POST['wp_road_map_add_term_nonce'], 'add_term_to_' . $_POST['taxonomy_slug'])) {
         $new_term = sanitize_text_field($_POST['new_term']);
@@ -265,6 +283,35 @@ function wp_road_map_taxonomies_page() {
     </div>
     <hr style="margin-block: 50px;" />
     <?php
+
+// display default taxonomy/taxonomies
+
+echo '<h2>Tags</h2>';
+    
+// Form for adding new tags
+echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
+echo '<input type="text" name="new_tag" placeholder="New Tag" />';
+echo '<input type="hidden" name="taxonomy_slug" value="tag" />';
+echo '<input type="submit" value="Add Tag" />';
+echo wp_nonce_field('add_term_to_tag', 'wp_road_map_add_term_nonce');
+echo '</form>';
+
+// Display existing tags
+$tags = get_terms(array(
+    'taxonomy' => 'tag',
+    'hide_empty' => false,
+));
+if (!empty($tags) && !is_wp_error($tags)) {
+    echo '<ul class="terms-list">';
+    foreach ($tags as $tag) {
+        echo '<li>' . esc_html($tag->name) . '</li>';
+    }
+    echo '</ul>';
+} else {
+    echo '<p>No tags found.</p>';
+}
+
+
 
     // Retrieve and display taxonomies
 echo '<h2>Registered Taxonomies</h2>';
