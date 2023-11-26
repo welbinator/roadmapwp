@@ -1,5 +1,15 @@
 <?php
 
+// check if shortcode exists on page
+function wp_road_map_check_for_shortcode() {
+    global $wp_road_map_shortcode_loaded, $post;
+
+    if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'new_idea_form')) {
+        $wp_road_map_shortcode_loaded = true;
+    }
+}
+add_action('wp', 'wp_road_map_check_for_shortcode');
+
 // enqueue admin styles
 function wp_road_map_enqueue_admin_styles($hook) {
     error_log($hook);
@@ -16,7 +26,23 @@ function wp_road_map_enqueue_admin_styles($hook) {
 }
 add_action('admin_enqueue_scripts', 'wp_road_map_enqueue_admin_styles');
 
+// enqueue front end styles
+function wp_road_map_enqueue_frontend_styles() {
+    global $wp_road_map_shortcode_loaded;
 
+    if (!$wp_road_map_shortcode_loaded) {
+        return;
+    }
+
+    // Correct path to the CSS file
+    $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-road-map-frontend.css'; 
+    wp_enqueue_style('wp-road-map-frontend-styles', $css_url);
+}
+
+add_action('wp_enqueue_scripts', 'wp_road_map_enqueue_frontend_styles');
+
+
+// add menus
 function wp_road_map_add_admin_menu() {
     // Add top-level menu page
     add_menu_page(
@@ -253,6 +279,9 @@ add_action('admin_menu', 'wp_road_map_add_admin_menu');
 
 // shortcode
 function wp_road_map_new_idea_form_shortcode() {
+    global $wp_road_map_shortcode_loaded;
+    $wp_road_map_shortcode_loaded = true;
+
     $output = '';
 
     // Check if the form has been submitted
@@ -280,11 +309,13 @@ function wp_road_map_new_idea_form_shortcode() {
     }
 
     // Display the form
+    $output .= '<div class="new_taxonomy_form__frontend">';
     $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-    $output .= '<label for="idea_title">Title:</label>';
-    $output .= '<input type="text" name="idea_title" id="idea_title" required>';
-    $output .= '<label for="idea_description">Description:</label>';
-    $output .= '<textarea name="idea_description" id="idea_description" required></textarea>';
+    $output .= '<ul class="flex-outer">';
+    $output .= '<li class="new_taxonomy_form_input"><label for="idea_title">Title:</label>';
+    $output .= '<input type="text" name="idea_title" id="idea_title" required></li>';
+    $output .= '<li class="new_taxonomy_form_input"><label for="idea_description">Description:</label>';
+    $output .= '<textarea name="idea_description" id="idea_description" required></textarea></li>';
 
     // Fetch taxonomies associated with the 'idea' post type
     $taxonomies = get_object_taxonomies('idea', 'objects');
@@ -292,6 +323,7 @@ function wp_road_map_new_idea_form_shortcode() {
         $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
         if (!empty($terms) && !is_wp_error($terms)) {
+            $output .='<li class="new_taxonomy_form_input">';
             $output .= '<label for="idea_taxonomy_' . esc_attr($taxonomy->name) . '">' . esc_html($taxonomy->labels->singular_name) . ':</label>';
             $output .= '<select name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" id="idea_taxonomy_' . esc_attr($taxonomy->name) . '" multiple>';
 
@@ -300,14 +332,16 @@ function wp_road_map_new_idea_form_shortcode() {
             }
 
             $output .= '</select>';
+            $output .= '</li>';
         }
     }
 
     // Nonce field for security
     $output .= wp_nonce_field('wp_road_map_new_idea', 'wp_road_map_new_idea_nonce');
 
-    $output .= '<input type="submit" value="Submit Idea">';
+    $output .= '<li class="new_taxonomy_form_input"><input type="submit" value="Submit Idea"></li>';
     $output .= '</form>';
+    $output .= '</div>';
 
     return $output;
 }
