@@ -49,7 +49,6 @@ function wp_road_map_register_post_type() {
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => null,
-        'supports'           => array( 'title', 'editor', 'author', 'comments' ),
         'taxonomies'         => $taxonomies ,
         'supports' => $supports,
     );
