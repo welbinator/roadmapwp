@@ -91,9 +91,38 @@ function wp_road_map_register_default_taxonomies() {
         }
     }
 }
-
-
 add_action('init', 'wp_road_map_register_default_taxonomies');
+
+//automatically assign Status of New Idea to new idea posts
+// Hook into the save_post action
+add_action('save_post_idea', 'wp_road_map_auto_assign_new_idea_status', 10, 3);
+
+// Function to auto-assign "New Idea" status to new Idea posts
+function wp_road_map_auto_assign_new_idea_status($post_id, $post, $update) {
+    // If this is an update, not a new post, or if it's an autosave, don't do anything
+    if ($update || wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
+        return;
+    }
+
+    // Check if the term exists
+    $term = term_exists('New Idea', 'status');
+
+    // If the term doesn't exist, add it
+    if ($term === 0 || $term === null) {
+        $term = wp_insert_term('New Idea', 'status');
+    }
+
+    // Check for errors
+    if (is_wp_error($term)) {
+        error_log('Error auto-assigning "New Idea" status: ' . $term->get_error_message());
+        return;
+    }
+
+    // Assign "New Idea" status to this idea post using the term slug
+    wp_set_object_terms($post_id, 'new-idea', 'status');
+}
+
+add_action('save_post_idea', 'wp_road_map_auto_assign_new_idea_status', 10, 3);
 
 
 
