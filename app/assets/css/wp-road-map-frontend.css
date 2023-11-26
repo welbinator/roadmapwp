@@ -29,7 +29,6 @@
 .flex-outer li label,
 .flex-outer li p {
     padding: 8px;
-    letter-spacing: .09em;
 }
 
 .flex-outer>li>label,
@@ -49,6 +48,5 @@
 .flex-outer li button {
     margin-left: auto;
     padding: 8px 16px;
-    letter-spacing: .09em;
     border-radius: 2px;
 }

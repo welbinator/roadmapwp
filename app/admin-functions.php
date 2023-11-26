@@ -272,7 +272,23 @@ function wp_road_map_taxonomies_page() {
         echo '<ul>';
 
         foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
-            echo '<li><strong>Taxonomy slug:</strong> ' . esc_html($taxonomy_slug);
+            echo '<li><h3 style="display:inline;">Taxonomy Slug: </h3>' . esc_html($taxonomy_slug);
+
+            // Display existing terms for this taxonomy
+            $terms = get_terms(array(
+                'taxonomy' => $taxonomy_slug,
+                'hide_empty' => false,
+            ));
+            if (!empty($terms) && !is_wp_error($terms)) {
+                echo '<h4>Existing Terms</h4>';
+                echo '<ul class="terms-list">';
+                foreach ($terms as $term) {
+                    echo '<li>' . esc_html($term->name) . '</li>';
+                }
+                echo '</ul>';
+            } else {
+                echo '<p>No terms found for this taxonomy.</p>';
+            }
 
             // Form for adding terms to this taxonomy
             echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
@@ -283,7 +299,10 @@ function wp_road_map_taxonomies_page() {
             echo '</form>';
 
             echo '</li>';
+            echo '<hr style="margin-block: 20px;" />';
         }
+
+        
 
         echo '</ul>';
     }
