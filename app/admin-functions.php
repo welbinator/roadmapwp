@@ -160,7 +160,9 @@ function wp_road_map_taxonomies_page() {
             $error_message = 'Invalid nonce...';
         } else {
             // Sanitize and validate inputs
-            $raw_taxonomy_slug = sanitize_key($_POST['taxonomy_slug']);
+            $raw_taxonomy_slug = $_POST['taxonomy_slug'];
+            $taxonomy_slug = sanitize_key($raw_taxonomy_slug);
+
             
             // Validate slug: only letters, numbers, and underscores
             if (!preg_match('/^[a-zA-Z0-9_]+$/', $raw_taxonomy_slug)) {
@@ -265,47 +267,53 @@ function wp_road_map_taxonomies_page() {
     <?php
 
     // Retrieve and display taxonomies
-    echo '<h2>Registered Taxonomies</h2>';
-    $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
-    if (!empty($custom_taxonomies)) {
-       
-        echo '<ul>';
+echo '<h2>Registered Taxonomies</h2>';
+$custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+if (!empty($custom_taxonomies)) {
+    echo '<ul>';
 
-        foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
-            echo '<li><h3 style="display:inline;">Taxonomy Slug: </h3>' . esc_html($taxonomy_slug);
+    foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
+        // Always display the taxonomy slug
+        echo '<li><h3 style="display:inline;">Taxonomy Slug: ' . esc_html($taxonomy_slug) . '</h3>';
 
-            // Display existing terms for this taxonomy
-            $terms = get_terms(array(
-                'taxonomy' => $taxonomy_slug,
-                'hide_empty' => false,
-            ));
-            if (!empty($terms) && !is_wp_error($terms)) {
-                echo '<h4>Existing Terms</h4>';
-                echo '<ul class="terms-list">';
-                foreach ($terms as $term) {
-                    echo '<li>' . esc_html($term->name) . '</li>';
-                }
-                echo '</ul>';
-            } else {
-                echo '<p>No terms found for this taxonomy.</p>';
+        // Add a delete link
+        $delete_url = wp_nonce_url(
+            admin_url('admin.php?page=wp-road-map-taxonomies&action=delete&taxonomy=' . urlencode($taxonomy_slug)),
+            'delete_taxonomy_' . $taxonomy_slug
+        );
+        echo ' <a href="' . esc_url($delete_url) . '" style="color:red;">Delete</a>';
+        
+        // Display existing terms for this taxonomy
+        $terms = get_terms(array(
+            'taxonomy' => $taxonomy_slug,
+            'hide_empty' => false,
+        ));
+        if (!empty($terms) && !is_wp_error($terms)) {
+            echo '<h4>Existing Terms</h4>';
+            echo '<ul class="terms-list">';
+            foreach ($terms as $term) {
+                echo '<li>' . esc_html($term->name) . '</li>';
             }
-
-            // Form for adding terms to this taxonomy
-            echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
-            echo '<input type="text" name="new_term" placeholder="New Term" />';
-            echo '<input type="hidden" name="taxonomy_slug" value="' . esc_attr($taxonomy_slug) . '" />';
-            echo '<input type="submit" value="Add Term" />';
-            echo wp_nonce_field('add_term_to_' . $taxonomy_slug, 'wp_road_map_add_term_nonce');
-            echo '</form>';
-
-            echo '</li>';
-            echo '<hr style="margin-block: 20px;" />';
+            echo '</ul>';
+        } else {
+            echo '<p>No terms found for this taxonomy.</p>';
         }
 
-        
+        // Form for adding terms to this taxonomy
+        echo '<form action="' . esc_url(admin_url('admin.php?page=wp-road-map-taxonomies')) . '" method="post">';
+        echo '<input type="text" name="new_term" placeholder="New Term" />';
+        echo '<input type="hidden" name="taxonomy_slug" value="' . esc_attr($taxonomy_slug) . '" />';
+        echo '<input type="submit" value="Add Term" />';
+        echo wp_nonce_field('add_term_to_' . $taxonomy_slug, 'wp_road_map_add_term_nonce');
+        echo '</form>';
 
-        echo '</ul>';
+        echo '</li>';
+        echo '<hr style="margin-block: 20px;" />';
     }
+
+    echo '</ul>';
+}
+
 }
 
 // shortcode
