@@ -14,10 +14,10 @@ Text Domain: wp-road-map
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 // Include admin functions
-require_once plugin_dir_path( __FILE__ ) . 'admin-functions.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/admin-functions.php';
 
 // Include Custom Post Type definition
-require_once plugin_dir_path( __FILE__ ) . 'cpt-ideas.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/cpt-ideas.php';
 
 // Include initialization functions
 require_once plugin_dir_path( __FILE__ ) . 'init.php';
