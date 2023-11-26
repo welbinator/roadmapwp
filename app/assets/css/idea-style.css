@@ -1,0 +1,25 @@
+.idea-vote-box {
+    text-align: center;
+    width: 100px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f8f8f8;
+}
+
+.idea-vote-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    color: #333;
+    display: block;
+    margin: 0 auto;
+}
+
+.idea-vote-count {
+    font-size: 16px;
+    margin-top: 5px;
+    color: #333;
+}

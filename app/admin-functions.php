@@ -43,16 +43,26 @@ function wp_road_map_enqueue_frontend_styles() {
     global $wp_road_map_shortcode_loaded;
     global $wp_road_map_ideas_shortcode_loaded;
 
-    if (!$wp_road_map_shortcode_loaded && !$wp_road_map_ideas_shortcode_loaded) {
-        return;
+    // Enqueue general frontend styles if needed
+    if ($wp_road_map_shortcode_loaded || $wp_road_map_ideas_shortcode_loaded) {
+        $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-road-map-frontend.css'; 
+        wp_enqueue_style('wp-road-map-frontend-styles', $css_url);
     }
 
-    // Correct path to the CSS file
-    $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-road-map-frontend.css'; 
-    wp_enqueue_style('wp-road-map-frontend-styles', $css_url);
+    // Always check and enqueue style for 'idea' CPT
+    if (is_singular('idea')) {
+        wp_enqueue_style('wp-road-map-idea-style', plugin_dir_url(__FILE__) . 'assets/css/idea-style.css');
+    }
+
+    wp_enqueue_script('wp-road-map-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
+    wp_localize_script('wp-road-map-voting', 'wpRoadMapVoting', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('wp-road-map-vote-nonce')
+    ));
 }
 
 add_action('wp_enqueue_scripts', 'wp_road_map_enqueue_frontend_styles');
+
 
 
 // add menus
