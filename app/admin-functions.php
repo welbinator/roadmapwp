@@ -21,19 +21,22 @@ add_action('wp', 'wp_road_map_check_for_ideas_shortcode');
 
 // enqueue admin styles
 function wp_road_map_enqueue_admin_styles($hook) {
-    // error_log($hook);
-    // Check if we are on the specific admin page
-    if ( 'roadmap_page_wp-road-map-taxonomies' !== $hook  && 'roadmap_page_wp-road-map-settings' !== $hook  ){
-        return;
+    global $post;
+
+    // Enqueue CSS for 'idea' post type editor
+    if ('post.php' == $hook && isset($post) && 'idea' == $post->post_type) {
+        $css_url = plugin_dir_url(__FILE__) . 'assets/css/idea-editor-styles.css';
+        wp_enqueue_style('wp-road-map-idea-admin-styles', $css_url);
     }
 
-    // The URL of the CSS file
-    $css_url = plugin_dir_url(__FILE__) . 'assets/css/admin-styles.css';
-
-    // Enqueue the style
-    wp_enqueue_style('wp-road-map-admin-styles', $css_url);
+    // Enqueue CSS for other specific plugin admin pages
+    if (in_array($hook, ['roadmap_page_wp-road-map-taxonomies', 'roadmap_page_wp-road-map-settings'])) {
+        $css_url = plugin_dir_url(__FILE__) . 'assets/css/admin-styles.css';
+        wp_enqueue_style('wp-road-map-general-admin-styles', $css_url);
+    }
 }
 add_action('admin_enqueue_scripts', 'wp_road_map_enqueue_admin_styles');
+
 
 // enqueue front end styles
 function wp_road_map_enqueue_frontend_styles() {

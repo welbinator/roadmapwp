@@ -48,7 +48,7 @@ function wp_road_map_register_post_type() {
         'hierarchical'       => false,
         'menu_position'      => null,
         'taxonomies'         => $taxonomies,
-        'supports'           => array( 'title', 'editor', 'author' )
+        'supports'           => array( 'title', 'editor', 'author', 'comments' )
     );
 
     register_post_type('idea', $args);
