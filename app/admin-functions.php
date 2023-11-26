@@ -314,7 +314,7 @@ if (!empty($tags) && !is_wp_error($tags)) {
 
 
     // Retrieve and display taxonomies
-echo '<h2>Registered Taxonomies</h2>';
+echo '<h2>Your Custom Taxonomies</h2>';
 $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
 if (!empty($custom_taxonomies)) {
     echo '<ul>';
@@ -390,6 +390,7 @@ function wp_road_map_new_idea_form_shortcode() {
                 wp_set_object_terms($idea_id, $term_ids, $tax_slug);
             }
         }
+        
 
         $output .= '<p>Thank you for your submission!</p>';
     }
@@ -406,19 +407,22 @@ function wp_road_map_new_idea_form_shortcode() {
     // Fetch taxonomies associated with the 'idea' post type
     $taxonomies = get_object_taxonomies('idea', 'objects');
     foreach ($taxonomies as $taxonomy) {
+        // Check if the taxonomy is public before generating the HTML
+    if ($taxonomy->public) {
         $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
-        if (!empty($terms) && !is_wp_error($terms)) {
-            $output .='<li class="new_taxonomy_form_input">';
-            $output .= '<label for="idea_taxonomy_' . esc_attr($taxonomy->name) . '">' . esc_html($taxonomy->labels->singular_name) . ':</label>';
-            $output .= '<select name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" id="idea_taxonomy_' . esc_attr($taxonomy->name) . '" multiple>';
+            if (!empty($terms) && !is_wp_error($terms)) {
+                $output .='<li class="new_taxonomy_form_input">';
+                $output .= '<label for="idea_taxonomy_' . esc_attr($taxonomy->name) . '">' . esc_html($taxonomy->labels->singular_name) . ':</label>';
+                $output .= '<select name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" id="idea_taxonomy_' . esc_attr($taxonomy->name) . '" multiple>';
 
-            foreach ($terms as $term) {
-                $output .= '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
+                foreach ($terms as $term) {
+                    $output .= '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
+                }
+
+                $output .= '</select>';
+                $output .= '</li>';
             }
-
-            $output .= '</select>';
-            $output .= '</li>';
         }
     }
 

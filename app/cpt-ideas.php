@@ -55,41 +55,42 @@ add_action('init', 'wp_road_map_register_post_type');
 
 // default taxonomies
 function wp_road_map_register_default_taxonomies() {
-    // Define default taxonomies
+    // Define default taxonomies with their properties
     $default_taxonomies = array(
         'status' => array(
             'singular' => 'Status',
-            'plural' => 'Status'
+            'plural' => 'Status',
+            'public' => false  // Make status taxonomy private
         ),
         'tag' => array(
             'singular' => 'Tag',
-            'plural' => 'Tags'
+            'plural' => 'Tags',
+            'public' => true  // Keep tag taxonomy public
         )
     );
 
-    foreach ($default_taxonomies as $slug => $names) {
+    foreach ($default_taxonomies as $slug => $properties) {
         if (!taxonomy_exists($slug)) {
             register_taxonomy(
                 $slug,
                 'idea',
                 array(
-                    'label' => $names['plural'],
+                    'label' => $properties['plural'],
                     'labels' => array(
-                        'name' => $names['plural'],
-                        'singular_name' => $names['singular'],
+                        'name' => $properties['plural'],
+                        'singular_name' => $properties['singular'],
                         // ... other labels ...
                     ),
-                    'public' => true,
-                    // 'hierarchical' => ($slug == 'status'),
-                    'hierarchical' => true,
+                    'public' => $properties['public'],
+                    'hierarchical' => ($slug == 'status'),
                     'show_ui' => true,
                     'show_in_rest' => true,
-                    'show_admin_column' => true,
                 )
             );
         }
     }
 }
+
 
 add_action('init', 'wp_road_map_register_default_taxonomies');
 
