@@ -59,6 +59,16 @@ function wp_road_map_enqueue_frontend_styles() {
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('wp-road-map-vote-nonce')
     ));
+
+    // Enqueue the idea-filter JavaScript file
+    wp_enqueue_script('wp-road-map-idea-filter', plugin_dir_url(__FILE__) . 'assets/js/idea-filter.js', array('jquery'), '', true);
+
+    // Localize the script with the AJAX URL
+    wp_localize_script('wp-road-map-idea-filter', 'wpRoadMapAjax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('wp-road-map-vote-nonce') // Same nonce used in the AJAX handler
+    ));
+    
 }
 
 add_action('wp_enqueue_scripts', 'wp_road_map_enqueue_frontend_styles');
@@ -492,64 +502,117 @@ function wp_road_map_display_ideas_shortcode() {
     $wp_road_map_ideas_shortcode_loaded = true;
     ob_start(); // Start output buffering
 
+    // Get custom taxonomies excluding 'status'
+    $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+    $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     ?>
-    <div class="grid-container">
-        <?php
-        // Define the statuses to loop through
-        $statuses = array('New Idea', 'Maybe', 'Not Now', 'On Roadmap');
-
-        // Iterate through each status
-        foreach ($statuses as $index => $status) {
-            // WP Query to fetch ideas with the current status
-            $args = array(
-                'post_type' => 'idea',
-                'posts_per_page' => -1, // Adjust the number as needed
-                'tax_query' => array(
-                    array(
-                        'taxonomy' => 'status',
-                        'field'    => 'name',
-                        'terms'    => $status,
-                    ),
-                ),
-            );
-            $query = new WP_Query($args);
-
-            // Check if there are posts for the current status
-            if ($query->have_posts()) : ?>
-                <div class="grid-column column-<?php echo ($index + 1); ?>">
-                    <h2><?php echo esc_html($status); ?></h2> <!-- Heading for each status -->
-                    <?php while ($query->have_posts()) : $query->the_post(); ?>
-                        <div class="card">
-                            <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                            <p class="card-date"><?php the_date(); ?></p>
-                            <p class="card-meta">Tags: <?php echo get_the_term_list(get_the_ID(), 'idea-tag', '', ', '); ?></p>
-                            <p class="card-description"><?php the_excerpt(); ?></p>
-
-                            <!-- Include voting box here -->
-                            <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
-                                <button class="idea-vote-button">
-                                    ^
-                                </button>
-                                <div class="idea-vote-count">
-                                    <?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?>
-                                </div>
-                            </div>
-
-                            <hr style="margin-block: 30px;" />
-                        </div>
-                    <?php endwhile; ?>
+    <div class="wp-road-map-ideas-filter">
+        <?php foreach ($taxonomies as $taxonomy_slug) : 
+            $taxonomy = get_taxonomy($taxonomy_slug);
+            if ($taxonomy && $taxonomy_slug != 'status') : ?>
+                <div class="wp-road-map-ideas-filter-taxonomy">
+                    <label for="<?php echo esc_attr($taxonomy->name); ?>"><?php echo esc_html($taxonomy->labels->singular_name); ?>:</label>
+                    <select id="<?php echo esc_attr($taxonomy->name); ?>" class="wp-road-map-ideas-filter-select">
+                        <option value=""><?php echo esc_html__('All', 'wp-road-map'); ?></option>
+                        <?php
+                        $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
+                        foreach ($terms as $term) {
+                            echo '<option value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
             <?php endif; 
-            wp_reset_postdata(); // Reset post data
+        endforeach; ?>
+    </div>
+
+    <div class="wp-road-map-ideas-list">
+        <?php
+        $args = array(
+            'post_type' => 'idea',
+            'posts_per_page' => -1 // Adjust as needed
+        );
+        $query = new WP_Query($args);
+
+        if ($query->have_posts()) {
+            while ($query->have_posts()) : $query->the_post();
+                ?>
+                <div class="wp-road-map-idea">
+                    <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                    <p class="idea-meta">Posted on: <?php the_date(); ?></p>
+                    <p class="idea-excerpt"><?php the_excerpt(); ?></p>
+
+                    <!-- Voting box -->
+                    <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+                        <button class="idea-vote-button">^</button>
+                        <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
+                    </div>
+                </div>
+                <?php
+            endwhile;
+        } else {
+            echo '<p>No ideas found.</p>';
         }
+        wp_reset_postdata();
         ?>
     </div>
     <?php
-
     return ob_get_clean(); // Return the buffered output
 }
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
+
+// handle ajax requests for ideas filter
+function wp_road_map_filter_ideas() {
+    check_ajax_referer('wp-road-map-vote-nonce', 'nonce');
+
+    $filter_data = $_POST['filter_data'];
+    $args = array(
+        'post_type' => 'idea',
+        'posts_per_page' => -1 // Adjust as needed
+    );
+
+    if (!empty($filter_data)) {
+        $tax_query = array('relation' => 'AND');
+        foreach ($filter_data as $taxonomy => $term_slug) {
+            $tax_query[] = array(
+                'taxonomy' => $taxonomy,
+                'field'    => 'slug',
+                'terms'    => $term_slug
+            );
+        }
+        $args['tax_query'] = $tax_query;
+    }
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) : $query->the_post();
+            ?>
+            <div class="wp-road-map-idea">
+                <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                <p class="idea-meta">Posted on: <?php the_date(); ?></p>
+                <p class="idea-excerpt"><?php the_excerpt(); ?></p>
+
+                <!-- Voting box -->
+                <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+                    <button class="idea-vote-button">^</button>
+                    <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
+                </div>
+            </div>
+            <?php
+        endwhile;
+    } else {
+        echo '<p>No ideas found.</p>';
+    }
+
+    wp_reset_postdata();
+    wp_die();
+}
+
+
+add_action('wp_ajax_filter_ideas', 'wp_road_map_filter_ideas');
+add_action('wp_ajax_nopriv_filter_ideas', 'wp_road_map_filter_ideas');
 
 
 // filter that dynamically enables or disables comments on idea posts
