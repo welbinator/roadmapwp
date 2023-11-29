@@ -1,8 +1,13 @@
 <?php
 
-// functions check if a shortcode is displayed and sets a global variable to true for purposes of enqueuing css files
+/**
+ * Check for the presence of specific shortcodes on the page and set global flags for enqueuing CSS files.
+ */
 
-// function to check if new idea form shortcode is displayed on a page and sets global variable to true
+/**
+ * Checks if the 'new_idea_form' shortcode is present on the current page.
+ * Sets a global flag for enqueuing related CSS files if the shortcode is found.
+ */
 function wp_road_map_check_for_new_idea_shortcode() {
     global $wp_road_map_new_idea_shortcode_loaded, $post;
 
@@ -12,7 +17,10 @@ function wp_road_map_check_for_new_idea_shortcode() {
 }
 add_action('wp', 'wp_road_map_check_for_new_idea_shortcode');
 
-// function to check if display ideas shortcode is displayed on the page and sets global variable to true
+/**
+ * Checks if the 'display_ideas' shortcode is present on the current page.
+ * Sets a global flag for enqueuing related CSS files if the shortcode is found.
+ */
 function wp_road_map_check_for_ideas_shortcode() {
     global $wp_road_map_ideas_shortcode_loaded, $post;
 
@@ -22,7 +30,10 @@ function wp_road_map_check_for_ideas_shortcode() {
 }
 add_action('wp', 'wp_road_map_check_for_ideas_shortcode');
 
-// function to check if roadmap shortcode is displayed on the page, and sets global variable to true
+/**
+ * Checks if the 'roadmap' shortcode is present on the current page.
+ * Sets a global flag for enqueuing related CSS files if the shortcode is found.
+ */
 function wp_road_map_check_for_roadmap_shortcode() {
     global $wp_road_map_roadmap_shortcode_loaded, $post;
 
@@ -32,7 +43,11 @@ function wp_road_map_check_for_roadmap_shortcode() {
 }
 add_action('wp', 'wp_road_map_check_for_roadmap_shortcode');
 
-// enqueue admin styles
+/**
+ * Enqueues admin styles for specific admin pages and post types.
+ *
+ * @param string $hook The current admin page hook.
+ */
 function wp_road_map_enqueue_admin_styles($hook) {
     global $post;
 
@@ -42,7 +57,7 @@ function wp_road_map_enqueue_admin_styles($hook) {
         wp_enqueue_style('wp-road-map-idea-admin-styles', $css_url);
     }
 
-    // Enqueue CSS for other specific plugin admin pages
+    // Enqueue CSS for specific plugin admin pages
     if (in_array($hook, ['roadmap_page_wp-road-map-taxonomies', 'roadmap_page_wp-road-map-settings'])) {
         $css_url = plugin_dir_url(__FILE__) . 'assets/css/admin-styles.css';
         wp_enqueue_style('wp-road-map-general-admin-styles', $css_url);
@@ -50,116 +65,113 @@ function wp_road_map_enqueue_admin_styles($hook) {
 }
 add_action('admin_enqueue_scripts', 'wp_road_map_enqueue_admin_styles');
 
-
-// enqueue front end styles
+/**
+ * Enqueues front end styles and scripts for the plugin.
+ *
+ * This function checks whether any of the plugin's shortcodes are loaded or if it's a singular 'idea' post,
+ * and enqueues the necessary styles and scripts.
+ */
 function wp_road_map_enqueue_frontend_styles() {
-    // Declare the global variables
     global $wp_road_map_new_idea_shortcode_loaded, $wp_road_map_ideas_shortcode_loaded, $wp_road_map_roadmap_shortcode_loaded;
 
-    // Consolidate the shortcode load states into an array
+    // Consolidate shortcode load states
     $wp_road_map_shortcodes_loaded = array(
         $wp_road_map_new_idea_shortcode_loaded,
         $wp_road_map_ideas_shortcode_loaded,
         $wp_road_map_roadmap_shortcode_loaded,
-        // Add more shortcode flags here as needed
     );
 
-    // Check if any of the shortcodes are loaded
-    if (in_array(true, $wp_road_map_shortcodes_loaded, true) || is_singular('idea') ) {
-        error_log('new idea' . $wp_road_map_new_idea_shortcode_loaded);
-        error_log('ideas' . $wp_road_map_ideas_shortcode_loaded);
-        error_log('roadmap' . $wp_road_map_roadmap_shortcode_loaded);
+    // Enqueue styles if any shortcode is loaded
+    if (in_array(true, $wp_road_map_shortcodes_loaded, true) || is_singular('idea')) {
         $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-road-map-frontend.css'; 
         wp_enqueue_style('wp-road-map-frontend-styles', $css_url);
     }
 
+    // Enqueue scripts and localize them
     wp_enqueue_script('wp-road-map-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
     wp_localize_script('wp-road-map-voting', 'wpRoadMapVoting', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('wp-road-map-vote-nonce')
     ));
 
-    // Enqueue the idea-filter JavaScript file
     wp_enqueue_script('wp-road-map-idea-filter', plugin_dir_url(__FILE__) . 'assets/js/idea-filter.js', array('jquery'), '', true);
-
-    // Localize the script with the AJAX URL
     wp_localize_script('wp-road-map-idea-filter', 'wpRoadMapAjax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('wp-road-map-vote-nonce') // Same nonce used in the AJAX handler
+        'nonce' => wp_create_nonce('wp-road-map-vote-nonce')
     ));
 }
-
 add_action('wp_enqueue_scripts', 'wp_road_map_enqueue_frontend_styles');
 
-
-// add menus
+/**
+ * Adds admin menu pages for the plugin.
+ *
+ * This function creates a top-level menu item 'RoadMap' in the admin dashboard,
+ * along with several submenu pages like Settings, Ideas, and Taxonomies.
+ */
 function wp_road_map_add_admin_menu() {
-    // Add top-level menu page
     add_menu_page(
-        __('RoadMap', 'wp-road-map'), // Page title
-        __('RoadMap', 'wp-road-map'), // Menu title
-        'manage_options', // Capability
-        'wp-road-map', // Menu slug
-        'wp_road_map_settings_page', // Function to display the settings page
-        'dashicons-chart-line', // Icon URL
-        6 // Position
+        __('RoadMap', 'wp-road-map'), 
+        __('RoadMap', 'wp-road-map'), 
+        'manage_options', 
+        'wp-road-map', 
+        'wp_road_map_settings_page', 
+        'dashicons-chart-line', 
+        6
     );
 
-    // Add submenu page for Settings
     add_submenu_page(
-        'wp-road-map', // Parent slug
-        __('Settings', 'wp-road-map'), // Page title
-        __('Settings', 'wp-road-map'), // Menu title
-        'manage_options', // Capability
-        'wp-road-map-settings', // Menu slug
-        'wp_road_map_settings_page' // Function to display the settings page
+        'wp-road-map',
+        __('Settings', 'wp-road-map'),
+        __('Settings', 'wp-road-map'),
+        'manage_options',
+        'wp-road-map-settings',
+        'wp_road_map_settings_page'
     );
 
-    // Add submenu page for Ideas
     add_submenu_page(
-        'wp-road-map', // Parent slug
-        __('Ideas', 'wp-road-map'), // Page title
-        __('Ideas', 'wp-road-map'), // Menu title
-        'manage_options', // Capability
-        'edit.php?post_type=idea' // Menu slug to the Ideas CPT
+        'wp-road-map',
+        __('Ideas', 'wp-road-map'),
+        __('Ideas', 'wp-road-map'),
+        'manage_options',
+        'edit.php?post_type=idea'
     );
 
-    // Add submenu page for Taxonomies
-add_submenu_page(
-    'wp-road-map', // Parent slug
-    __('Taxonomies', 'wp-road-map'), // Page title
-    __('Taxonomies', 'wp-road-map'), // Menu title
-    'manage_options', // Capability
-    'wp-road-map-taxonomies', // Menu slug
-    'wp_road_map_taxonomies_page' // Function to display the Taxonomies page
-);
+    add_submenu_page(
+        'wp-road-map',
+        __('Taxonomies', 'wp-road-map'),
+        __('Taxonomies', 'wp-road-map'),
+        'manage_options',
+        'wp-road-map-taxonomies',
+        'wp_road_map_taxonomies_page'
+    );
 
-    // Remove duplicate RoadMap submenu item
     remove_submenu_page('wp-road-map', 'wp-road-map');
 }
 add_action('admin_menu', 'wp_road_map_add_admin_menu');
 
-
-// registering settings
+/**
+ * Registers settings for the RoadMap plugin.
+ *
+ * This function sets up a settings section for the plugin, allowing configuration of various features and functionalities.
+ */
 function wp_road_map_register_settings() {
     register_setting('wp_road_map_settings', 'wp_road_map_settings');
 }
 add_action('admin_init', 'wp_road_map_register_settings');
 
-// filter that dynamically enables or disables comments on idea posts
+/**
+ * Dynamically enables or disables comments on 'idea' post types.
+ *
+ * @param bool $open Whether the comments are open.
+ * @param int $post_id The post ID.
+ * @return bool Modified status of comments open.
+ */
 function wp_road_map_filter_comments_open($open, $post_id) {
     $post = get_post($post_id);
     $options = get_option('wp_road_map_settings');
     if ($post->post_type == 'idea') {
-        if (isset($options['allow_comments']) && $options['allow_comments'] == 1) {
-            return true; // Enable comments
-        } else {
-            return false; // Disable comments
-        }
+        return isset($options['allow_comments']) && $options['allow_comments'] == 1;
     }
     return $open;
 }
 add_filter('comments_open', 'wp_road_map_filter_comments_open', 10, 2);
-
-
-

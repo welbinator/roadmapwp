@@ -1,6 +1,7 @@
 <?php
-
-// ajax handling for voting functionality
+/**
+ * Ajax handling for voting functionality.
+ */
 function wp_road_map_handle_vote() {
     check_ajax_referer('wp-road-map-vote-nonce', 'nonce');
 
@@ -34,11 +35,12 @@ function wp_road_map_handle_vote() {
     wp_die();
 }
 
-
 add_action('wp_ajax_wp_road_map_handle_vote', 'wp_road_map_handle_vote');
 add_action('wp_ajax_nopriv_wp_road_map_handle_vote', 'wp_road_map_handle_vote');
 
-// handle ajax requests for ideas filter
+/**
+ * Handle AJAX requests for ideas filter.
+ */
 function wp_road_map_filter_ideas() {
     check_ajax_referer('wp-road-map-vote-nonce', 'nonce');
 
@@ -97,8 +99,6 @@ function wp_road_map_filter_ideas() {
     wp_reset_postdata();
     wp_die();
 }
-
-
 
 add_action('wp_ajax_filter_ideas', 'wp_road_map_filter_ideas');
 add_action('wp_ajax_nopriv_filter_ideas', 'wp_road_map_filter_ideas');

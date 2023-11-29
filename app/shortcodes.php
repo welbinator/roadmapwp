@@ -1,6 +1,9 @@
 <?php
-
-// shortcode to display new idea form 
+/**
+ * Shortcode to display the new idea submission form.
+ *
+ * @return string The HTML output for the new idea form.
+ */
 function wp_road_map_new_idea_form_shortcode() {
     global $wp_road_map_new_idea_shortcode_loaded;
     $wp_road_map_new_idea_shortcode_loaded = true;
@@ -10,50 +13,51 @@ function wp_road_map_new_idea_form_shortcode() {
     if (isset($_GET['new_idea_submitted']) && $_GET['new_idea_submitted'] == '1') {
         $output .= '<p>Thank you for your submission!</p>';
     }
-        $output .= '<div class="new_taxonomy_form__frontend">';
-        $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
-        $output .= '<ul class="flex-outer">';
-        $output .= '<li class="new_taxonomy_form_input"><label for="idea_title">Title:</label>';
-        $output .= '<input type="text" name="idea_title" id="idea_title" required></li>';
-        $output .= '<li class="new_taxonomy_form_input"><label for="idea_description">Description:</label>';
-        $output .= '<textarea name="idea_description" id="idea_description" required></textarea></li>';
+    
+    $output .= '<div class="new_taxonomy_form__frontend">';
+    $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
+    $output .= '<ul class="flex-outer">';
+    $output .= '<li class="new_taxonomy_form_input"><label for="idea_title">Title:</label>';
+    $output .= '<input type="text" name="idea_title" id="idea_title" required></li>';
+    $output .= '<li class="new_taxonomy_form_input"><label for="idea_description">Description:</label>';
+    $output .= '<textarea name="idea_description" id="idea_description" required></textarea></li>';
 
-        $taxonomies = get_object_taxonomies('idea', 'objects');
-        foreach ($taxonomies as $taxonomy) {
-            if ($taxonomy->name !== 'status') {
-                $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
+    $taxonomies = get_object_taxonomies('idea', 'objects');
+    foreach ($taxonomies as $taxonomy) {
+        if ($taxonomy->name !== 'status') {
+            $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
-                if (!empty($terms) && !is_wp_error($terms)) {
-                    $output .= '<li class="new_taxonomy_form_input">';
-                    $output .= '<label>' . esc_html($taxonomy->labels->singular_name) . ':</label>';
-                    $output .= '<div class="taxonomy-checkboxes">';
+            if (!empty($terms) && !is_wp_error($terms)) {
+                $output .= '<li class="new_taxonomy_form_input">';
+                $output .= '<label>' . esc_html($taxonomy->labels->singular_name) . ':</label>';
+                $output .= '<div class="taxonomy-checkboxes">';
 
-                    foreach ($terms as $term) {
-                        $output .= '<label class="taxonomy-term-label">';
-                        $output .= '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->term_id) . '"> ';
-                        $output .= esc_html($term->name);
-                        $output .= '</label>';
-                    }
-
-                    $output .= '</div>';
-                    $output .= '</li>';
+                foreach ($terms as $term) {
+                    $output .= '<label class="taxonomy-term-label">';
+                    $output .= '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->term_id) . '"> ';
+                    $output .= esc_html($term->name);
+                    $output .= '</label>';
                 }
+
+                $output .= '</div>';
+                $output .= '</li>';
             }
         }
+    }
 
-        $output .= wp_nonce_field('wp_road_map_new_idea', 'wp_road_map_new_idea_nonce');
-        $output .= '<li class="new_taxonomy_form_input"><input type="submit" value="Submit Idea"></li>';
-        $output .= '</ul>';
-        $output .= '</form>';
-        $output .= '</div>';
-   
+    $output .= wp_nonce_field('wp_road_map_new_idea', 'wp_road_map_new_idea_nonce');
+    $output .= '<li class="new_taxonomy_form_input"><input type="submit" value="Submit Idea"></li>';
+    $output .= '</ul>';
+    $output .= '</form>';
+    $output .= '</div>';
 
     return $output;
 }
 add_shortcode('new_idea_form', 'wp_road_map_new_idea_form_shortcode');
 
-
-// function to handle idea form submission
+/**
+ * Function to handle the submission of the new idea form.
+ */
 function wp_road_map_handle_new_idea_submission() {
     if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['idea_title']) && isset($_POST['wp_road_map_new_idea_nonce']) && wp_verify_nonce($_POST['wp_road_map_new_idea_nonce'], 'wp_road_map_new_idea')) {
         $title = sanitize_text_field($_POST['idea_title']);
@@ -80,7 +84,11 @@ function wp_road_map_handle_new_idea_submission() {
 }
 add_action('template_redirect', 'wp_road_map_handle_new_idea_submission');
 
-// shortcode to display ideas
+/**
+ * Shortcode to display ideas.
+ *
+ * @return string The HTML output for displaying ideas.
+ */
 function wp_road_map_display_ideas_shortcode() {
     global $wp_road_map_ideas_shortcode_loaded;
     $wp_road_map_ideas_shortcode_loaded = true;
@@ -168,7 +176,11 @@ function wp_road_map_display_ideas_shortcode() {
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
 
-// shortcode for displaying roadmap
+/**
+ * Shortcode to display the roadmap.
+ *
+ * @return string The HTML output for displaying the roadmap.
+ */
 function wp_road_map_roadmap_shortcode() {
     global $wp_road_map_roadmap_shortcode_loaded;
     $wp_road_map_roadmap_shortcode_loaded = true;
