@@ -72,17 +72,20 @@ add_action('admin_enqueue_scripts', 'wp_roadmap_enqueue_admin_styles');
  * and enqueues the necessary styles and scripts.
  */
 function wp_roadmap_enqueue_frontend_styles() {
-    global $wp_roadmap_new_idea_shortcode_loaded, $wp_roadmap_ideas_shortcode_loaded, $wp_roadmap_roadmap_shortcode_loaded;
+    global $post;
 
-    // Consolidate shortcode load states
-    $wp_roadmap_shortcodes_loaded = array(
-        $wp_roadmap_new_idea_shortcode_loaded,
-        $wp_roadmap_ideas_shortcode_loaded,
-        $wp_roadmap_roadmap_shortcode_loaded,
-    );
+    // Check for shortcode presence
+    $has_shortcode = has_shortcode($post->post_content, 'new_idea_form') ||
+                     has_shortcode($post->post_content, 'display_ideas') ||
+                     has_shortcode($post->post_content, 'roadmap');
 
-    // Enqueue Tailwind CSS styles if any shortcode is loaded
-    if (in_array(true, $wp_roadmap_shortcodes_loaded, true) || is_singular('idea')) {
+    // Check for block presence
+    $has_block = has_block('wp-roadmap-pro/new-idea-form', $post) ||
+                 has_block('wp-roadmap-pro/display-ideas', $post) ||
+                 has_block('wp-roadmap-pro/roadmap', $post);
+
+    // Enqueue styles if a shortcode or block is loaded
+    if ($has_shortcode || $has_block || is_singular('idea')) {
         // Enqueue Tailwind CSS
         $tailwind_css_url = plugin_dir_url(__FILE__) . '../dist/styles.css';
         wp_enqueue_style('wp-roadmap-tailwind-styles', $tailwind_css_url);
@@ -92,7 +95,7 @@ function wp_roadmap_enqueue_frontend_styles() {
         wp_enqueue_style('wp-roadmap-frontend-styles', $custom_css_url);
     }
 
-    // Enqueue scripts and localize them
+    // Enqueue scripts and localize them as before
     wp_enqueue_script('wp-roadmap-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
     wp_localize_script('wp-roadmap-voting', 'wpRoadMapVoting', array(
         'ajax_url' => admin_url('admin-ajax.php'),
@@ -107,6 +110,7 @@ function wp_roadmap_enqueue_frontend_styles() {
 }
 
 add_action('wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles');
+
 
 /**
  * Adds admin menu pages for the plugin.
