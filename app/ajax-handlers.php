@@ -88,7 +88,7 @@ function wp_roadmap_filter_ideas() {
                 </div>
                 <div class="idea-wrapper">
                     <div class="idea-header">
-                        <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <h4 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                         <p class="idea-meta">Posted on: <?php the_date(); ?></p>
                     </div>
                     <div class="idea-body">

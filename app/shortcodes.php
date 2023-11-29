@@ -151,7 +151,7 @@ function wp_roadmap_display_ideas_shortcode() {
                     </div>
                     <div class="idea-wrapper">
                         <div class="idea-header">
-                            <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <h4 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                                 <?php
                                 // Fetch and display terms for the idea
                                 $terms = wp_get_post_terms(get_the_ID(), get_object_taxonomies('idea'));
@@ -226,7 +226,7 @@ function wp_roadmap_roadmap_shortcode() {
         if ($query->have_posts()) {
             while ($query->have_posts()) : $query->the_post();
                 $output .= '<div class="roadmap-idea">';
-                $output .= '<h3 class="idea-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+                $output .= '<h4 class="idea-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>';
                 $output .= '<p class="idea-excerpt">' . get_the_excerpt() . '</p>';
                 
                 
