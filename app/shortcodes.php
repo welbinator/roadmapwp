@@ -223,10 +223,10 @@ function wp_roadmap_roadmap_shortcode() {
                 $output .= '<p class="idea-excerpt">' . get_the_excerpt() . '</p>';
                 
                 // Display vote count
-                $vote_count = get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0';
-                $output .= '<div class="idea-vote-box">';
-                $output .= '<div class="idea-vote-count">' . esc_html($vote_count) . '</div>';
-                $output .= '</div>'; // Close vote box
+                // $vote_count = get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0';
+                // $output .= '<div class="idea-vote-box">';
+                // $output .= '<div class="idea-vote-count">' . esc_html($vote_count) . '</div>';
+                // $output .= '</div>'; // Close vote box
 
                 $output .= '</div>'; // Close idea
             endwhile;
