@@ -556,13 +556,28 @@ function wp_road_map_display_ideas_shortcode() {
             'posts_per_page' => -1 // Adjust as needed
         );
         $query = new WP_Query($args);
-
+    
         if ($query->have_posts()) {
             while ($query->have_posts()) : $query->the_post();
                 ?>
                 <div class="wp-road-map-idea">
                     <div class="idea-header">
                         <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <?php
+                            // Fetch and display terms for the idea
+                            $terms = wp_get_post_terms(get_the_ID(), get_object_taxonomies('idea'));
+                            if (!empty($terms) && !is_wp_error($terms)) {
+                                echo '<div class="idea-terms">';
+                                foreach ($terms as $term) {
+                                    $term_link = get_term_link($term);
+                                    if (!is_wp_error($term_link)) {
+                                        echo '<a href="' . esc_url($term_link) . '">' . esc_html($term->name) . '</a> ';
+                                    }
+                                }
+                                echo '</div>';
+                            }
+                            ?>
+                        
                         <p class="idea-meta">Posted on: <?php the_date(); ?></p>
                         <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
                             <button class="idea-vote-button">^</button>
@@ -579,12 +594,11 @@ function wp_road_map_display_ideas_shortcode() {
         } else {
             echo '<p>No ideas found.</p>';
         }
+    
         wp_reset_postdata();
-        ?>
-    </div>
-    <?php
-    return ob_get_clean(); // Return the buffered output
-}
+    
+        return ob_get_clean(); // Return the buffered output
+    }
 
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
