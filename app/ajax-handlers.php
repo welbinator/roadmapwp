@@ -2,8 +2,8 @@
 /**
  * Ajax handling for voting functionality.
  */
-function wp_road_map_handle_vote() {
-    check_ajax_referer('wp-road-map-vote-nonce', 'nonce');
+function wp_roadmap_handle_vote() {
+    check_ajax_referer('wp-roadmap-vote-nonce', 'nonce');
 
     $post_id = intval($_POST['post_id']);
     $user_id = get_current_user_id();
@@ -35,14 +35,14 @@ function wp_road_map_handle_vote() {
     wp_die();
 }
 
-add_action('wp_ajax_wp_road_map_handle_vote', 'wp_road_map_handle_vote');
-add_action('wp_ajax_nopriv_wp_road_map_handle_vote', 'wp_road_map_handle_vote');
+add_action('wp_ajax_wp_roadmap_handle_vote', 'wp_roadmap_handle_vote');
+add_action('wp_ajax_nopriv_wp_roadmap_handle_vote', 'wp_roadmap_handle_vote');
 
 /**
  * Handle AJAX requests for ideas filter.
  */
-function wp_road_map_filter_ideas() {
-    check_ajax_referer('wp-road-map-vote-nonce', 'nonce');
+function wp_roadmap_filter_ideas() {
+    check_ajax_referer('wp-roadmap-vote-nonce', 'nonce');
 
     $filter_data = $_POST['filter_data'];
     $tax_query = array();
@@ -81,7 +81,7 @@ function wp_road_map_filter_ideas() {
     if ($query->have_posts()) {
         while ($query->have_posts()) : $query->the_post();
             ?>
-            <div class="wp-road-map-idea">
+            <div class="wp-roadmap-idea">
                 <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                 <p class="idea-meta">Posted on: <?php the_date(); ?></p>
                 <p class="idea-excerpt"><?php the_excerpt(); ?></p>
@@ -100,5 +100,5 @@ function wp_road_map_filter_ideas() {
     wp_die();
 }
 
-add_action('wp_ajax_filter_ideas', 'wp_road_map_filter_ideas');
-add_action('wp_ajax_nopriv_filter_ideas', 'wp_road_map_filter_ideas');
+add_action('wp_ajax_filter_ideas', 'wp_roadmap_filter_ideas');
+add_action('wp_ajax_nopriv_filter_ideas', 'wp_roadmap_filter_ideas');

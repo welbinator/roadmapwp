@@ -4,9 +4,9 @@
  *
  * @return string The HTML output for the new idea form.
  */
-function wp_road_map_new_idea_form_shortcode() {
-    global $wp_road_map_new_idea_shortcode_loaded;
-    $wp_road_map_new_idea_shortcode_loaded = true;
+function wp_roadmap_new_idea_form_shortcode() {
+    global $wp_roadmap_new_idea_shortcode_loaded;
+    $wp_roadmap_new_idea_shortcode_loaded = true;
 
     $output = '';
 
@@ -45,7 +45,7 @@ function wp_road_map_new_idea_form_shortcode() {
         }
     }
 
-    $output .= wp_nonce_field('wp_road_map_new_idea', 'wp_road_map_new_idea_nonce');
+    $output .= wp_nonce_field('wp_roadmap_new_idea', 'wp_roadmap_new_idea_nonce');
     $output .= '<li class="new_taxonomy_form_input"><input type="submit" value="Submit Idea"></li>';
     $output .= '</ul>';
     $output .= '</form>';
@@ -53,13 +53,13 @@ function wp_road_map_new_idea_form_shortcode() {
 
     return $output;
 }
-add_shortcode('new_idea_form', 'wp_road_map_new_idea_form_shortcode');
+add_shortcode('new_idea_form', 'wp_roadmap_new_idea_form_shortcode');
 
 /**
  * Function to handle the submission of the new idea form.
  */
-function wp_road_map_handle_new_idea_submission() {
-    if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['idea_title']) && isset($_POST['wp_road_map_new_idea_nonce']) && wp_verify_nonce($_POST['wp_road_map_new_idea_nonce'], 'wp_road_map_new_idea')) {
+function wp_roadmap_handle_new_idea_submission() {
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['idea_title']) && isset($_POST['wp_roadmap_new_idea_nonce']) && wp_verify_nonce($_POST['wp_roadmap_new_idea_nonce'], 'wp_roadmap_new_idea')) {
         $title = sanitize_text_field($_POST['idea_title']);
         $description = sanitize_textarea_field($_POST['idea_description']);
 
@@ -82,27 +82,27 @@ function wp_road_map_handle_new_idea_submission() {
         exit;
     }
 }
-add_action('template_redirect', 'wp_road_map_handle_new_idea_submission');
+add_action('template_redirect', 'wp_roadmap_handle_new_idea_submission');
 
 /**
  * Shortcode to display ideas.
  *
  * @return string The HTML output for displaying ideas.
  */
-function wp_road_map_display_ideas_shortcode() {
-    global $wp_road_map_ideas_shortcode_loaded;
-    $wp_road_map_ideas_shortcode_loaded = true;
+function wp_roadmap_display_ideas_shortcode() {
+    global $wp_roadmap_ideas_shortcode_loaded;
+    $wp_roadmap_ideas_shortcode_loaded = true;
     ob_start(); // Start output buffering
 
     // Get custom taxonomies excluding 'status'
-    $custom_taxonomies = get_option('wp_road_map_custom_taxonomies', array());
+    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     ?>
-    <div class="wp-road-map-ideas-filter">
+    <div class="wp-roadmap-ideas-filter">
         <?php foreach ($taxonomies as $taxonomy_slug) : 
             $taxonomy = get_taxonomy($taxonomy_slug);
             if ($taxonomy && $taxonomy_slug != 'status') : ?>
-                <div class="wp-road-map-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr($taxonomy_slug); ?>">
+                <div class="wp-roadmap-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr($taxonomy_slug); ?>">
                     <label><?php echo esc_html($taxonomy->labels->singular_name); ?>:</label>
                     <?php
                     $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
@@ -122,7 +122,7 @@ function wp_road_map_display_ideas_shortcode() {
         endforeach; ?>
     </div>
 
-    <div class="wp-road-map-ideas-list">
+    <div class="wp-roadmap-ideas-list">
         <?php
         $args = array(
             'post_type' => 'idea',
@@ -133,7 +133,7 @@ function wp_road_map_display_ideas_shortcode() {
         if ($query->have_posts()) {
             while ($query->have_posts()) : $query->the_post();
                 ?>
-                <div class="wp-road-map-idea">
+                <div class="wp-roadmap-idea">
                     <div class="idea-header">
                         <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                             <?php
@@ -174,16 +174,16 @@ function wp_road_map_display_ideas_shortcode() {
     }
 
 
-add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
+add_shortcode('display_ideas', 'wp_roadmap_display_ideas_shortcode');
 
 /**
  * Shortcode to display the roadmap.
  *
  * @return string The HTML output for displaying the roadmap.
  */
-function wp_road_map_roadmap_shortcode() {
-    global $wp_road_map_roadmap_shortcode_loaded;
-    $wp_road_map_roadmap_shortcode_loaded = true;
+function wp_roadmap_roadmap_shortcode() {
+    global $wp_roadmap_roadmap_shortcode_loaded;
+    $wp_roadmap_roadmap_shortcode_loaded = true;
 
     $output = '<div class="roadmap-grid">';
 
@@ -235,4 +235,4 @@ function wp_road_map_roadmap_shortcode() {
 
     return $output;
 }
-add_shortcode('roadmap', 'wp_road_map_roadmap_shortcode');
+add_shortcode('roadmap', 'wp_roadmap_roadmap_shortcode');

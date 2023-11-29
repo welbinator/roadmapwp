@@ -1,8 +1,8 @@
 jQuery(document).ready(function($) {
     // Listen for changes on checkboxes and radio buttons in the filter
-    $('.wp-road-map-ideas-filter-taxonomy input[type=checkbox], .wp-road-map-ideas-filter-taxonomy input[type=radio]').change(function() {
+    $('.wp-roadmap-ideas-filter-taxonomy input[type=checkbox], .wp-roadmap-ideas-filter-taxonomy input[type=radio]').change(function() {
         var filterData = {};
-        $('.wp-road-map-ideas-filter-taxonomy').each(function() {
+        $('.wp-roadmap-ideas-filter-taxonomy').each(function() {
             var taxonomy = $(this).data('taxonomy');
             var matchType = $('input[name="match_type_' + taxonomy + '"]:checked').val();
             filterData[taxonomy] = {
@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
                 'nonce': wpRoadMapAjax.nonce // Include the nonce for security
             },
             success: function(response) {
-                $('.wp-road-map-ideas-list').html(response);
+                $('.wp-roadmap-ideas-list').html(response);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log('AJAX error:', textStatus, errorThrown); // Log errors for debugging
