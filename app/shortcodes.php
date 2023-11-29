@@ -68,7 +68,7 @@ function wp_roadmap_handle_new_idea_submission() {
         $idea_id = wp_insert_post(array(
             'post_title'    => $title,
             'post_content'  => $description,
-            'post_status'   => 'publish',
+            'post_status'   => 'pending',
             'post_type'     => 'idea',
         ));
 
