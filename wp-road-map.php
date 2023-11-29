@@ -11,11 +11,14 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wp-road-map
 */
 
-global $wp_road_map_shortcode_loaded;
-$wp_road_map_shortcode_loaded = false;
+global $wp_road_map_new_idea_shortcode_loaded;
+$wp_road_map_new_idea_shortcode_loaded = false;
 
 global $wp_road_map_ideas_shortcode_loaded;
 $wp_road_map_ideas_shortcode_loaded = false;
+
+global $wp_road_map_roadmap_shortcode_loaded;
+$wp_road_map_roadmap_shortcode_loaded = false;
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
@@ -33,7 +36,7 @@ function wp_road_map_on_activation() {
     wp_road_map_register_default_taxonomies();
 
     // Now add the terms
-    $status_terms = array('New Idea', 'Maybe', 'On Roadmap', 'Not Now', 'Closed');
+    $status_terms = array('New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed');
     foreach ($status_terms as $term) {
         if (!term_exists($term, 'status')) {
             $result = wp_insert_term($term, 'status');

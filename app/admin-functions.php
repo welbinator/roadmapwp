@@ -1,14 +1,14 @@
 <?php
 
 // check if shortcode exists on page
-function wp_road_map_check_for_shortcode() {
-    global $wp_road_map_shortcode_loaded, $post;
+function wp_road_map_check_for_new_idea_shortcode() {
+    global $wp_road_map_new_idea_shortcode_loaded, $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'new_idea_form')) {
-        $wp_road_map_shortcode_loaded = true;
+        $wp_road_map_new_idea_shortcode_loaded = true;
     }
 }
-add_action('wp', 'wp_road_map_check_for_shortcode');
+add_action('wp', 'wp_road_map_check_for_new_idea_shortcode');
 
 function wp_road_map_check_for_ideas_shortcode() {
     global $wp_road_map_ideas_shortcode_loaded, $post;
@@ -18,6 +18,15 @@ function wp_road_map_check_for_ideas_shortcode() {
     }
 }
 add_action('wp', 'wp_road_map_check_for_ideas_shortcode');
+
+function wp_road_map_check_for_roadmap_shortcode() {
+    global $wp_road_map_roadmap_shortcode_loaded, $post;
+
+    if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'roadmap')) {
+        $wp_road_map_roadmap_shortcode_loaded = true;
+    }
+}
+add_action('wp', 'wp_road_map_check_for_roadmap_shortcode');
 
 // enqueue admin styles
 function wp_road_map_enqueue_admin_styles($hook) {
@@ -40,11 +49,12 @@ add_action('admin_enqueue_scripts', 'wp_road_map_enqueue_admin_styles');
 
 // enqueue front end styles
 function wp_road_map_enqueue_frontend_styles() {
-    global $wp_road_map_shortcode_loaded;
+    global $wp_road_map_new_idea_shortcode_loaded;
     global $wp_road_map_ideas_shortcode_loaded;
+    global $wp_road_map_roadmap_shortcode_loaded;
 
     // Enqueue general frontend styles if needed
-    if ($wp_road_map_shortcode_loaded || $wp_road_map_ideas_shortcode_loaded) {
+    if ( $wp_road_map_new_idea_shortcode_loaded || $wp_road_map_ideas_shortcode_loaded || $wp_road_map_roadmap_shortcode_loaded ) {
         $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-road-map-frontend.css'; 
         wp_enqueue_style('wp-road-map-frontend-styles', $css_url);
     }
@@ -417,8 +427,8 @@ if (!empty($custom_taxonomies)) {
 
 // shortcode to display new idea form 
 function wp_road_map_new_idea_form_shortcode() {
-    global $wp_road_map_shortcode_loaded;
-    $wp_road_map_shortcode_loaded = true;
+    global $wp_road_map_new_idea_shortcode_loaded;
+    $wp_road_map_new_idea_shortcode_loaded = true;
 
     $output = '';
 
@@ -560,6 +570,65 @@ function wp_road_map_display_ideas_shortcode() {
 }
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
+
+// shortcode for displaying roadmap
+function wp_road_map_roadmap_shortcode() {
+    global $wp_road_map_roadmap_shortcode_loaded;
+    $wp_road_map_roadmap_shortcode_loaded = true;
+
+    $output = '<div class="roadmap-grid">';
+
+    // Define the statuses to display in each column
+    $statuses = array('Up Next', 'On Roadmap');
+
+    foreach ($statuses as $status) {
+        // Query for ideas with the current status
+        $args = array(
+            'post_type' => 'idea',
+            'posts_per_page' => -1,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'status',
+                    'field'    => 'name',
+                    'terms'    => $status,
+                ),
+            ),
+        );
+        $query = new WP_Query($args);
+
+        // Column for each status
+        $output .= '<div class="roadmap-column">';
+        $output .= '<h2>' . esc_html($status) . '</h2>';
+
+        if ($query->have_posts()) {
+            while ($query->have_posts()) : $query->the_post();
+                $output .= '<div class="roadmap-idea">';
+                $output .= '<h3 class="idea-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
+                $output .= '<p class="idea-excerpt">' . get_the_excerpt() . '</p>';
+                
+                // Display vote count
+                $vote_count = get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0';
+                $output .= '<div class="idea-vote-box">';
+                $output .= '<div class="idea-vote-count">' . esc_html($vote_count) . '</div>';
+                $output .= '</div>'; // Close vote box
+
+                $output .= '</div>'; // Close idea
+            endwhile;
+        } else {
+            $output .= '<p>No ideas found for ' . esc_html($status) . '.</p>';
+        }
+
+        wp_reset_postdata();
+        $output .= '</div>'; // Close column
+    }
+
+    $output .= '</div>'; // Close grid
+
+    return $output;
+}
+add_shortcode('roadmap', 'wp_road_map_roadmap_shortcode');
+
+
 
 // handle ajax requests for ideas filter
 function wp_road_map_filter_ideas() {

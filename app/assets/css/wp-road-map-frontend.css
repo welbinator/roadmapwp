@@ -52,7 +52,7 @@
     border-radius: 2px;
 }
 
-/* ideas page shortcode */
+/* ideas shortcode */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 5 columns */
@@ -122,6 +122,23 @@
     margin-top: 5px;
     color: #333;
 }
+
+/* roadmap shortcode */
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.roadmap-column {
+    /* Styles for each column */
+}
+
+.roadmap-idea {
+    /* Styles for each idea */
+}
+
+
 
 /* Media query for responsiveness */
 @media screen and (max-width: 768px) {
