@@ -529,17 +529,21 @@ function wp_road_map_display_ideas_shortcode() {
         <?php foreach ($taxonomies as $taxonomy_slug) : 
             $taxonomy = get_taxonomy($taxonomy_slug);
             if ($taxonomy && $taxonomy_slug != 'status') : ?>
-                <div class="wp-road-map-ideas-filter-taxonomy">
-                    <label for="<?php echo esc_attr($taxonomy->name); ?>"><?php echo esc_html($taxonomy->labels->singular_name); ?>:</label>
-                    <select id="<?php echo esc_attr($taxonomy->name); ?>" class="wp-road-map-ideas-filter-select">
-                        <option value=""><?php echo esc_html__('All', 'wp-road-map'); ?></option>
-                        <?php
-                        $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
-                        foreach ($terms as $term) {
-                            echo '<option value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</option>';
-                        }
-                        ?>
-                    </select>
+                <div class="wp-road-map-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr($taxonomy_slug); ?>">
+                    <label><?php echo esc_html($taxonomy->labels->singular_name); ?>:</label>
+                    <?php
+                    $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
+                    foreach ($terms as $term) {
+                        echo '<label class="taxonomy-term-label">';
+                        echo '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->slug) . '"> ';
+                        echo esc_html($term->name);
+                        echo '</label>';
+                    }
+                    ?>
+                    <div class="filter-match-type">
+                        <label><input type="radio" name="match_type_<?php echo esc_attr($taxonomy->name); ?>" value="any" checked> Any</label>
+                        <label><input type="radio" name="match_type_<?php echo esc_attr($taxonomy->name); ?>" value="all"> All</label>
+                    </div>
                 </div>
             <?php endif; 
         endforeach; ?>
@@ -560,7 +564,6 @@ function wp_road_map_display_ideas_shortcode() {
                     <div class="idea-header">
                         <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                         <p class="idea-meta">Posted on: <?php the_date(); ?></p>
-                        <!-- Voting box -->
                         <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
                             <button class="idea-vote-button">^</button>
                             <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
@@ -582,6 +585,7 @@ function wp_road_map_display_ideas_shortcode() {
     <?php
     return ob_get_clean(); // Return the buffered output
 }
+
 
 add_shortcode('display_ideas', 'wp_road_map_display_ideas_shortcode');
 
@@ -649,22 +653,36 @@ function wp_road_map_filter_ideas() {
     check_ajax_referer('wp-road-map-vote-nonce', 'nonce');
 
     $filter_data = $_POST['filter_data'];
-    $args = array(
-        'post_type' => 'idea',
-        'posts_per_page' => -1 // Adjust as needed
-    );
+    $tax_query = array();
 
-    if (!empty($filter_data)) {
-        $tax_query = array('relation' => 'AND');
-        foreach ($filter_data as $taxonomy => $term_slug) {
+    foreach ($filter_data as $taxonomy => $data) {
+        if (!empty($data['terms'])) {
             $tax_query[] = array(
                 'taxonomy' => $taxonomy,
                 'field'    => 'slug',
-                'terms'    => $term_slug
+                'terms'    => $data['terms'],
+                'operator' => ($data['matchType'] === 'all') ? 'AND' : 'IN'
             );
         }
-        $args['tax_query'] = $tax_query;
     }
+
+    // Adjust relation based on match type
+    $relation = 'OR';
+    foreach ($filter_data as $data) {
+        if (isset($data['matchType']) && $data['matchType'] === 'all') {
+            $relation = 'AND';
+            break;
+        }
+    }
+    if (count($tax_query) > 1) {
+        $tax_query['relation'] = $relation;
+    }
+
+    $args = array(
+        'post_type' => 'idea',
+        'posts_per_page' => -1,
+        'tax_query' => $tax_query
+    );
 
     $query = new WP_Query($args);
 
@@ -675,8 +693,6 @@ function wp_road_map_filter_ideas() {
                 <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                 <p class="idea-meta">Posted on: <?php the_date(); ?></p>
                 <p class="idea-excerpt"><?php the_excerpt(); ?></p>
-
-                <!-- Voting box -->
                 <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
                     <button class="idea-vote-button">^</button>
                     <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
@@ -691,6 +707,7 @@ function wp_road_map_filter_ideas() {
     wp_reset_postdata();
     wp_die();
 }
+
 
 
 add_action('wp_ajax_filter_ideas', 'wp_road_map_filter_ideas');

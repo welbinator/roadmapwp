@@ -1,12 +1,17 @@
 jQuery(document).ready(function($) {
-    $('.wp-road-map-ideas-filter-select').change(function() {
+    // Listen for changes on checkboxes and radio buttons in the filter
+    $('.wp-road-map-ideas-filter-taxonomy input[type=checkbox], .wp-road-map-ideas-filter-taxonomy input[type=radio]').change(function() {
         var filterData = {};
-        $('.wp-road-map-ideas-filter-select').each(function() {
-            var taxonomy = $(this).attr('id');
-            var term = $(this).val();
-            if (term) {
-                filterData[taxonomy] = term;
-            }
+        $('.wp-road-map-ideas-filter-taxonomy').each(function() {
+            var taxonomy = $(this).data('taxonomy');
+            var matchType = $('input[name="match_type_' + taxonomy + '"]:checked').val();
+            filterData[taxonomy] = {
+                'terms': [],
+                'matchType': matchType
+            };
+            $(this).find('input[type=checkbox]:checked').each(function() {
+                filterData[taxonomy]['terms'].push($(this).val());
+            });
         });
 
         $.ajax({
