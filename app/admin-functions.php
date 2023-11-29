@@ -49,20 +49,30 @@ add_action('admin_enqueue_scripts', 'wp_road_map_enqueue_admin_styles');
 
 // enqueue front end styles
 function wp_road_map_enqueue_frontend_styles() {
-    global $wp_road_map_new_idea_shortcode_loaded;
-    global $wp_road_map_ideas_shortcode_loaded;
-    global $wp_road_map_roadmap_shortcode_loaded;
+    // Declare the global variables
+    global $wp_road_map_new_idea_shortcode_loaded, $wp_road_map_ideas_shortcode_loaded, $wp_road_map_roadmap_shortcode_loaded;
 
-    // Enqueue general frontend styles if needed
-    if ( $wp_road_map_new_idea_shortcode_loaded || $wp_road_map_ideas_shortcode_loaded || $wp_road_map_roadmap_shortcode_loaded ) {
+    // Consolidate the shortcode load states into an array
+    $wp_road_map_shortcodes_loaded = array(
+        $wp_road_map_new_idea_shortcode_loaded,
+        $wp_road_map_ideas_shortcode_loaded,
+        $wp_road_map_roadmap_shortcode_loaded,
+        // Add more shortcode flags here as needed
+    );
+
+    // Check if any of the shortcodes are loaded
+    if (in_array(true, $wp_road_map_shortcodes_loaded, true) || is_singular('idea') ) {
+        error_log('new idea' . $wp_road_map_new_idea_shortcode_loaded);
+        error_log('ideas' . $wp_road_map_ideas_shortcode_loaded);
+        error_log('roadmap' . $wp_road_map_roadmap_shortcode_loaded);
         $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-road-map-frontend.css'; 
         wp_enqueue_style('wp-road-map-frontend-styles', $css_url);
     }
 
     // Always check and enqueue style for 'idea' CPT
-    if (is_singular('idea')) {
-        wp_enqueue_style('wp-road-map-idea-style', plugin_dir_url(__FILE__) . 'assets/css/idea-style.css');
-    }
+    // if (is_singular('idea')) {
+    //     wp_enqueue_style('wp-road-map-idea-style', plugin_dir_url(__FILE__) . 'assets/css/idea-style.css');
+    // }
 
     wp_enqueue_script('wp-road-map-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
     wp_localize_script('wp-road-map-voting', 'wpRoadMapVoting', array(
@@ -547,16 +557,20 @@ function wp_road_map_display_ideas_shortcode() {
             while ($query->have_posts()) : $query->the_post();
                 ?>
                 <div class="wp-road-map-idea">
-                    <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                    <p class="idea-meta">Posted on: <?php the_date(); ?></p>
-                    <p class="idea-excerpt"><?php the_excerpt(); ?></p>
-
-                    <!-- Voting box -->
-                    <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
-                        <button class="idea-vote-button">^</button>
-                        <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
+                    <div class="idea-header">
+                        <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <p class="idea-meta">Posted on: <?php the_date(); ?></p>
+                        <!-- Voting box -->
+                        <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+                            <button class="idea-vote-button">^</button>
+                            <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
+                        </div>
+                    </div>
+                    <div class="idea-body">
+                        <p class="idea-excerpt"><?php the_excerpt(); ?></p>
                     </div>
                 </div>
+                <hr class="idea-divider" />
                 <?php
             endwhile;
         } else {

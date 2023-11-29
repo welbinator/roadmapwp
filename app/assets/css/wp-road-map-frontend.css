@@ -67,6 +67,15 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+.wp-road-map-ideas-filter {
+    display: flex;
+    gap: 50px;
+    margin-block: 50px;
+}
+
+.wp-road-map-idea {
+    position: relative;
+}
 .card {
     text-align: center;
 }
@@ -96,30 +105,39 @@
     font-size: 16px;
     margin-top: 10px;
 }
+.idea-header {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
 .idea-vote-box {
     text-align: center;
-    width: 25px;
-    height: 50px;
+    width: 50px;
+    height: auto;
     border: 1px solid #ddd;
     padding: 10px;
-    margin-top: 10px;
-    background-color: #f8f8f8;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .idea-vote-button {
     border: none;
     background: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 0px;
     font-size: 20px;
     color: #333;
     display: block;
-    margin: 0 auto;
 }
 
 .idea-vote-count {
     font-size: 16px;
-    margin-top: 5px;
+    /* margin-top: 5px; */
     color: #333;
 }
 
