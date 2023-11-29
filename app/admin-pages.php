@@ -37,10 +37,12 @@ function wp_roadmap_taxonomies_page() {
 
     $pro_feature = apply_filters('wp_roadmap_pro_add_taxonomy_feature', '');
 
+    echo '<h2>Add Custom Taxonomy</h2>';
+
     if ($pro_feature) {
         echo $pro_feature;
     } else {
-        echo '<p>Trying to add a custom taxonomy? This is a Pro feature.</p>';
+        echo '<p>Adding custom taxonomies is a Pro feature</p>';
     }
 
 
