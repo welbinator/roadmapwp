@@ -28,9 +28,6 @@ require_once plugin_dir_path( __FILE__ ) . 'app/admin-functions.php';
 // Include Custom Post Type definition
 require_once plugin_dir_path( __FILE__ ) . 'app/cpt-ideas.php';
 
-// Include initialization functions
-require_once plugin_dir_path( __FILE__ ) . 'init.php';
-
 // Include ajax hanlders
 require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
 
