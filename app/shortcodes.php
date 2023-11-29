@@ -133,34 +133,37 @@ function wp_roadmap_display_ideas_shortcode() {
         if ($query->have_posts()) {
             while ($query->have_posts()) : $query->the_post();
                 ?>
-                <div class="wp-roadmap-idea">
-                    <div class="idea-header">
-                        <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                            <?php
-                            // Fetch and display terms for the idea
-                            $terms = wp_get_post_terms(get_the_ID(), get_object_taxonomies('idea'));
-                            if (!empty($terms) && !is_wp_error($terms)) {
-                                echo '<div class="idea-terms">';
-                                foreach ($terms as $term) {
-                                    $term_link = get_term_link($term);
-                                    if (!is_wp_error($term_link)) {
-                                        echo '<a href="' . esc_url($term_link) . '">' . esc_html($term->name) . '</a> ';
-                                    }
-                                }
-                                echo '</div>';
-                            }
-                            ?>
-                        
-                        <p class="idea-meta">Posted on: <?php the_date(); ?></p>
-                        <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+                <article class="wp-roadmap-idea">
+                    <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
                             <button class="idea-vote-button">^</button>
                             <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
+                    </div>
+                    <div class="idea-wrapper">
+                        <div class="idea-header">
+                            <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <?php
+                                // Fetch and display terms for the idea
+                                $terms = wp_get_post_terms(get_the_ID(), get_object_taxonomies('idea'));
+                                if (!empty($terms) && !is_wp_error($terms)) {
+                                    echo '<div class="idea-terms">';
+                                    foreach ($terms as $term) {
+                                        $term_link = get_term_link($term);
+                                        if (!is_wp_error($term_link)) {
+                                            echo '<a href="' . esc_url($term_link) . '">' . esc_html($term->name) . '</a> ';
+                                        }
+                                    }
+                                    echo '</div>';
+                                }
+                                ?>
+                            
+                            <p class="idea-meta">Posted on: <?php the_date(); ?></p>
+                            
+                        </div>
+                        <div class="idea-body">
+                            <p class="idea-excerpt"><?php the_excerpt(); ?></p>
                         </div>
                     </div>
-                    <div class="idea-body">
-                        <p class="idea-excerpt"><?php the_excerpt(); ?></p>
-                    </div>
-                </div>
+                </article>
                 <hr class="idea-divider" />
                 <?php
             endwhile;

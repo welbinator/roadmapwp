@@ -81,15 +81,21 @@ function wp_roadmap_filter_ideas() {
     if ($query->have_posts()) {
         while ($query->have_posts()) : $query->the_post();
             ?>
-            <div class="wp-roadmap-idea">
-                <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                <p class="idea-meta">Posted on: <?php the_date(); ?></p>
-                <p class="idea-excerpt"><?php the_excerpt(); ?></p>
+            <article class="wp-roadmap-idea">
                 <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
                     <button class="idea-vote-button">^</button>
                     <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
                 </div>
-            </div>
+                <div class="idea-wrapper">
+                    <div class="idea-header">
+                        <h3 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <p class="idea-meta">Posted on: <?php the_date(); ?></p>
+                    </div>
+                    <div class="idea-body">
+                        <p class="idea-excerpt"><?php the_excerpt(); ?></p>
+                    </div>
+                </div>
+            </article>
             <?php
         endwhile;
     } else {

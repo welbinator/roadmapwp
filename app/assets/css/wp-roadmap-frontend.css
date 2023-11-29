@@ -110,15 +110,18 @@
     width: 100%;
     max-width: 500px;
 }
+.idea-wrapper {
+    padding-left: 130px;
+}
 .idea-vote-box {
     text-align: center;
-    width: 50px;
+    width: 100px;
     height: auto;
     border: 1px solid #ddd;
     padding: 10px;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
