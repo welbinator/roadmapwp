@@ -175,6 +175,7 @@ add_action('admin_init', 'wp_roadmap_register_settings');
 function wp_roadmap_filter_comments_open($open, $post_id) {
     $post = get_post($post_id);
     $options = get_option('wp_roadmap_settings');
+     
     if ($post->post_type == 'idea') {
         return isset($options['allow_comments']) && $options['allow_comments'] == 1;
     }

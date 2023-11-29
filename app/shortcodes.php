@@ -71,7 +71,6 @@ function wp_roadmap_handle_new_idea_submission() {
         // Retrieve the default status from Pro plugin settings
         $default_idea_status = isset($pro_options['default_idea_status']) ? $pro_options['default_idea_status'] : 'pending';
 
-        error_log('Default Post Status: ' . $default_idea_status); // Check the error log to see the output
         $idea_id = wp_insert_post(array(
             'post_title'    => $title,
             'post_content'  => $description,
@@ -230,11 +229,7 @@ function wp_roadmap_roadmap_shortcode() {
                 $output .= '<h3 class="idea-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
                 $output .= '<p class="idea-excerpt">' . get_the_excerpt() . '</p>';
                 
-                // Display vote count
-                // $vote_count = get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0';
-                // $output .= '<div class="idea-vote-box">';
-                // $output .= '<div class="idea-vote-count">' . esc_html($vote_count) . '</div>';
-                // $output .= '</div>'; // Close vote box
+                
 
                 $output .= '</div>'; // Close idea
             endwhile;

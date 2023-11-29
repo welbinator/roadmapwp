@@ -129,8 +129,8 @@ article.wp-roadmap-idea {
 }
 .idea-vote-box {
     text-align: center;
-    width: 100px;
-    height: auto;
+    width: 75px;
+    height: 75px;
     border: 1px solid #ddd;
     padding: 10px;
     position: absolute;

@@ -5,6 +5,7 @@
 function wp_roadmap_settings_page() {
     // Fetch current settings
     $options = get_option('wp_roadmap_settings');
+     
     $allow_comments = isset($options['allow_comments']) ? $options['allow_comments'] : '';
 
     ?>
@@ -34,6 +35,15 @@ function wp_roadmap_settings_page() {
                         ?>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Choose Idea Template', 'wp-roadmap'); ?></th>
+                    <td>
+                        <?php
+                        // Filter hook to allow the Pro version to override this setting
+                        echo apply_filters('wp_roadmap_choose_idea_template_setting', '<p>' . esc_html__('Choosing a custom idea template is a pro feature', 'wp-roadmap') . '</p>');
+                        ?>
+                    </td>
+                </tr>
             </table>
 
             <?php submit_button(); ?>
@@ -41,8 +51,6 @@ function wp_roadmap_settings_page() {
     </div>
     <?php
 }
-
-
 
 /**
  * Function to display the Taxonomies management page.
@@ -81,20 +89,13 @@ function wp_roadmap_taxonomies_page() {
 
     // Display default taxonomy/taxonomies
     echo '<h2>Tags</h2>';
-    
-    // Form for adding new tags
-    echo '<form action="' . esc_url(admin_url('admin.php?page=wp-roadmap-taxonomies')) . '" method="post">';
-    echo '<input type="text" name="new_idea_tag" placeholder="New Tag" />';
-    echo '<input type="hidden" name="taxonomy_slug" value="idea-tag" />';
-    echo '<input type="submit" value="Add Tag" />';
-    echo wp_nonce_field('add_term_to_idea_tag', 'wp_roadmap_add_term_nonce');
-    echo '</form>';
 
     // Display existing tags
     $idea_tags = get_terms(array(
         'taxonomy' => 'idea-tag',
         'hide_empty' => false,
     ));
+
     if (!empty($idea_tags) && !is_wp_error($idea_tags)) {
         echo '<ul class="terms-list">';
         foreach ($idea_tags as $idea_tag) {
@@ -104,4 +105,12 @@ function wp_roadmap_taxonomies_page() {
     } else {
         echo '<p>No tags found.</p>';
     }
+
+     // Form for adding new tags
+     echo '<form action="' . esc_url(admin_url('admin.php?page=wp-roadmap-taxonomies')) . '" method="post">';
+     echo '<input type="text" name="new_idea_tag" placeholder="New Tag" />';
+     echo '<input type="hidden" name="taxonomy_slug" value="idea-tag" />';
+     echo '<input type="submit" value="Add Tag" />';
+     echo wp_nonce_field('add_term_to_idea_tag', 'wp_roadmap_add_term_nonce');
+     echo '</form>';
 }

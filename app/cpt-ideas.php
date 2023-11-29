@@ -3,6 +3,7 @@
 // Function to register the custom post type
 function wp_roadmap_register_post_type() {
     $options = get_option('wp_roadmap_settings');
+     
     $supports = array('title', 'editor', 'author'); // include 'comments' support
 
 
