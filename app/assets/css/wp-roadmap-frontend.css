@@ -1,13 +1,4 @@
 /* new idea form */
-.new_taxonomy_form__frontend {
-    width: 80%;
-    max-width: 1200px;
-}
-
-.new_taxonomy_form__frontend * {
-    box-sizing: border-box;
-}
-
 .flex-outer {
     list-style-type: none;
     padding: 0;
@@ -20,22 +11,17 @@
 .flex-outer li {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .flex-outer>li:not(:last-child) {
     margin-bottom: 20px;
 }
 
-.flex-outer li label,
-.flex-outer li p {
-    padding: 8px;
-}
-
 .flex-outer>li>label,
 .flex-outer li p {
     flex: 1 0 120px;
-    max-width: 220px;
+    max-width: 140px;
 }
 
 .flex-outer>li>label+* {
@@ -51,8 +37,23 @@
     padding: 8px 16px;
     border-radius: 2px;
 }
-
+.new_idea_form_input input {
+    border-radius: 5px;
+}
+.new_idea_form_input textarea {
+    min-height: 200px;
+    border-radius: 5px;
+}
 /* ideas shortcode */
+h3.idea-title a {
+    text-decoration: none!important;
+}
+article.wp-roadmap-idea {
+    box-shadow: 0px 0px 18px #c9c9c966;
+    margin-block: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 5 columns */
@@ -68,14 +69,27 @@
 }
 
 .wp-roadmap-ideas-filter {
-    display: flex;
-    gap: 50px;
     margin-block: 50px;
+}
+.wp-roadmap-ideas-filter-taxonomy {
+    padding: 30px;
+}
+.taxonomy-term-label {
+    padding: 10px;
+}
+
+.filter-match-type {
+    margin-top: 10px;
 }
 
 .wp-roadmap-idea {
     position: relative;
 }
+
+.wp-roadmap-ideas-list {
+    padding: 30px;
+}
+
 .card {
     text-align: center;
 }
@@ -120,8 +134,9 @@
     border: 1px solid #ddd;
     padding: 10px;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;

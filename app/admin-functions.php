@@ -81,10 +81,15 @@ function wp_roadmap_enqueue_frontend_styles() {
         $wp_roadmap_roadmap_shortcode_loaded,
     );
 
-    // Enqueue styles if any shortcode is loaded
+    // Enqueue Tailwind CSS styles if any shortcode is loaded
     if (in_array(true, $wp_roadmap_shortcodes_loaded, true) || is_singular('idea')) {
-        $css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-roadmap-frontend.css'; 
-        wp_enqueue_style('wp-roadmap-frontend-styles', $css_url);
+        // Enqueue Tailwind CSS
+        $tailwind_css_url = plugin_dir_url(__FILE__) . '../dist/styles.css';
+        wp_enqueue_style('wp-roadmap-tailwind-styles', $tailwind_css_url);
+
+        // Enqueue your custom frontend styles (this will override Tailwind styles where applicable)
+        $custom_css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-roadmap-frontend.css';
+        wp_enqueue_style('wp-roadmap-frontend-styles', $custom_css_url);
     }
 
     // Enqueue scripts and localize them
@@ -100,6 +105,7 @@ function wp_roadmap_enqueue_frontend_styles() {
         'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
     ));
 }
+
 add_action('wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles');
 
 /**

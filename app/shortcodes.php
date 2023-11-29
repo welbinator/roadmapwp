@@ -14,12 +14,14 @@ function wp_roadmap_new_idea_form_shortcode() {
         $output .= '<p>Thank you for your submission!</p>';
     }
     
-    $output .= '<div class="new_taxonomy_form__frontend">';
+    
+    $output .= '<div class="new_idea_form__frontend">';
+    $output .= '<h2>Submit new Idea</h2>';
     $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     $output .= '<ul class="flex-outer">';
-    $output .= '<li class="new_taxonomy_form_input"><label for="idea_title">Title:</label>';
+    $output .= '<li class="new_idea_form_input"><label for="idea_title">Title:</label>';
     $output .= '<input type="text" name="idea_title" id="idea_title" required></li>';
-    $output .= '<li class="new_taxonomy_form_input"><label for="idea_description">Description:</label>';
+    $output .= '<li class="new_idea_form_input"><label for="idea_description">Description:</label>';
     $output .= '<textarea name="idea_description" id="idea_description" required></textarea></li>';
 
     $taxonomies = get_object_taxonomies('idea', 'objects');
@@ -28,7 +30,7 @@ function wp_roadmap_new_idea_form_shortcode() {
             $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
             if (!empty($terms) && !is_wp_error($terms)) {
-                $output .= '<li class="new_taxonomy_form_input">';
+                $output .= '<li class="new_idea_form_input">';
                 $output .= '<label>' . esc_html($taxonomy->labels->singular_name) . ':</label>';
                 $output .= '<div class="taxonomy-checkboxes">';
 
@@ -46,7 +48,7 @@ function wp_roadmap_new_idea_form_shortcode() {
     }
 
     $output .= wp_nonce_field('wp_roadmap_new_idea', 'wp_roadmap_new_idea_nonce');
-    $output .= '<li class="new_taxonomy_form_input"><input type="submit" value="Submit Idea"></li>';
+    $output .= '<li class="new_idea_form_input"><input type="submit" value="Submit Idea"></li>';
     $output .= '</ul>';
     $output .= '</form>';
     $output .= '</div>';
@@ -98,7 +100,9 @@ function wp_roadmap_display_ideas_shortcode() {
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     ?>
+    
     <div class="wp-roadmap-ideas-filter">
+    <h2>Browse Ideas</h2>
         <?php foreach ($taxonomies as $taxonomy_slug) : 
             $taxonomy = get_taxonomy($taxonomy_slug);
             if ($taxonomy && $taxonomy_slug != 'status') : ?>
@@ -164,7 +168,7 @@ function wp_roadmap_display_ideas_shortcode() {
                         </div>
                     </div>
                 </article>
-                <hr class="idea-divider" />
+                
                 <?php
             endwhile;
         } else {
