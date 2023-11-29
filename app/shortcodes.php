@@ -65,10 +65,17 @@ function wp_roadmap_handle_new_idea_submission() {
         $title = sanitize_text_field($_POST['idea_title']);
         $description = sanitize_textarea_field($_POST['idea_description']);
 
+        // Get the default post status option from the settings
+        // Fetch Pro plugin settings
+        $pro_options = get_option('wp_roadmap_pro_settings', []);
+        // Retrieve the default status from Pro plugin settings
+        $default_idea_status = isset($pro_options['default_idea_status']) ? $pro_options['default_idea_status'] : 'pending';
+
+        error_log('Default Post Status: ' . $default_idea_status); // Check the error log to see the output
         $idea_id = wp_insert_post(array(
             'post_title'    => $title,
             'post_content'  => $description,
-            'post_status'   => 'pending',
+            'post_status'   => $default_idea_status, // Use the default post status
             'post_type'     => 'idea',
         ));
 
@@ -85,6 +92,7 @@ function wp_roadmap_handle_new_idea_submission() {
     }
 }
 add_action('template_redirect', 'wp_roadmap_handle_new_idea_submission');
+
 
 /**
  * Shortcode to display ideas.

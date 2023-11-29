@@ -15,19 +15,34 @@ function wp_roadmap_settings_page() {
             settings_fields('wp_roadmap_settings');
             do_settings_sections('wp_roadmap_settings');
             ?>
+
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row">Allow Comments on Ideas</th>
+                    <th scope="row"><?php esc_html_e('Allow Comments on Ideas', 'wp-roadmap'); ?></th>
                     <td>
                         <input type="checkbox" name="wp_roadmap_settings[allow_comments]" value="1" <?php checked(1, $allow_comments); ?>/>
                     </td>
                 </tr>
+                
+                <!-- Default Status Setting -->
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Set New Idea Default Status', 'wp-roadmap'); ?></th>
+                    <td>
+                        <?php
+                        // Filter hook to allow the Pro version to override this setting
+                        echo apply_filters('wp_roadmap_default_idea_status_setting', '<p>' . esc_html__('Setting a default status is a pro feature', 'wp-roadmap') . '</p>');
+                        ?>
+                    </td>
+                </tr>
             </table>
+
             <?php submit_button(); ?>
         </form>
     </div>
     <?php
 }
+
+
 
 /**
  * Function to display the Taxonomies management page.
