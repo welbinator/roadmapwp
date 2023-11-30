@@ -103,9 +103,11 @@ function wp_roadmap_display_ideas_shortcode() {
     $wp_roadmap_ideas_shortcode_loaded = true;
     ob_start(); // Start output buffering
 
-    // Get custom taxonomies excluding 'status'
+    // Custom taxonomies excluding 'status'
+    $exclude_taxonomies = array('status');
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
+    $taxonomies = array_diff($taxonomies, $exclude_taxonomies); // Exclude 'status' taxonomy
     ?>
     
     <div class="wp-roadmap-ideas-filter">
@@ -153,8 +155,8 @@ function wp_roadmap_display_ideas_shortcode() {
                         <div class="idea-header">
                             <h4 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                                 <?php
-                                // Fetch and display terms for the idea
-                                $terms = wp_get_post_terms(get_the_ID(), get_object_taxonomies('idea'));
+                                // Fetch and display terms for the idea, excluding 'status' taxonomy
+                                $terms = wp_get_post_terms(get_the_ID(), $taxonomies);
                                 if (!empty($terms) && !is_wp_error($terms)) {
                                     echo '<div class="idea-terms">';
                                     foreach ($terms as $term) {
