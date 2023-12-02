@@ -60,6 +60,15 @@ function wp_roadmap_settings_page() {
                         ?>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Hide Display Ideas Heading', 'wp-roadmap'); ?></th>
+                    <td>
+                        <?php
+                        // Filter hook to allow the Pro version to override this setting
+                        echo apply_filters('wp_roadmap_hide_display_ideas_heading_setting', '<p>' . esc_html__('Hiding the display ideas heading is a pro feature', 'wp-roadmap') . '</p>');
+                        ?>
+                    </td>
+                </tr>
             </table>
 
             <?php submit_button(); ?>

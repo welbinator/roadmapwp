@@ -15,12 +15,12 @@ function wp_roadmap_new_idea_form_shortcode() {
     }
     
     // Check if the pro version is installed and settings are enabled
-    $hide_heading = apply_filters('wp_roadmap_hide_custom_idea_heading', false);
-    $new_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
+    $hide_submit_idea_heading = apply_filters('wp_roadmap_hide_custom_idea_heading', false);
+    $new_submit_idea_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
     
     $output .= '<div class="new_idea_form__frontend">';
-    if (!$hide_heading) {
-        $output .= '<h2>' . esc_html($new_heading) . '</h2>';
+    if (!$hide_submit_idea_heading) {
+        $output .= '<h2>' . esc_html($new_submit_idea_heading) . '</h2>';
     }
     $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     $output .= '<ul class="flex-outer">';
@@ -113,10 +113,18 @@ function wp_roadmap_display_ideas_shortcode() {
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     $taxonomies = array_diff($taxonomies, $exclude_taxonomies); // Exclude 'status' taxonomy
+
+     // Check if the pro version is installed and settings are enabled
+     $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
+     $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
+     
+     $output = '<h2>' . esc_html($new_display_ideas_heading) . '</h2>';
+     if (!$hide_display_ideas_heading) {
+        echo $output;
+        
+     }
     ?>
     
-    <div class="wp-roadmap-ideas-filter">
-    <h2>Browse Ideas</h2>
         <?php foreach ($taxonomies as $taxonomy_slug) : 
             $taxonomy = get_taxonomy($taxonomy_slug);
             if ($taxonomy && $taxonomy_slug != 'status') : ?>
