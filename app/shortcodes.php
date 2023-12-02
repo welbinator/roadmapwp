@@ -16,7 +16,7 @@ function wp_roadmap_new_idea_form_shortcode() {
     
     // Check if the pro version is installed and settings are enabled
     $hide_heading = apply_filters('wp_roadmap_hide_new_idea_heading', false);
-    $new_heading = apply_filters('wp_roadmap_new_idea_heading_text', 'Submit new Idea');
+    $new_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
     
     $output .= '<div class="new_idea_form__frontend">';
     if (!$hide_heading) {
