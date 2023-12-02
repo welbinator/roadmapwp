@@ -56,7 +56,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_hide_new_idea_heading_setting', '<p>' . esc_html__('Hiding the new idea heading is a pro feature', 'wp-roadmap') . '</p>');
+                        echo apply_filters('wp_roadmap_hide_custom_idea_heading_setting', '<p>' . esc_html__('Hiding the new idea heading is a pro feature', 'wp-roadmap') . '</p>');
                         ?>
                     </td>
                 </tr>
