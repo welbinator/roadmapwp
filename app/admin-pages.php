@@ -52,7 +52,7 @@ function wp_roadmap_settings_page() {
 
                 <!-- Hide New Idea Heading Setting -->
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Hide New Idea Heading', 'wp-roadmap'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom "Submit Idea" Heading', 'wp-roadmap'); ?></th>
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
@@ -61,7 +61,7 @@ function wp_roadmap_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Hide Display Ideas Heading', 'wp-roadmap'); ?></th>
+                    <th scope="row"><?php esc_html_e('Custom "Browse Ideas" Heading', 'wp-roadmap'); ?></th>
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
