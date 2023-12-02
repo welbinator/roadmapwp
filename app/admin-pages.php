@@ -12,6 +12,11 @@ function wp_roadmap_settings_page() {
     <div class="wrap">
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="options.php" method="post">
+        <?php
+        settings_fields('wp_roadmap_settings');
+        do_settings_sections('wp_roadmap_settings');
+        wp_nonce_field('wp_roadmap_pro_settings_action', 'wp_roadmap_pro_settings_nonce');
+        ?>
             <?php
             settings_fields('wp_roadmap_settings');
             do_settings_sections('wp_roadmap_settings');
