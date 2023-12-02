@@ -44,6 +44,17 @@ function wp_roadmap_settings_page() {
                         ?>
                     </td>
                 </tr>
+
+                <!-- Hide New Idea Heading Setting -->
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Hide New Idea Heading', 'wp-roadmap'); ?></th>
+                    <td>
+                        <?php
+                        // Filter hook to allow the Pro version to override this setting
+                        echo apply_filters('wp_roadmap_hide_new_idea_heading_setting', '<p>' . esc_html__('Hiding the new idea heading is a pro feature', 'wp-roadmap') . '</p>');
+                        ?>
+                    </td>
+                </tr>
             </table>
 
             <?php submit_button(); ?>
@@ -51,6 +62,7 @@ function wp_roadmap_settings_page() {
     </div>
     <?php
 }
+
 
 /**
  * Function to display the Taxonomies management page.

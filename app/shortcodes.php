@@ -14,9 +14,13 @@ function wp_roadmap_new_idea_form_shortcode() {
         $output .= '<p>Thank you for your submission!</p>';
     }
     
+    // Check if the pro version is installed and the setting is enabled
+    $hide_heading = apply_filters('wp_roadmap_hide_new_idea_heading', false);
     
     $output .= '<div class="new_idea_form__frontend">';
-    $output .= '<h2>Submit new Idea</h2>';
+    if (!$hide_heading) {
+        $output .= '<h2>Submit new Idea</h2>';
+    }
     $output .= '<form action="' . esc_url($_SERVER['REQUEST_URI']) . '" method="post">';
     $output .= '<ul class="flex-outer">';
     $output .= '<li class="new_idea_form_input"><label for="idea_title">Title:</label>';
