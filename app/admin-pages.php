@@ -36,7 +36,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_default_idea_status_setting', '<p>' . esc_html__('Setting a default status is a pro feature', 'wp-roadmap') . '</p>');
+                        echo apply_filters('wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -45,7 +45,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_choose_idea_template_setting', '<p>' . esc_html__('Choosing a custom idea template is a pro feature', 'wp-roadmap') . '</p>');
+                        echo apply_filters('wp_roadmap_choose_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -56,7 +56,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_hide_custom_idea_heading_setting', '<p>' . esc_html__('Hiding the new idea heading is a pro feature', 'wp-roadmap') . '</p>');
+                        echo apply_filters('wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_hide_display_ideas_heading_setting', '<p>' . esc_html__('Hiding the display ideas heading is a pro feature', 'wp-roadmap') . '</p>');
+                        echo apply_filters('wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -91,7 +91,7 @@ function wp_roadmap_taxonomies_page() {
     if ($pro_feature) {
         echo $pro_feature;
     } else {
-        echo '<p>Adding custom taxonomies is a Pro feature</p>';
+        echo '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>';
     }
 
 
