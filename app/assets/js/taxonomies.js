@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (response.success) {
-                    // Reload the page or update the UI as needed
+                    window.location.reload(); // Reload the page
                 } else {
                     alert('Error: ' + response.data.message);
                 }
