@@ -139,4 +139,5 @@ function wp_roadmap_taxonomies_page() {
      echo '<input type="submit" value="Add Tag" />';
      echo wp_nonce_field('add_term_to_idea_tag', 'wp_roadmap_add_term_nonce');
      echo '</form>';
+     
 }

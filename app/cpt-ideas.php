@@ -133,9 +133,9 @@ add_action('save_post_idea', 'wp_roadmap_auto_assign_new_idea_status', 10, 3);
 function wp_roadmap_register_custom_taxonomies() {
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
 
-    foreach ($custom_taxonomies as $taxonomy_name => $taxonomy_data) {
-        if (!taxonomy_exists($taxonomy_name)) {
-            register_taxonomy($taxonomy_name, 'idea', $taxonomy_data);
+    foreach ($custom_taxonomies as $taxonomy_slug => $taxonomy_data) {
+        if (!taxonomy_exists($taxonomy_slug)) {
+            register_taxonomy($taxonomy_slug, 'idea', $taxonomy_data);
         }
     }
 }
