@@ -102,12 +102,14 @@ function wp_roadmap_taxonomies_page() {
     }
     $pro_feature = apply_filters('wp_roadmap_pro_add_taxonomy_feature', '');
 
-    echo '<h2>Add Custom Taxonomy?</h2>';
+    echo '<h2>Add Custom Taxonomy</h2>';
 
     if ($pro_feature) {
         echo $pro_feature;
+        echo '<h2>Existing Taxonomies</h2>';
     } else {
         echo '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>';
+        echo '<h2>Existing Taxonomies</h2>';
     }
 
     $taxonomies = get_taxonomies(array('object_type' => array('idea')), 'objects');
@@ -118,12 +120,11 @@ function wp_roadmap_taxonomies_page() {
             continue;
         }
 
-        echo '<h2>' . esc_html($taxonomy->labels->name) . '</h2>';
+        echo '<h3>' . esc_html($taxonomy->labels->name) . '</h3>';
 
         if (array_key_exists($taxonomy->name, $custom_taxonomies)) {
             echo '<ul><li data-taxonomy-slug="' . esc_attr($taxonomy->name) . '">';
-            echo esc_html($taxonomy->labels->singular_name);
-            echo ' - <a href="#" class="delete-taxonomy" data-taxonomy="' . esc_attr($taxonomy->name) . '">Delete</a>';
+            echo '<a href="#" class="delete-taxonomy" data-taxonomy="' . esc_attr($taxonomy->name) . '">Delete this taxonomy</a>';
             echo '</li></ul>';
         }
 
@@ -149,6 +150,7 @@ function wp_roadmap_taxonomies_page() {
         echo '<input type="submit" value="Add Term" />';
         echo wp_nonce_field('add_term_to_' . $taxonomy->name, 'wp_roadmap_add_term_nonce');
         echo '</form>';
+        echo '<hr style="margin:20px; border:2px solid #8080802e;" />';
     }
 }
 
