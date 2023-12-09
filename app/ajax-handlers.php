@@ -141,3 +141,5 @@ function handle_delete_selected_terms() {
     wp_send_json_success();
 }
 add_action('wp_ajax_delete_selected_terms', 'handle_delete_selected_terms');
+
+

@@ -13,7 +13,6 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (response.success) {
-                    // $('li[data-taxonomy-slug="' + taxonomy + '"]').remove();
                     window.location.reload(); // Reload the page
                 } else {
                     alert('Error: ' + response.data.message);

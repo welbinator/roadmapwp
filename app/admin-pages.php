@@ -83,6 +83,23 @@ function wp_roadmap_settings_page() {
  * This function allows adding terms to the "Tags" taxonomy.
  */
 function wp_roadmap_taxonomies_page() {
+
+     // Check if a new term is being added
+     if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['new_term']) && !empty($_POST['taxonomy_slug'])) {
+        $new_term = sanitize_text_field($_POST['new_term']);
+        $taxonomy_slug = sanitize_text_field($_POST['taxonomy_slug']);
+
+        if (!term_exists($new_term, $taxonomy_slug)) {
+            $inserted_term = wp_insert_term($new_term, $taxonomy_slug);
+            if (is_wp_error($inserted_term)) {
+                echo "term could not be added";// Handle error: Term could not be added
+            } else {
+                echo "Term added successfully";
+            }
+        } else {
+            echo "term already exists";// Handle error: Term already exists
+        }
+    }
     $pro_feature = apply_filters('wp_roadmap_pro_add_taxonomy_feature', '');
 
     echo '<h2>Add Custom Taxonomy?</h2>';
@@ -135,4 +152,3 @@ function wp_roadmap_taxonomies_page() {
     }
 }
 
-// End of admin-pages.php file
