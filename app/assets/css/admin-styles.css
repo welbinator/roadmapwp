@@ -55,7 +55,7 @@ h2 {
     border-radius: 2px;
 }
 
-ul.terms-list > li:before {
-    content: "-";
-    
+
+input.delete-terms-button {
+    margin-bottom: 10px!important;
 }
