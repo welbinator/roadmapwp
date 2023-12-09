@@ -112,11 +112,16 @@ function wp_roadmap_taxonomies_page() {
 
         $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
         if (!empty($terms) && !is_wp_error($terms)) {
+            echo '<form method="post" class="delete-terms-form" data-taxonomy="' . esc_attr($taxonomy->name) . '">';
             echo '<ul class="terms-list">';
             foreach ($terms as $term) {
-                echo '<li>' . esc_html($term->name) . '</li>';
+                echo '<li>';
+                echo '<input type="checkbox" name="terms[]" value="' . esc_attr($term->term_id) . '"> ' . esc_html($term->name);
+                echo '</li>';
             }
             echo '</ul>';
+            echo '<input type="submit" value="Delete Selected Terms" class="button delete-terms-button">';
+            echo '</form>';
         } else {
             echo '<p>No terms found for ' . esc_html($taxonomy->labels->name) . '.</p>';
         }
@@ -128,58 +133,6 @@ function wp_roadmap_taxonomies_page() {
         echo wp_nonce_field('add_term_to_' . $taxonomy->name, 'wp_roadmap_add_term_nonce');
         echo '</form>';
     }
-
-    // JavaScript for handling deletion without reloading
-} 
-
-function wp_roadmap_enqueue_delete_script() {
-    $nonce = wp_create_nonce('wp_roadmap_delete_taxonomy_nonce');
-    echo "
-    <script type='text/javascript'>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.delete-taxonomy').forEach(function(link) {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    var taxonomy = this.dataset.taxonomy;
-                    jQuery.ajax({
-                        url: ajaxurl,
-                        type: 'post',
-                        data: {
-                            action: 'delete_custom_taxonomy',
-                            taxonomy: taxonomy,
-                            nonce: '$nonce'
-                        },
-                        success: function(response) {
-                            if(response.success) {
-                                window.location.reload(); // Reload the page
-                            } else {
-                                alert('Error: ' + response.data.message);
-                            }
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-    ";
 }
 
-
-
-add_action('admin_footer', 'wp_roadmap_enqueue_delete_script');
-
-function handle_delete_custom_taxonomy() {
-    check_ajax_referer('wp_roadmap_delete_taxonomy_nonce', 'nonce');
-
-    $taxonomy = sanitize_text_field($_POST['taxonomy']);
-    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
-
-    if (isset($custom_taxonomies[$taxonomy])) {
-        unset($custom_taxonomies[$taxonomy]);
-        update_option('wp_roadmap_custom_taxonomies', $custom_taxonomies);
-        wp_send_json_success();
-    } else {
-        wp_send_json_error(array('message' => 'Taxonomy not found.'));
-    }
-}
-add_action('wp_ajax_delete_custom_taxonomy', 'handle_delete_custom_taxonomy');
+// End of admin-pages.php file

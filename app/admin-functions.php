@@ -62,6 +62,16 @@ function wp_roadmap_enqueue_admin_styles($hook) {
         $css_url = plugin_dir_url(__FILE__) . 'assets/css/admin-styles.css';
         wp_enqueue_style('wp-roadmap-general-admin-styles', $css_url);
     }
+
+    // Enqueue JS for the 'Taxonomies' admin page
+    if ('roadmap_page_wp-roadmap-taxonomies' == $hook) {
+        wp_enqueue_script('wp-roadmap-taxonomies-js', plugin_dir_url(__FILE__) . 'assets/js/taxonomies.js', array('jquery'), null, true);
+        wp_localize_script('wp-roadmap-taxonomies-js', 'wpRoadmapAjax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'delete_taxonomy_nonce' => wp_create_nonce('wp_roadmap_delete_taxonomy_nonce'),
+            'delete_terms_nonce' => wp_create_nonce('wp_roadmap_delete_terms_nonce')
+        ));
+    }
 }
 add_action('admin_enqueue_scripts', 'wp_roadmap_enqueue_admin_styles');
 

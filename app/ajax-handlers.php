@@ -108,3 +108,36 @@ function wp_roadmap_filter_ideas() {
 
 add_action('wp_ajax_filter_ideas', 'wp_roadmap_filter_ideas');
 add_action('wp_ajax_nopriv_filter_ideas', 'wp_roadmap_filter_ideas');
+
+
+// Handles the AJAX request for deleting a custom taxonomy
+function handle_delete_custom_taxonomy() {
+    check_ajax_referer('wp_roadmap_delete_taxonomy_nonce', 'nonce');
+
+    $taxonomy = sanitize_text_field($_POST['taxonomy']);
+    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+
+    if (isset($custom_taxonomies[$taxonomy])) {
+        unset($custom_taxonomies[$taxonomy]);
+        update_option('wp_roadmap_custom_taxonomies', $custom_taxonomies);
+        wp_send_json_success();
+    } else {
+        wp_send_json_error(array('message' => 'Taxonomy not found.'));
+    }
+}
+add_action('wp_ajax_delete_custom_taxonomy', 'handle_delete_custom_taxonomy');
+
+// Handles the AJAX request for deleting selected terms
+function handle_delete_selected_terms() {
+    check_ajax_referer('wp_roadmap_delete_terms_nonce', 'nonce');
+
+    $taxonomy = sanitize_text_field($_POST['taxonomy']);
+    $terms = array_map('intval', (array) $_POST['terms']);
+
+    foreach ($terms as $term_id) {
+        wp_delete_term($term_id, $taxonomy);
+    }
+
+    wp_send_json_success();
+}
+add_action('wp_ajax_delete_selected_terms', 'handle_delete_selected_terms');
