@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    $('.idea-vote-button').on('click', function() {
+    $(document).on('click', '.idea-vote-button', function() {
         var post_id = $(this).closest('.idea-vote-box').data('idea-id');
 
         $.ajax({
