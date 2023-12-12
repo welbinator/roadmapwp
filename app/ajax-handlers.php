@@ -46,7 +46,9 @@ function wp_roadmap_filter_ideas() {
 
     $filter_data = $_POST['filter_data'];
     $tax_query = array();
-    $exclude_taxonomies = array('status'); // Exclude 'status' taxonomy
+
+    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+    $display_taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
 
     foreach ($filter_data as $taxonomy => $data) {
         if (!empty($data['terms'])) {
@@ -82,7 +84,7 @@ function wp_roadmap_filter_ideas() {
                         <h2 class="text-2xl font-bold"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h2>
     
                         <div class="flex space-x-2 mt-2">
-                            <?php $terms = wp_get_post_terms($idea_id, $exclude_taxonomies, array('exclude' => 'status'));
+                            <?php $terms = wp_get_post_terms($idea_id, $display_taxonomies);
                             foreach ($terms as $term) :
                                 $term_link = get_term_link($term);
                                 if (!is_wp_error($term_link)) : ?>
@@ -112,6 +114,7 @@ function wp_roadmap_filter_ideas() {
     wp_reset_postdata();
     wp_die();
 }
+
 
 add_action('wp_ajax_filter_ideas', 'wp_roadmap_filter_ideas');
 add_action('wp_ajax_nopriv_filter_ideas', 'wp_roadmap_filter_ideas');
