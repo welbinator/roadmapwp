@@ -77,7 +77,11 @@ function wp_roadmap_settings_page() {
                     </td>
                 </tr>
            
-
+                <tr>
+                    <td style="padding:0;padding-block:20px;">
+                        <h1>Styling</h1>
+                    </td>
+                </tr>
             <!-- Styling section -->
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Vote Button Background Color', 'wp-roadmap'); ?></th>
