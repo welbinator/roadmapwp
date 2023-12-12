@@ -73,20 +73,21 @@ function wp_roadmap_settings_page() {
                         ?>
                     </td>
                 </tr>
-            </table>
+           
 
-            <h2>Styling</h2>
-            <table class="form-table">
-                <tr valign="top">
+            <!-- Styling section -->
+            <tr valign="top">
                     <th scope="row"><?php esc_html_e('Vote Button Background Color', 'wp-roadmap'); ?></th>
                     <td>
-                        <input type="color" name="wp_roadmap_settings[vote_button_color]" value="<?php echo esc_attr($vote_button_color); ?>"/>
+                        <input type="text" name="wp_roadmap_settings[vote_button_color]" value="<?php echo esc_attr($vote_button_color); ?>" class="wp-roadmap-color-picker"/>
+                        <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Filter Tags Background Color', 'wp-roadmap'); ?></th>
                     <td>
-                        <input type="color" name="wp_roadmap_settings[filter_tags_color]" value="<?php echo esc_attr($filter_tags_color); ?>"/>
+                        <input type="text" name="wp_roadmap_settings[filter_tags_color]" value="<?php echo esc_attr($filter_tags_color); ?>" class="wp-roadmap-color-picker"/>
+                        <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
                     </td>
                 </tr>
             </table>
@@ -95,6 +96,22 @@ function wp_roadmap_settings_page() {
         </form>
     </div>
     <?php
+    // Enqueue the color picker JavaScript and styles
+    wp_enqueue_script('wp-color-picker');
+    wp_enqueue_style('wp-color-picker');
+?>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        // Initialize color picker
+        $('.wp-roadmap-color-picker').wpColorPicker();
+    
+    });
+    </script>
+    
+    
+
+    <?php
+   
 }
 
 
