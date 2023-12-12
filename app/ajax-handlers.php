@@ -52,8 +52,11 @@ function wp_roadmap_filter_ideas() {
 
     // Retrieve color settings
     $options = get_option('wp_roadmap_settings');
-    $vote_button_color = isset($options['vote_button_color']) ? $options['vote_button_color'] : '#ff0000';
-    $filter_tags_color = isset($options['filter_tags_color']) ? $options['filter_tags_color'] : '#ff0000';
+    $vote_button_bg_color = isset($options['vote_button_bg_color']) ? $options['vote_button_bg_color'] : '#ff0000';
+    $vote_button_text_color = isset($options['vote_button_text_color']) ? $options['vote_button_text_color'] : '#000000';
+    $filter_tags_bg_color = isset($options['filter_tags_bg_color']) ? $options['filter_tags_bg_color'] : '#ff0000';
+    $filter_tags_text_color = isset($options['filter_tags_text_color']) ? $options['filter_tags_text_color'] : '#000000';
+    $filters_bg_color = isset($options['filters_bg_color']) ? $options['filters_bg_color'] : '#f5f5f5';
 
     foreach ($filter_data as $taxonomy => $data) {
         if (!empty($data['terms'])) {
@@ -93,7 +96,7 @@ function wp_roadmap_filter_ideas() {
                             foreach ($terms as $term) :
                                 $term_link = get_term_link($term);
                                 if (!is_wp_error($term_link)) : ?>
-                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm" style="background-color: <?php echo esc_attr($filter_tags_color); ?>;"><?php echo esc_html($term->name); ?></a>
+                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm" style="background-color: <?php echo esc_attr($filter_tags_bg_color); ?>;"><?php echo esc_html($term->name); ?></a>
                                 <?php endif;
                             endforeach; ?>
                         </div>
@@ -104,7 +107,7 @@ function wp_roadmap_filter_ideas() {
                         <div class="flex items-center justify-between mt-6">
                             <a class="text-blue-500 hover:underline" href="<?php echo esc_url(get_permalink()); ?>" rel="ugc">Read More</a>
                             <div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
-                            <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr($vote_button_color); ?>;">Upvote</button>
+                            <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr($vote_button_bg_color); ?>;color: <?php echo esc_attr($vote_button_text_color); ?>;">Upvote</button>
                                 <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
                             </div>
                         </div>
