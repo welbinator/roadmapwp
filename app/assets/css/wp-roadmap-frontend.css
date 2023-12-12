@@ -49,10 +49,10 @@ h3.idea-title a {
     text-decoration: none!important;
 }
 article.wp-roadmap-idea {
-    box-shadow: 0px 0px 18px #c9c9c966;
+    /* box-shadow: 0px 0px 18px #c9c9c966;
     margin-block: 15px;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 5px; */
 }
 .grid-container {
     display: grid;
@@ -83,7 +83,7 @@ article.wp-roadmap-idea {
 }
 
 .wp-roadmap-idea {
-    position: relative;
+    /* position: relative; */
 }
 
 .wp-roadmap-ideas-list {
@@ -127,51 +127,13 @@ article.wp-roadmap-idea {
 .idea-wrapper {
     padding-left: 130px;
 }
-.idea-vote-box {
-    text-align: center;
-    width: 75px;
-    height: 75px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-.idea-vote-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 0px;
-    font-size: 20px;
-    color: #333;
-    display: block;
-}
-
-.idea-vote-count {
-    font-size: 16px;
-    /* margin-top: 5px; */
-    color: #333;
-}
 
 /* roadmap shortcode */
 .roadmap-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-}
-
-.roadmap-column {
-    /* Styles for each column */
-}
-
-.roadmap-idea {
-    /* Styles for each idea */
 }
 
 

@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+    './app/shortcodes.php',
+  ],
   theme: {
     extend: {},
   },

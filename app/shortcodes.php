@@ -114,11 +114,11 @@ function wp_roadmap_display_ideas_shortcode() {
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     $taxonomies = array_diff($taxonomies, $exclude_taxonomies); // Exclude 'status' taxonomy
 
-     // Check if the pro version is installed and settings are enabled
-     $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
-     $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
-     
-     $output = '<h2>' . esc_html($new_display_ideas_heading) . '</h2>';
+    // Check if the pro version is installed and settings are enabled
+    $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
+    $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
+
+    $output = '<h2>' . esc_html($new_display_ideas_heading) . '</h2>';
      if (!$hide_display_ideas_heading) {
         echo $output;
         
@@ -149,58 +149,59 @@ function wp_roadmap_display_ideas_shortcode() {
     </div>
 
     <div class="wp-roadmap-ideas-list">
-        <?php
-        $args = array(
-            'post_type' => 'idea',
-            'posts_per_page' => -1 // Adjust as needed
-        );
-        $query = new WP_Query($args);
+
+    <?php
+    $args = array(
+        'post_type' => 'idea',
+        'posts_per_page' => -1 // Adjust as needed
+    );
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) : ?>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 px-6 py-8">
+            <?php while ($query->have_posts()) : $query->the_post();
+                $idea_id = get_the_ID();
+                $vote_count = get_post_meta($idea_id, 'idea_votes', true) ?: '0'; ?>
     
-        if ($query->have_posts()) {
-            while ($query->have_posts()) : $query->the_post();
-                ?>
-                <article class="wp-roadmap-idea">
-                    <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
-                            <button class="idea-vote-button">^</button>
-                            <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
-                    </div>
-                    <div class="idea-wrapper">
-                        <div class="idea-header">
-                            <h4 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                                <?php
-                                // Fetch and display terms for the idea, excluding 'status' taxonomy
-                                $terms = wp_get_post_terms(get_the_ID(), $taxonomies);
-                                if (!empty($terms) && !is_wp_error($terms)) {
-                                    echo '<div class="idea-terms">';
-                                    foreach ($terms as $term) {
-                                        $term_link = get_term_link($term);
-                                        if (!is_wp_error($term_link)) {
-                                            echo '<a href="' . esc_url($term_link) . '">' . esc_html($term->name) . '</a> ';
-                                        }
-                                    }
-                                    echo '</div>';
-                                }
-                                ?>
-                            
-                            <p class="idea-meta">Posted on: <?php the_date(); ?></p>
-                            
+                <div class="wp-roadmap-idea border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden" data-v0-t="card">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h2>
+    
+                        <div class="flex space-x-2 mt-2">
+                            <?php $terms = wp_get_post_terms($idea_id, $taxonomies);
+                            foreach ($terms as $term) :
+                                $term_link = get_term_link($term);
+                                if (!is_wp_error($term_link)) : ?>
+                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm"><?php echo esc_html($term->name); ?></a>
+                                <?php endif;
+                            endforeach; ?>
                         </div>
-                        <div class="idea-body">
-                            <p class="idea-excerpt"><?php the_excerpt(); ?></p>
+    
+                        <p class="text-gray-500 mt-2 text-sm">Submitted on: <?php echo get_the_date(); ?></p>
+                        <p class="text-gray-700 mt-4"><?php echo get_the_excerpt(); ?></p>
+    
+                        <div class="flex items-center justify-between mt-6">
+                            <a class="text-blue-500 hover:underline" href="<?php echo esc_url(get_permalink()); ?>" rel="ugc">Read More</a>
+                            <div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
+                                <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button">Upvote</button>
+                                <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+                            </div>
                         </div>
                     </div>
-                </article>
-                
-                <?php
-            endwhile;
-        } else {
-            echo '<p>No ideas found.</p>';
-        }
+                </div>
+            <?php endwhile; ?>
+        </div>
+    <?php else : ?>
+        <p>No ideas found.</p>
+    <?php endif; 
     
-        wp_reset_postdata();
-    
-        return ob_get_clean(); // Return the buffered output
-    }
+
+    wp_reset_postdata();
+
+    return ob_get_clean(); // Return the buffered output
+}
+
+
 
 
 add_shortcode('display_ideas', 'wp_roadmap_display_ideas_shortcode');
