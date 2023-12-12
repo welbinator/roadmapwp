@@ -129,28 +129,33 @@ function wp_roadmap_display_ideas_shortcode() {
         
      }
     ?>
-    
-        <?php foreach ($taxonomies as $taxonomy_slug) : 
-            $taxonomy = get_taxonomy($taxonomy_slug);
-            if ($taxonomy && $taxonomy_slug != 'status') : ?>
-                <div class="wp-roadmap-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr($taxonomy_slug); ?>">
-                    <label><?php echo esc_html($taxonomy->labels->singular_name); ?>:</label>
-                    <?php
-                    $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
-                    foreach ($terms as $term) {
-                        echo '<label class="taxonomy-term-label">';
-                        echo '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->slug) . '"> ';
-                        echo esc_html($term->name);
-                        echo '</label>';
-                    }
-                    ?>
-                    <div class="filter-match-type">
-                        <label><input type="radio" name="match_type_<?php echo esc_attr($taxonomy->name); ?>" value="any" checked> Any</label>
-                        <label><input type="radio" name="match_type_<?php echo esc_attr($taxonomy->name); ?>" value="all"> All</label>
+    <div class="filters-wrapper">
+        <h4>Filters:</h4>
+        <div class="filters-inner">
+            
+            <?php foreach ($taxonomies as $taxonomy_slug) : 
+                $taxonomy = get_taxonomy($taxonomy_slug);
+                if ($taxonomy && $taxonomy_slug != 'status') : ?>
+                    <div class="wp-roadmap-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr($taxonomy_slug); ?>">
+                        <label><?php echo esc_html($taxonomy->labels->singular_name); ?>:</label>
+                        <?php
+                        $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
+                        foreach ($terms as $term) {
+                            echo '<label class="taxonomy-term-label">';
+                            echo '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->slug) . '"> ';
+                            echo esc_html($term->name);
+                            echo '</label>';
+                        }
+                        ?>
+                        <div class="filter-match-type">
+                            <label><input type="radio" name="match_type_<?php echo esc_attr($taxonomy->name); ?>" value="any" checked> Any</label>
+                            <label><input type="radio" name="match_type_<?php echo esc_attr($taxonomy->name); ?>" value="all"> All</label>
+                        </div>
                     </div>
-                </div>
-            <?php endif; 
-        endforeach; ?>
+                <?php endif; 
+            endforeach; ?>
+            </div>
+        </div><!-- filters wrapper -->
     </div>
 
     <div class="wp-roadmap-ideas-list">

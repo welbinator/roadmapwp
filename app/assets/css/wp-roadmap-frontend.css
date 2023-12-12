@@ -45,15 +45,21 @@
     border-radius: 5px;
 }
 /* ideas shortcode */
+.filters-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    
+}
+.filters-wrapper {
+    background-color: #f5f5f5;
+    padding: 30px;
+}
+
 h3.idea-title a {
     text-decoration: none!important;
 }
-article.wp-roadmap-idea {
-    /* box-shadow: 0px 0px 18px #c9c9c966;
-    margin-block: 15px;
-    padding: 5px;
-    border-radius: 5px; */
-}
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 5 columns */
@@ -72,7 +78,8 @@ article.wp-roadmap-idea {
     margin-block: 50px;
 }
 .wp-roadmap-ideas-filter-taxonomy {
-    padding: 30px;
+    padding-right: 30px;
+    flex-shrink: 0;
 }
 .taxonomy-term-label {
     padding: 10px;
