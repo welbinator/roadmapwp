@@ -114,6 +114,11 @@ function wp_roadmap_display_ideas_shortcode() {
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     $taxonomies = array_diff($taxonomies, $exclude_taxonomies); // Exclude 'status' taxonomy
 
+    // Retrieve color settings
+    $options = get_option('wp_roadmap_settings');
+    $vote_button_color = isset($options['vote_button_color']) ? $options['vote_button_color'] : '#ff0000';
+    $filter_tags_color = isset($options['filter_tags_color']) ? $options['filter_tags_color'] : '#ff0000';
+
     // Check if the pro version is installed and settings are enabled
     $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
     $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
@@ -167,12 +172,12 @@ function wp_roadmap_display_ideas_shortcode() {
                     <div class="p-6">
                         <h2 class="text-2xl font-bold"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h2>
     
-                        <div class="flex space-x-2 mt-2">
+                        <div class="flex flex-wrap space-x-2 mt-2">
                             <?php $terms = wp_get_post_terms($idea_id, $taxonomies);
                             foreach ($terms as $term) :
                                 $term_link = get_term_link($term);
                                 if (!is_wp_error($term_link)) : ?>
-                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm"><?php echo esc_html($term->name); ?></a>
+                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm" style="background-color: <?php echo esc_attr($filter_tags_color); ?>;"><?php echo esc_html($term->name); ?></a>
                                 <?php endif;
                             endforeach; ?>
                         </div>
@@ -183,7 +188,7 @@ function wp_roadmap_display_ideas_shortcode() {
                         <div class="flex items-center justify-between mt-6">
                             <a class="text-blue-500 hover:underline" href="<?php echo esc_url(get_permalink()); ?>" rel="ugc">Read More</a>
                             <div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
-                                <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button">Upvote</button>
+                                <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr($vote_button_color); ?>;">Upvote</button>
                                 <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
                             </div>
                         </div>

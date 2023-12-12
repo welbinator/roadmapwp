@@ -83,7 +83,7 @@ function wp_roadmap_filter_ideas() {
                     <div class="p-6">
                         <h2 class="text-2xl font-bold"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h2>
     
-                        <div class="flex space-x-2 mt-2">
+                        <div class="flex flex-wrap space-x-2 mt-2">
                             <?php $terms = wp_get_post_terms($idea_id, $display_taxonomies);
                             foreach ($terms as $term) :
                                 $term_link = get_term_link($term);

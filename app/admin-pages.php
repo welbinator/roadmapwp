@@ -7,6 +7,10 @@ function wp_roadmap_settings_page() {
     $options = get_option('wp_roadmap_settings');
      
     $allow_comments = isset($options['allow_comments']) ? $options['allow_comments'] : '';
+    
+    // New Styling Section
+    $vote_button_color = isset($options['vote_button_color']) ? $options['vote_button_color'] : '#0000ff'; // Default to blue if not set
+    $filter_tags_color = isset($options['filter_tags_color']) ? $options['filter_tags_color'] : '#0000ff'; // Default to blue if not set
 
     ?>
     <div class="wrap">
@@ -67,6 +71,22 @@ function wp_roadmap_settings_page() {
                         // Filter hook to allow the Pro version to override this setting
                         echo apply_filters('wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>Styling</h2>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Vote Button Background Color', 'wp-roadmap'); ?></th>
+                    <td>
+                        <input type="color" name="wp_roadmap_settings[vote_button_color]" value="<?php echo esc_attr($vote_button_color); ?>"/>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Filter Tags Background Color', 'wp-roadmap'); ?></th>
+                    <td>
+                        <input type="color" name="wp_roadmap_settings[filter_tags_color]" value="<?php echo esc_attr($filter_tags_color); ?>"/>
                     </td>
                 </tr>
             </table>
