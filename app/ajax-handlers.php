@@ -46,6 +46,7 @@ function wp_roadmap_filter_ideas() {
 
     $filter_data = $_POST['filter_data'];
     $tax_query = array();
+    $exclude_taxonomies = array('status'); // Exclude 'status' taxonomy
 
     foreach ($filter_data as $taxonomy => $data) {
         if (!empty($data['terms'])) {
@@ -58,16 +59,8 @@ function wp_roadmap_filter_ideas() {
         }
     }
 
-    // Adjust relation based on match type
-    $relation = 'OR';
-    foreach ($filter_data as $data) {
-        if (isset($data['matchType']) && $data['matchType'] === 'all') {
-            $relation = 'AND';
-            break;
-        }
-    }
     if (count($tax_query) > 1) {
-        $tax_query['relation'] = $relation;
+        $tax_query['relation'] = 'AND';
     }
 
     $args = array(
@@ -78,29 +71,43 @@ function wp_roadmap_filter_ideas() {
 
     $query = new WP_Query($args);
 
-    if ($query->have_posts()) {
-        while ($query->have_posts()) : $query->the_post();
-            ?>
-            <article class="wp-roadmap-idea">
-                <div class="idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
-                    <button class="idea-vote-button">^</button>
-                    <div class="idea-vote-count"><?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?></div>
-                </div>
-                <div class="idea-wrapper">
-                    <div class="idea-header">
-                        <h4 class="idea-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                        <p class="idea-meta">Posted on: <?php the_date(); ?></p>
+    if ($query->have_posts()) : ?>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 px-6 py-8">
+            <?php while ($query->have_posts()) : $query->the_post();
+                $idea_id = get_the_ID();
+                $vote_count = get_post_meta($idea_id, 'idea_votes', true) ?: '0'; ?>
+    
+                <div class="wp-roadmap-idea border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden" data-v0-t="card">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h2>
+    
+                        <div class="flex space-x-2 mt-2">
+                            <?php $terms = wp_get_post_terms($idea_id, $exclude_taxonomies, array('exclude' => 'status'));
+                            foreach ($terms as $term) :
+                                $term_link = get_term_link($term);
+                                if (!is_wp_error($term_link)) : ?>
+                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm"><?php echo esc_html($term->name); ?></a>
+                                <?php endif;
+                            endforeach; ?>
+                        </div>
+    
+                        <p class="text-gray-500 mt-2 text-sm">Submitted on: <?php echo get_the_date(); ?></p>
+                        <p class="text-gray-700 mt-4"><?php echo get_the_excerpt(); ?></p>
+    
+                        <div class="flex items-center justify-between mt-6">
+                            <a class="text-blue-500 hover:underline" href="<?php echo esc_url(get_permalink()); ?>" rel="ugc">Read More</a>
+                            <div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
+                                <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button">Upvote</button>
+                                <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="idea-body">
-                        <p class="idea-excerpt"><?php the_excerpt(); ?></p>
-                    </div>
                 </div>
-            </article>
-            <?php
-        endwhile;
-    } else {
-        echo '<p>No ideas found.</p>';
-    }
+            <?php endwhile; ?>
+        </div>
+    <?php else : ?>
+        <p>No ideas found.</p>
+    <?php endif; 
 
     wp_reset_postdata();
     wp_die();
@@ -108,6 +115,7 @@ function wp_roadmap_filter_ideas() {
 
 add_action('wp_ajax_filter_ideas', 'wp_roadmap_filter_ideas');
 add_action('wp_ajax_nopriv_filter_ideas', 'wp_roadmap_filter_ideas');
+
 
 
 // Handles the AJAX request for deleting a custom taxonomy
