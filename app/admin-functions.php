@@ -104,7 +104,7 @@ function wp_roadmap_enqueue_frontend_styles() {
 
     // Enqueue styles if a shortcode or block is loaded
     if ($has_new_idea_form_shortcode || $has_display_ideas_shortcode || $has_roadmap_shortcode || $has_block || is_singular('idea')) {
-        error_log('new idea: ' . $has_new_idea_form_shortcode . 'display ideas: ' . $has_display_ideas_shortcode . 'roadmap: ' . $has_roadmap_shortcode);
+
         // Enqueue Tailwind CSS
         $tailwind_css_url = plugin_dir_url(__FILE__) . '../dist/styles.css';
         wp_enqueue_style('wp-roadmap-tailwind-styles', $tailwind_css_url);

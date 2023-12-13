@@ -148,6 +148,10 @@ function wp_roadmap_settings_page() {
  * This function allows adding terms to the "Tags" taxonomy.
  */
 function wp_roadmap_taxonomies_page() {
+    // Check if the current user has the 'manage_options' capability
+    if (!current_user_can('manage_options')) {
+        wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'wp-roadmap'));
+    }
     // Check if Pro version is active
     $is_pro_active = function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active();
 
@@ -156,6 +160,11 @@ function wp_roadmap_taxonomies_page() {
 
     // Check if a new term is being added
     if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['new_term']) && !empty($_POST['taxonomy_slug'])) {
+        // Verify the nonce
+        if (!isset($_POST['wp_roadmap_add_term_nonce']) || !check_admin_referer('add_term_to_' . sanitize_text_field($_POST['taxonomy_slug']), 'wp_roadmap_add_term_nonce')) {
+            wp_die(esc_html__('Nonce verification failed.', 'wp-roadmap'));
+        }
+
         $new_term = sanitize_text_field($_POST['new_term']);
         $taxonomy_slug = sanitize_text_field($_POST['taxonomy_slug']);
 
