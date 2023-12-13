@@ -13,6 +13,20 @@ Text Domain: wp-roadmap
 
 defined('ABSPATH') or die('No script kiddies please!');
 
+function wp_roadmap_activate_free_version() {
+    update_option('wp_roadmap_free_active', true);
+}
+register_activation_hook(__FILE__, 'wp_roadmap_activate_free_version');
+
+function wp_roadmap_deactivate_free_version() {
+    delete_option('wp_roadmap_free_active');
+}
+register_deactivation_hook(__FILE__, 'wp_roadmap_deactivate_free_version');
+
+function wp_roadmap_free_version_active() {
+    // This function is just for identification purposes
+}
+
 // Include necessary files
 require_once plugin_dir_path(__FILE__) . 'app/admin-functions.php';
 require_once plugin_dir_path(__FILE__) . 'app/cpt-ideas.php';
