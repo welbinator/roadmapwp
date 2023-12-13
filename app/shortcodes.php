@@ -17,6 +17,7 @@ function wp_roadmap_new_idea_form_shortcode() {
     $hide_submit_idea_heading = apply_filters('wp_roadmap_hide_custom_idea_heading', false);
     $new_submit_idea_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
     
+    $output .='<div class="roadmap_wrapper container mx-auto">';
     $output .= '<div class="new_idea_form__frontend">';
     if (!$hide_submit_idea_heading) {
         $output .= '<h2>' . esc_html($new_submit_idea_heading) . '</h2>';
@@ -55,6 +56,7 @@ function wp_roadmap_new_idea_form_shortcode() {
     $output .= '<li class="new_idea_form_input"><input type="submit" value="Submit Idea"></li>';
     $output .= '</ul>';
     $output .= '</form>';
+    $output .= '</div>';
     $output .= '</div>';
 
     return $output;
@@ -136,6 +138,7 @@ function wp_roadmap_display_ideas_shortcode() {
     $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
     $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
 
+    $output .='<div class="roadmap_wrapper container mx-auto">';
     $output .= '<div class="browse_ideas_frontend">';
     $output .= '<h2>' . esc_html($new_display_ideas_heading) . '</h2>';
         if (!$hide_display_ideas_heading) {
@@ -235,6 +238,7 @@ function wp_roadmap_display_ideas_shortcode() {
                 <?php endwhile; ?>
             </div>
         </div>
+    </div>
     <?php else : ?>
         <p>No ideas found.</p>
     <?php endif; 
@@ -275,6 +279,7 @@ function wp_roadmap_roadmap_shortcode() {
 
     ob_start(); // Start output buffering
     ?>
+    <div class="roadmap_wrapper container mx-auto">
     <div class="roadmap-grid">
         <?php
         $statuses = array('Up Next', 'On Roadmap');
@@ -332,6 +337,7 @@ function wp_roadmap_roadmap_shortcode() {
         }
         ?>
     </div> <!-- Close grid -->
+    </div>
     <?php
     return ob_get_clean(); // Return the buffered output
 }
