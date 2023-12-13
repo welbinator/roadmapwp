@@ -3,6 +3,14 @@
  * The Template for displaying all single posts of the 'idea' CPT.
  */
 
+ // Retrieve color settings
+ $options = get_option('wp_roadmap_settings');
+ $vote_button_bg_color = isset($options['vote_button_bg_color']) ? $options['vote_button_bg_color'] : '#ff0000';
+ $vote_button_text_color = isset($options['vote_button_text_color']) ? $options['vote_button_text_color'] : '#000000';
+ $filter_tags_bg_color = isset($options['filter_tags_bg_color']) ? $options['filter_tags_bg_color'] : '#ff0000';
+ $filter_tags_text_color = isset($options['filter_tags_text_color']) ? $options['filter_tags_text_color'] : '#000000';
+ $filters_bg_color = isset($options['filters_bg_color']) ? $options['filters_bg_color'] : '#f5f5f5';
+ 
 get_header(); ?>
 
 <main id="primary" class="flex-grow px-4 py-8 site-main">

@@ -48,7 +48,7 @@ function wp_roadmap_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Choose Idea Template', 'wp-roadmap'); ?></th>
+                    <th scope="row"><?php esc_html_e('Choose Template or Single Idea page', 'wp-roadmap'); ?></th>
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
