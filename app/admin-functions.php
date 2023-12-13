@@ -44,6 +44,19 @@ function wp_roadmap_check_for_roadmap_shortcode() {
 add_action('wp', 'wp_roadmap_check_for_roadmap_shortcode');
 
 /**
+ * Checks if the 'roadmap' shortcode is present on the current page.
+ * Sets an option for enqueuing related CSS files if the shortcode is found.
+ */
+function wp_roadmap_check_for_single_idea_shortcode() {
+    global $post;
+
+    if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'roadmap')) {
+        update_option('wp_roadmap_single_idea_shortcode_loaded', true);
+    }
+}
+add_action('wp', 'wp_roadmap_check_for_single_idea_shortcode');
+
+/**
  * Enqueues admin styles for specific admin pages and post types.
  * 
  * @param string $hook The current admin page hook.
@@ -88,6 +101,7 @@ function wp_roadmap_enqueue_frontend_styles() {
     $has_new_idea_form_shortcode = false;
     $has_display_ideas_shortcode = false;
     $has_roadmap_shortcode = false;
+    $has_single_idea_shortcode = false;
     $has_block = false;
 
     // Check for shortcode presence in the post content
@@ -95,6 +109,7 @@ function wp_roadmap_enqueue_frontend_styles() {
         $has_new_idea_form_shortcode = has_shortcode($post->post_content, 'new_idea_form');
         $has_display_ideas_shortcode = has_shortcode($post->post_content, 'display_ideas');
         $has_roadmap_shortcode = has_shortcode($post->post_content, 'roadmap');
+        $has_single_idea_shortcode = has_shortcode($post->post_content, 'single_idea');
 
         // Check for block presence
         $has_block = has_block('wp-roadmap-pro/new-idea-form', $post) ||
@@ -103,7 +118,7 @@ function wp_roadmap_enqueue_frontend_styles() {
     }
 
     // Enqueue styles if a shortcode or block is loaded
-    if ($has_new_idea_form_shortcode || $has_display_ideas_shortcode || $has_roadmap_shortcode || $has_block || is_singular('idea')) {
+    if ($has_new_idea_form_shortcode || $has_display_ideas_shortcode || $has_roadmap_shortcode || $has_single_idea_shortcode|| $has_block || is_singular('idea')) {
 
         // Enqueue Tailwind CSS
         $tailwind_css_url = plugin_dir_url(__FILE__) . '../dist/styles.css';
@@ -206,3 +221,22 @@ function wp_roadmap_filter_comments_open($open, $post_id) {
     return $open;
 }
 add_filter('comments_open', 'wp_roadmap_filter_comments_open', 10, 2);
+
+function wp_roadmap_redirect_single_idea($template) {
+    global $post;
+
+    if ('idea' === $post->post_type) {
+        $options = get_option('wp_roadmap_settings');
+        $single_idea_page_id = isset($options['single_idea_page']) ? $options['single_idea_page'] : '';
+
+        if ($single_idea_page_id) {
+            $redirect_url = add_query_arg('idea_id', $post->ID, get_permalink($single_idea_page_id));
+            wp_redirect($redirect_url);
+            exit;
+        }
+    }
+
+    return $template;
+}
+
+add_filter('single_template', 'wp_roadmap_redirect_single_idea');

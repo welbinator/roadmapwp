@@ -5,6 +5,7 @@
 function wp_roadmap_settings_page() {
     // Fetch current settings
     $options = get_option('wp_roadmap_settings');
+    $selected_page = isset($options['single_idea_page']) ? $options['single_idea_page'] : '';
      
     $allow_comments = isset($options['allow_comments']) ? $options['allow_comments'] : '';
     
@@ -45,6 +46,19 @@ function wp_roadmap_settings_page() {
                         // Filter hook to allow the Pro version to override this setting
                         echo apply_filters('wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Set page for single idea', 'wp-roadmap'); ?></th>
+                    <td>
+                        <select name="wp_roadmap_settings[single_idea_page]">
+                            <?php
+                            $pages = get_pages();
+                            foreach ($pages as $page) {
+                                echo '<option value="' . esc_attr($page->ID) . '"' . selected($selected_page, $page->ID, false) . '>' . esc_html($page->post_title) . '</option>';
+                            }
+                            ?>
+                        </select>
                     </td>
                 </tr>
                 <tr valign="top">
