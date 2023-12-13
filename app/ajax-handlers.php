@@ -79,25 +79,30 @@ function wp_roadmap_filter_ideas() {
         'tax_query' => $tax_query
     );
 
+     // Validate color settings
+     $vote_button_bg_color = sanitize_hex_color($options['vote_button_bg_color']);
+     $vote_button_text_color = sanitize_hex_color($options['vote_button_text_color']);
+     $filter_tags_bg_color = sanitize_hex_color($options['filter_tags_bg_color']);
+     $filter_tags_text_color = sanitize_hex_color($options['filter_tags_text_color']);
+
     $query = new WP_Query($args);
 
     if ($query->have_posts()) : ?>
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 px-6 py-8">
             <?php while ($query->have_posts()) : $query->the_post();
-                $idea_id = get_the_ID();
-                $vote_count = get_post_meta($idea_id, 'idea_votes', true) ?: '0'; ?>
+                $idea_id = get_the_ID(); ?>
     
                 <div class="wp-roadmap-idea border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden" data-v0-t="card">
                     <div class="p-6">
                         <h2 class="text-2xl font-bold"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h2>
     
-                        <p class="text-gray-500 mt-2 text-sm">Submitted on: <?php echo get_the_date(); ?></p>
+                        <p class="text-gray-500 mt-2 text-sm"><?php esc_html_e('Submitted on:', 'wp-roadmap'); ?> <?php echo get_the_date(); ?></p>
                         <div class="flex flex-wrap space-x-2 mt-2">
                             <?php $terms = wp_get_post_terms($idea_id, $display_taxonomies);
                             foreach ($terms as $term) :
                                 $term_link = get_term_link($term);
                                 if (!is_wp_error($term_link)) : ?>
-                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm" style="background-color: <?php echo esc_attr($filter_tags_bg_color); ?>;"><?php echo esc_html($term->name); ?></a>
+                                    <a href="<?php echo esc_url($term_link); ?>" class="inline-flex items-center border font-semibold bg-blue-500 text-white px-3 py-1 rounded-full text-sm" style="background-color: <?php echo esc_attr($filter_tags_bg_color); ?>; color: <?php echo esc_attr($filter_tags_text_color); ?>;"><?php echo esc_html($term->name); ?></a>
                                 <?php endif;
                             endforeach; ?>
                         </div>
@@ -135,7 +140,7 @@ function wp_roadmap_filter_ideas() {
             <?php endwhile; ?>
         </div>
     <?php else : ?>
-        <p>No ideas found.</p>
+        <p><?php esc_html_e('No ideas found.', 'wp-roadmap'); ?></p>
     <?php endif; 
 
     wp_reset_postdata();
@@ -160,7 +165,7 @@ function handle_delete_custom_taxonomy() {
         update_option('wp_roadmap_custom_taxonomies', $custom_taxonomies);
         wp_send_json_success();
     } else {
-        wp_send_json_error(array('message' => 'Taxonomy not found.'));
+        wp_send_json_error(array('message' => __('Taxonomy not found.', 'wp-roadmap')));
     }
 }
 add_action('wp_ajax_delete_custom_taxonomy', 'handle_delete_custom_taxonomy');
