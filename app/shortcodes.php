@@ -362,6 +362,7 @@ function wp_roadmap_single_idea_shortcode($atts) {
     ob_start();
     ?>
     <main id="primary" class="site-main">
+        <div class="roadmap_wrapper container mx-auto">
         <article id="post-<?php echo esc_attr($post->ID); ?>" <?php post_class(); ?>>
             <header class="entry-header">
                 <h1 class="entry-title"><?php echo esc_html($post->post_title); ?></h1>
@@ -422,6 +423,7 @@ function wp_roadmap_single_idea_shortcode($atts) {
                 <?php edit_post_link(__('Edit', 'wp-roadmap'), '<span class="edit-link">', '</span>', $post->ID); ?>
             </footer>
         </article>
+        </div>
     </main>
     <?php
     return ob_get_clean();
