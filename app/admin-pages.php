@@ -49,15 +49,15 @@ function wp_roadmap_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Choose Template or Single Idea page', 'wp-roadmap'); ?></th>
+                    <th scope="row"><?php esc_html_e('Single Idea Template', 'wp-roadmap'); ?></th>
                     <td>
                         <?php
-                        // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_choose_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
+                        // This filter will be handled in choose-idea-template.php
+                        echo apply_filters('wp_roadmap_single_idea_template_setting', '');
                         ?>
                     </td>
                 </tr>
-                <tr valign="top">
+                <tr valign="top" id="single_idea_page_setting" style="display: none;">
                     <th scope="row"><?php esc_html_e('Set page for single idea', 'wp-roadmap'); ?></th>
                     <td>
                         <select name="wp_roadmap_settings[single_idea_page]">
