@@ -112,25 +112,21 @@ function wp_roadmap_enqueue_frontend_styles() {
         // Enqueue your custom frontend styles
         $custom_css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-roadmap-frontend.css';
         wp_enqueue_style('wp-roadmap-frontend-styles', $custom_css_url);
+    
+
+        // Enqueue scripts and localize them as before
+        wp_enqueue_script('wp-roadmap-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
+        wp_localize_script('wp-roadmap-voting', 'wpRoadMapVoting', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
+        ));
+
+        wp_enqueue_script('wp-roadmap-idea-filter', plugin_dir_url(__FILE__) . 'assets/js/idea-filter.js', array('jquery'), '', true);
+        wp_localize_script('wp-roadmap-idea-filter', 'wpRoadMapAjax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
+        ));
     }
-
-    // Reset the options at the end of each request
-    update_option('wp_roadmap_new_idea_shortcode_loaded', false);
-    update_option('wp_roadmap_ideas_shortcode_loaded', false);
-    update_option('wp_roadmap_roadmap_shortcode_loaded', false);
-
-    // Enqueue scripts and localize them as before
-    wp_enqueue_script('wp-roadmap-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
-    wp_localize_script('wp-roadmap-voting', 'wpRoadMapVoting', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
-    ));
-
-    wp_enqueue_script('wp-roadmap-idea-filter', plugin_dir_url(__FILE__) . 'assets/js/idea-filter.js', array('jquery'), '', true);
-    wp_localize_script('wp-roadmap-idea-filter', 'wpRoadMapAjax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
-    ));
 }
 
 add_action('wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles');
