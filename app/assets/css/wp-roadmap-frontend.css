@@ -89,8 +89,10 @@ h3.idea-title a {
     margin-top: 10px;
 }
 
-.wp-roadmap-idea {
-    /* position: relative; */
+.roadmap-idea {
+    /* box-shadow: 0px 0px 5px #0000002e;
+    padding: 10px;
+    border-radius: 5px; */
 }
 
 .wp-roadmap-ideas-list {
