@@ -14,7 +14,6 @@ function wp_roadmap_new_idea_form_shortcode() {
         $output .= '<p>Thank you for your submission!</p>';
     }
     
-    // Check if the pro version is installed and settings are enabled
     $hide_submit_idea_heading = apply_filters('wp_roadmap_hide_custom_idea_heading', false);
     $new_submit_idea_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
     
@@ -31,7 +30,7 @@ function wp_roadmap_new_idea_form_shortcode() {
 
     $taxonomies = get_object_taxonomies('idea', 'objects');
     foreach ($taxonomies as $taxonomy) {
-        if ($taxonomy->name !== 'status') {
+        if ($taxonomy->name !== 'status' && ($taxonomy->name === 'idea-tag' || (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()))) {
             $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
             if (!empty($terms) && !is_wp_error($terms)) {
@@ -60,6 +59,7 @@ function wp_roadmap_new_idea_form_shortcode() {
 
     return $output;
 }
+
 add_shortcode('new_idea_form', 'wp_roadmap_new_idea_form_shortcode');
 
 /**
@@ -108,11 +108,18 @@ function wp_roadmap_display_ideas_shortcode() {
     $wp_roadmap_ideas_shortcode_loaded = true;
     ob_start(); // Start output buffering
 
-    // Custom taxonomies excluding 'status'
+    // Always include 'idea-tag' taxonomy
+    $taxonomies = array('idea-tag');
+
+    // Include custom taxonomies only if Pro version is active
+    if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
+        $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+        $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
+    }
+
+    // Exclude 'status' taxonomy
     $exclude_taxonomies = array('status');
-    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
-    $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
-    $taxonomies = array_diff($taxonomies, $exclude_taxonomies); // Exclude 'status' taxonomy
+    $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
 
     // Retrieve color settings
     $options = get_option('wp_roadmap_settings');
@@ -135,7 +142,6 @@ function wp_roadmap_display_ideas_shortcode() {
     <div class="filters-wrapper" style="background-color: <?php echo esc_attr($filters_bg_color); ?>;">
         <h4>Filters:</h4>
         <div class="filters-inner">
-            
             <?php foreach ($taxonomies as $taxonomy_slug) : 
                 $taxonomy = get_taxonomy($taxonomy_slug);
                 if ($taxonomy && $taxonomy_slug != 'status') : ?>
@@ -157,8 +163,8 @@ function wp_roadmap_display_ideas_shortcode() {
                     </div>
                 <?php endif; 
             endforeach; ?>
-            </div>
-        </div><!-- filters wrapper -->
+        </div>
+    </div>
     </div>
 
     <div class="wp-roadmap-ideas-list">
@@ -251,6 +257,14 @@ function wp_roadmap_roadmap_shortcode() {
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
     $taxonomies = array_merge(array('idea-tag'), array_keys($custom_taxonomies));
     $taxonomies = array_diff($taxonomies, $exclude_taxonomies); // Exclude 'status' taxonomy
+
+    // Retrieve color settings
+    $options = get_option('wp_roadmap_settings');
+    $vote_button_bg_color = isset($options['vote_button_bg_color']) ? $options['vote_button_bg_color'] : '#ff0000';
+    $vote_button_text_color = isset($options['vote_button_text_color']) ? $options['vote_button_text_color'] : '#000000';
+    $filter_tags_bg_color = isset($options['filter_tags_bg_color']) ? $options['filter_tags_bg_color'] : '#ff0000';
+    $filter_tags_text_color = isset($options['filter_tags_text_color']) ? $options['filter_tags_text_color'] : '#000000';
+    $filters_bg_color = isset($options['filters_bg_color']) ? $options['filters_bg_color'] : '#f5f5f5';
 
     ob_start(); // Start output buffering
     ?>
