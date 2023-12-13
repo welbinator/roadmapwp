@@ -148,21 +148,26 @@ function wp_roadmap_settings_page() {
  * This function allows adding terms to the "Tags" taxonomy.
  */
 function wp_roadmap_taxonomies_page() {
+    // Check if Pro version is active
+    $is_pro_active = function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active();
 
-     // Check if a new term is being added
-     if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['new_term']) && !empty($_POST['taxonomy_slug'])) {
+    // Fetch custom taxonomies
+    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+
+    // Check if a new term is being added
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($_POST['new_term']) && !empty($_POST['taxonomy_slug'])) {
         $new_term = sanitize_text_field($_POST['new_term']);
         $taxonomy_slug = sanitize_text_field($_POST['taxonomy_slug']);
 
         if (!term_exists($new_term, $taxonomy_slug)) {
             $inserted_term = wp_insert_term($new_term, $taxonomy_slug);
             if (is_wp_error($inserted_term)) {
-                echo "term could not be added";// Handle error: Term could not be added
+                echo "term could not be added"; // Handle error: Term could not be added
             } else {
                 echo "Term added successfully";
             }
         } else {
-            echo "term already exists";// Handle error: Term already exists
+            echo "term already exists"; // Handle error: Term already exists
         }
     }
     $pro_feature = apply_filters('wp_roadmap_pro_add_taxonomy_feature', '');
@@ -178,11 +183,13 @@ function wp_roadmap_taxonomies_page() {
     }
 
     $taxonomies = get_taxonomies(array('object_type' => array('idea')), 'objects');
-    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
 
     foreach ($taxonomies as $taxonomy) {
+        if (!$is_pro_active && $taxonomy->name !== 'idea-tag') {
+            continue; // Skip non-idea-tag taxonomies if Pro is not active
+        }
         if ($taxonomy->name === 'status') {
-            continue;
+            continue; // Always skip 'status' taxonomy
         }
 
         echo '<h3>' . esc_html($taxonomy->labels->name) . '</h3>';
@@ -218,4 +225,5 @@ function wp_roadmap_taxonomies_page() {
         echo '<hr style="margin:20px; border:2px solid #8080802e;" />';
     }
 }
+
 
