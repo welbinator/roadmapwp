@@ -10,7 +10,8 @@ get_header(); ?>
         <?php
         while ( have_posts() ) :
             the_post();
-
+            $idea_id = get_the_ID();
+            $vote_count = get_post_meta($idea_id, 'idea_votes', true) ?: '0';
             ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class('p-6 flex flex-col space-y-2'); ?>>
                 <header class="entry-header">
@@ -46,6 +47,27 @@ get_header(); ?>
                 ?>
                 
                 <div class="entry-content">
+                <div class="flex items-center gap-4 mt-4 idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+                <button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr($vote_button_bg_color); ?>!important;background-image: none!important;color: <?php echo esc_attr($vote_button_text_color); ?>!important;">
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="w-5 h-5 mr-1"
+                                        >
+                                            <path d="M7 10v12"></path>
+                                            <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"></path>
+                                        </svg>
+                                        Vote
+                                    </button>
+                                    <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+                    </div>
                     <?php
                     the_content();
                     wp_link_pages(
@@ -89,8 +111,6 @@ get_header(); ?>
 </main><!-- #main -->
 
 <?php 
-if (is_active_sidebar()) {
-    get_sidebar();
-} 
+
 get_footer(); 
 ?>
