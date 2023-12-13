@@ -49,6 +49,15 @@ function wp_roadmap_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Choose Template or Single Idea page', 'wp-roadmap'); ?></th>
+                    <td>
+                        <?php
+                        // Filter hook to allow the Pro version to override this setting
+                        echo apply_filters('wp_roadmap_choose_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
+                        ?>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><?php esc_html_e('Set page for single idea', 'wp-roadmap'); ?></th>
                     <td>
                         <select name="wp_roadmap_settings[single_idea_page]">
@@ -61,15 +70,7 @@ function wp_roadmap_settings_page() {
                         </select>
                     </td>
                 </tr>
-                <tr valign="top">
-                    <th scope="row"><?php esc_html_e('Choose Template or Single Idea page', 'wp-roadmap'); ?></th>
-                    <td>
-                        <?php
-                        // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_choose_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
-                        ?>
-                    </td>
-                </tr>
+                
 
                 <!-- Hide New Idea Heading Setting -->
                 <tr valign="top">
