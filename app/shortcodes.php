@@ -230,7 +230,7 @@ function wp_roadmap_display_ideas_shortcode() {
                                         </svg>
                                         Vote
                                     </button>
-                                    <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+                                    <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
                                 </div>
                             </div>
                         </div>
@@ -422,7 +422,7 @@ function wp_roadmap_single_idea_shortcode($atts) {
                         </svg>
                         Vote
             </button>
-            <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+            <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
             </div>
 
             <footer class="entry-footer">
