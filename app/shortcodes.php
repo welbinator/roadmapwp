@@ -16,8 +16,10 @@ function wp_roadmap_new_idea_form_shortcode() {
     
     $hide_submit_idea_heading = apply_filters('wp_roadmap_hide_custom_idea_heading', false);
     $new_submit_idea_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
-    
-    $output .= '<div class="new_idea_form__frontend">';
+    ?>
+    <div class="roadmap-wrapper container mx-auto">
+    <div class="new_idea_form_frontend">
+    <?php
     if (!$hide_submit_idea_heading) {
         $output .= '<h2>' . esc_html($new_submit_idea_heading) . '</h2>';
     }
@@ -56,7 +58,8 @@ function wp_roadmap_new_idea_form_shortcode() {
     $output .= '</ul>';
     $output .= '</form>';
     $output .= '</div>';
-
+    $output .= '</div>';
+    
     return $output;
 }
 
@@ -135,10 +138,11 @@ function wp_roadmap_display_ideas_shortcode() {
     // Check if the pro version is installed and settings are enabled
     $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
     $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
-
-    $output .= '<div class="browse_ideas_frontend">';
-    $output .= '<h2>' . esc_html($new_display_ideas_heading) . '</h2>';
-        if (!$hide_display_ideas_heading) {
+?>
+<div class="roadmap-wrapper container mx-auto">
+   <div class="browse_ideas_frontend">
+    <h2> <?php echo esc_html($new_display_ideas_heading); ?> </h2>
+       <?php if (!$hide_display_ideas_heading) {
             echo $output;
             
         }
@@ -154,7 +158,7 @@ function wp_roadmap_display_ideas_shortcode() {
                             <div class="taxonomy-term-labels">
                                 <?php
                                 $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
-                                foreach ($terms as $term) {
+                                foreach ($terms as $term) { 
                                     echo '<label class="taxonomy-term-label">';
                                     echo '<input type="checkbox" name="idea_taxonomies[' . esc_attr($taxonomy->name) . '][]" value="' . esc_attr($term->slug) . '"> ';
                                     echo esc_html($term->name);
@@ -235,6 +239,7 @@ function wp_roadmap_display_ideas_shortcode() {
                 <?php endwhile; ?>
             </div>
         </div>
+    </div>
     <?php else : ?>
         <p>No ideas found.</p>
     <?php endif; 
@@ -275,6 +280,7 @@ function wp_roadmap_roadmap_shortcode() {
 
     ob_start(); // Start output buffering
     ?>
+    <div class="roadmap-wrapper container mx-auto">
     <div class="roadmap-grid">
         <?php
         $statuses = array('Up Next', 'On Roadmap');
@@ -331,6 +337,7 @@ function wp_roadmap_roadmap_shortcode() {
             <?php
         }
         ?>
+    </div>
     </div> <!-- Close grid -->
     <?php
     return ob_get_clean(); // Return the buffered output
@@ -362,6 +369,7 @@ function wp_roadmap_single_idea_shortcode($atts) {
     ob_start();
     ?>
     <main id="primary" class="site-main">
+    <div class="roadmap-wrapper container mx-auto">
         <article id="post-<?php echo esc_attr($post->ID); ?>" <?php post_class(); ?>>
             <header class="entry-header">
                 <h1 class="entry-title"><?php echo esc_html($post->post_title); ?></h1>
@@ -422,6 +430,7 @@ function wp_roadmap_single_idea_shortcode($atts) {
                 <?php edit_post_link(__('Edit', 'wp-roadmap'), '<span class="edit-link">', '</span>', $post->ID); ?>
             </footer>
         </article>
+        </div>
     </main>
     <?php
     return ob_get_clean();

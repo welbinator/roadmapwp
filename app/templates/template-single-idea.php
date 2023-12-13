@@ -14,6 +14,7 @@
 get_header(); ?>
 
 <main id="primary" class="flex-grow px-4 py-8 site-main">
+<div class="roadmap-wrapper container mx-auto">
     <article class="flex flex-col space-y-8">
         <?php
         while ( have_posts() ) :
@@ -122,6 +123,7 @@ get_header(); ?>
         endwhile; // End of the loop.
         ?>
     </article>
+    </div>
 </main><!-- #main -->
 
 <?php 
