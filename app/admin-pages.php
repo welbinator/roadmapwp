@@ -53,7 +53,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // This filter will be handled in choose-idea-template.php
-                        echo apply_filters('wp_roadmap_single_idea_template_setting', '');
+                        echo apply_filters('wp_roadmap_single_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
