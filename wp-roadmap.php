@@ -11,31 +11,14 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wp-roadmap
 */
 
-global $wp_roadmap_new_idea_shortcode_loaded;
-$wp_roadmap_new_idea_shortcode_loaded = false;
+defined('ABSPATH') or die('No script kiddies please!');
 
-global $wp_roadmap_ideas_shortcode_loaded;
-$wp_roadmap_ideas_shortcode_loaded = false;
-
-global $wp_roadmap_roadmap_shortcode_loaded;
-$wp_roadmap_roadmap_shortcode_loaded = false;
-
-defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
-
-// Include admin functions
-require_once plugin_dir_path( __FILE__ ) . 'app/admin-functions.php';
-
-// Include Custom Post Type definition
-require_once plugin_dir_path( __FILE__ ) . 'app/cpt-ideas.php';
-
-// Include ajax hanlders
-require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
-
-// Register admin pages
-require_once plugin_dir_path( __FILE__ ) . 'app/admin-pages.php';
-
-// Shortcodes
-require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes.php';
+// Include necessary files
+require_once plugin_dir_path(__FILE__) . 'app/admin-functions.php';
+require_once plugin_dir_path(__FILE__) . 'app/cpt-ideas.php';
+require_once plugin_dir_path(__FILE__) . 'app/ajax-handlers.php';
+require_once plugin_dir_path(__FILE__) . 'app/admin-pages.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes.php';
 
 function wp_roadmap_on_activation() {
     // Directly call the function that registers your taxonomies here
@@ -55,7 +38,6 @@ function wp_roadmap_on_activation() {
 
 register_activation_hook(__FILE__, 'wp_roadmap_on_activation');
 
-// use custom template for idea cpt
 function wp_roadmap_custom_template($template) {
     global $post;
 
@@ -73,9 +55,3 @@ function wp_roadmap_custom_template($template) {
 }
 
 add_filter('single_template', 'wp_roadmap_custom_template');
-
-
-
-
-
-

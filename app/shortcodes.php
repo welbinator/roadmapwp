@@ -5,8 +5,8 @@
  * @return string The HTML output for the new idea form.
  */
 function wp_roadmap_new_idea_form_shortcode() {
-    global $wp_roadmap_new_idea_shortcode_loaded;
-    $wp_roadmap_new_idea_shortcode_loaded = true;
+    // Flag to indicate the new idea form shortcode is loaded
+    update_option('wp_roadmap_new_idea_shortcode_loaded', true);
 
     $output = '';
 
@@ -104,8 +104,9 @@ add_action('template_redirect', 'wp_roadmap_handle_new_idea_submission');
  * @return string The HTML output for displaying ideas.
  */
 function wp_roadmap_display_ideas_shortcode() {
-    global $wp_roadmap_ideas_shortcode_loaded;
-    $wp_roadmap_ideas_shortcode_loaded = true;
+   // Flag to indicate the display ideas shortcode is loaded
+   update_option('wp_roadmap_ideas_shortcode_loaded', true);
+
     ob_start(); // Start output buffering
 
     $output = "";
@@ -255,8 +256,8 @@ add_shortcode('display_ideas', 'wp_roadmap_display_ideas_shortcode');
  * @return string The HTML output for displaying the roadmap.
  */
 function wp_roadmap_roadmap_shortcode() {
-    global $wp_roadmap_roadmap_shortcode_loaded;
-    $wp_roadmap_roadmap_shortcode_loaded = true;
+   // Flag to indicate the roadmap shortcode is loaded
+    update_option('wp_roadmap_roadmap_shortcode_loaded', true);
 
     // Get custom taxonomies excluding 'status'
     $exclude_taxonomies = array('status');
