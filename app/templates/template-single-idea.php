@@ -19,12 +19,19 @@ get_header(); ?>
                 </header><!-- .entry-header -->
 
                 <?php
-                // Display terms from Tags taxonomy and any custom taxonomies
-                $exclude_taxonomies = ['status']; // Exclude 'status' taxonomy
-                $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', []);
-                $taxonomies = array_keys($custom_taxonomies);
-                $taxonomies[] = 'idea-tag'; // Add the 'idea-tag' taxonomy
-                
+                // Always include 'idea-tag' taxonomy
+                $taxonomies = array('idea-tag');
+
+                // Include custom taxonomies only if Pro version is active
+                if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
+                    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+                    $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
+                }
+
+                // Exclude 'status' taxonomy
+                $exclude_taxonomies = array('status');
+                $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
+
                 $terms = wp_get_post_terms(get_the_ID(), $taxonomies, ['exclude' => $exclude_taxonomies]);
                 if (!empty($terms) && !is_wp_error($terms)) {
                     echo '<div class="idea-terms flex flex-wrap mt-2">';
@@ -39,33 +46,8 @@ get_header(); ?>
                 ?>
                 
                 <div class="entry-content">
-                    <div class="flex items-center gap-4 mt-4 idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
-                        <button aria-label="Vote Post" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 idea-vote-button">
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="w-5 h-5 mr-1"
-                        >
-                            <path d="M7 10v12"></path>
-                            <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"></path>
-                        </svg>
-                        Vote
-                        </button>
-                        <div class="idea-vote-count">
-                            <?php echo get_post_meta(get_the_ID(), 'idea_votes', true) ?: '0'; ?>
-                        </div>
-                    </div>
-
                     <?php
                     the_content();
-
                     wp_link_pages(
                         array(
                             'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'text-domain' ),
@@ -77,7 +59,6 @@ get_header(); ?>
 
                 <footer class="entry-footer">
                     <?php
-                    // Edit post link
                     edit_post_link(
                         sprintf(
                             wp_kses(
@@ -97,18 +78,14 @@ get_header(); ?>
                     ?>
                 </footer><!-- .entry-footer -->
             </article><!-- #post-<?php the_ID(); ?> -->
-            <?php
 
-            // If comments are open or there is at least one comment, load up the comment template.
+            <?php
             if ( comments_open() || get_comments_number() ) :
                 comments_template();
             endif;
-
         endwhile; // End of the loop.
         ?>
     </div>
 </main><!-- #main -->
 
-<?php
-get_sidebar();
-get_footer();
+<?php get_sidebar(); get_footer(); ?>
