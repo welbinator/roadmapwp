@@ -1,51 +1,51 @@
 <?php
 
 /**
- * Check for the presence of specific shortcodes on the page and set global flags for enqueuing CSS files.
+ * Check for the presence of specific shortcodes on the page and set options for enqueuing CSS files.
  */
 
 /**
  * Checks if the 'new_idea_form' shortcode is present on the current page.
- * Sets a global flag for enqueuing related CSS files if the shortcode is found.
+ * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
 function wp_roadmap_check_for_new_idea_shortcode() {
-    global $wp_roadmap_new_idea_shortcode_loaded, $post;
+    global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'new_idea_form')) {
-        $wp_roadmap_new_idea_shortcode_loaded = true;
+        update_option('wp_roadmap_new_idea_shortcode_loaded', true);
     }
 }
 add_action('wp', 'wp_roadmap_check_for_new_idea_shortcode');
 
 /**
  * Checks if the 'display_ideas' shortcode is present on the current page.
- * Sets a global flag for enqueuing related CSS files if the shortcode is found.
+ * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
 function wp_roadmap_check_for_ideas_shortcode() {
-    global $wp_roadmap_ideas_shortcode_loaded, $post;
+    global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'display_ideas')) {
-        $wp_roadmap_ideas_shortcode_loaded = true;
+        update_option('wp_roadmap_ideas_shortcode_loaded', true);
     }
 }
 add_action('wp', 'wp_roadmap_check_for_ideas_shortcode');
 
 /**
  * Checks if the 'roadmap' shortcode is present on the current page.
- * Sets a global flag for enqueuing related CSS files if the shortcode is found.
+ * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
 function wp_roadmap_check_for_roadmap_shortcode() {
-    global $wp_roadmap_roadmap_shortcode_loaded, $post;
+    global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'roadmap')) {
-        $wp_roadmap_roadmap_shortcode_loaded = true;
+        update_option('wp_roadmap_roadmap_shortcode_loaded', true);
     }
 }
 add_action('wp', 'wp_roadmap_check_for_roadmap_shortcode');
 
 /**
  * Enqueues admin styles for specific admin pages and post types.
- *
+ * 
  * @param string $hook The current admin page hook.
  */
 function wp_roadmap_enqueue_admin_styles($hook) {
@@ -84,39 +84,49 @@ add_action('admin_enqueue_scripts', 'wp_roadmap_enqueue_admin_styles');
 function wp_roadmap_enqueue_frontend_styles() {
     global $post;
 
-    // Check for shortcode presence
-    $has_shortcode = has_shortcode($post->post_content, 'new_idea_form') ||
-                     has_shortcode($post->post_content, 'display_ideas') ||
-                     has_shortcode($post->post_content, 'roadmap');
+    // Initialize flags
+    $has_new_idea_form_shortcode = false;
+    $has_display_ideas_shortcode = false;
+    $has_roadmap_shortcode = false;
+    $has_block = false;
 
-    // Check for block presence
-    $has_block = has_block('wp-roadmap-pro/new-idea-form', $post) ||
-                 has_block('wp-roadmap-pro/display-ideas', $post) ||
-                 has_block('wp-roadmap-pro/roadmap', $post);
+    // Check for shortcode presence in the post content
+    if (is_a($post, 'WP_Post')) {
+        $has_new_idea_form_shortcode = has_shortcode($post->post_content, 'new_idea_form');
+        $has_display_ideas_shortcode = has_shortcode($post->post_content, 'display_ideas');
+        $has_roadmap_shortcode = has_shortcode($post->post_content, 'roadmap');
+
+        // Check for block presence
+        $has_block = has_block('wp-roadmap-pro/new-idea-form', $post) ||
+                     has_block('wp-roadmap-pro/display-ideas', $post) ||
+                     has_block('wp-roadmap-pro/roadmap', $post);
+    }
 
     // Enqueue styles if a shortcode or block is loaded
-    if ($has_shortcode || $has_block || is_singular('idea')) {
+    if ($has_new_idea_form_shortcode || $has_display_ideas_shortcode || $has_roadmap_shortcode || $has_block || is_singular('idea')) {
+
         // Enqueue Tailwind CSS
         $tailwind_css_url = plugin_dir_url(__FILE__) . '../dist/styles.css';
         wp_enqueue_style('wp-roadmap-tailwind-styles', $tailwind_css_url);
 
-        // Enqueue your custom frontend styles (this will override Tailwind styles where applicable)
+        // Enqueue your custom frontend styles
         $custom_css_url = plugin_dir_url(__FILE__) . 'assets/css/wp-roadmap-frontend.css';
         wp_enqueue_style('wp-roadmap-frontend-styles', $custom_css_url);
+    
+
+        // Enqueue scripts and localize them as before
+        wp_enqueue_script('wp-roadmap-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
+        wp_localize_script('wp-roadmap-voting', 'wpRoadMapVoting', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
+        ));
+
+        wp_enqueue_script('wp-roadmap-idea-filter', plugin_dir_url(__FILE__) . 'assets/js/idea-filter.js', array('jquery'), '', true);
+        wp_localize_script('wp-roadmap-idea-filter', 'wpRoadMapAjax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
+        ));
     }
-
-    // Enqueue scripts and localize them as before
-    wp_enqueue_script('wp-roadmap-voting', plugin_dir_url(__FILE__) . 'assets/js/voting.js', array('jquery'), null, true);
-    wp_localize_script('wp-roadmap-voting', 'wpRoadMapVoting', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
-    ));
-
-    wp_enqueue_script('wp-roadmap-idea-filter', plugin_dir_url(__FILE__) . 'assets/js/idea-filter.js', array('jquery'), '', true);
-    wp_localize_script('wp-roadmap-idea-filter', 'wpRoadMapAjax', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('wp-roadmap-vote-nonce')
-    ));
 }
 
 add_action('wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles');

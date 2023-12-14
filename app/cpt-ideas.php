@@ -63,13 +63,13 @@ function wp_roadmap_register_default_taxonomies() {
     // Define default taxonomies with their properties
     $default_taxonomies = array(
         'status' => array(
-            'singular' => 'Status',
-            'plural' => 'Status',
+            'singular' => __('Status', 'wp-roadmap'), // Translatable
+            'plural' => __('Status', 'wp-roadmap'),   // Translatable
             'public' => true  // Make status taxonomy private
         ),
         'idea-tag' => array(
-            'singular' => 'Tag',
-            'plural' => 'Tags',
+            'singular' => __('Tag', 'wp-roadmap'),    // Translatable
+            'plural' => __('Tags', 'wp-roadmap'),     // Translatable
             'public' => true  // Keep tag taxonomy public
         )
     );
