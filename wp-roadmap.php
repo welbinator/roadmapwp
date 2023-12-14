@@ -42,11 +42,10 @@ function wp_roadmap_custom_template($template) {
     global $post;
 
     if ('idea' === $post->post_type) {
-        $options = get_option('wp_roadmap_pro_settings');
-        $chosen_idea_template = isset($options['chosen_idea_template']) ? $options['chosen_idea_template'] : 'default';
-        error_log('Chosen Idea Template Option: ' . $chosen_idea_template);
+        $options = get_option('wp_roadmap_settings');
+        $chosen_idea_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
 
-        if ($chosen_idea_template === 'custom' && file_exists(plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php')) {
+        if ($chosen_idea_template === 'plugin' && file_exists(plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php')) {
             return plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php';
         }
     }
@@ -54,4 +53,5 @@ function wp_roadmap_custom_template($template) {
     return $template;
 }
 
-add_filter('single_template', 'wp_roadmap_custom_template'); 
+add_filter('single_template', 'wp_roadmap_custom_template');
+

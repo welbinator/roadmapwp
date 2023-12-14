@@ -228,15 +228,13 @@ function wp_roadmap_redirect_single_idea($template) {
     if ('idea' === $post->post_type) {
         $options = get_option('wp_roadmap_settings');
         $single_idea_page_id = isset($options['single_idea_page']) ? $options['single_idea_page'] : '';
+        $chosen_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
 
-        if ($single_idea_page_id) {
-            $redirect_url = add_query_arg('idea_id', $post->ID, get_permalink($single_idea_page_id));
-            wp_redirect($redirect_url);
-            exit;
-        }
     }
 
     return $template;
 }
 
 add_filter('single_template', 'wp_roadmap_redirect_single_idea');
+
+
