@@ -54,4 +54,4 @@ function wp_roadmap_custom_template($template) {
     return $template;
 }
 
-add_filter('single_template', 'wp_roadmap_custom_template');
+add_filter('single_template', 'wp_roadmap_custom_template'); 
