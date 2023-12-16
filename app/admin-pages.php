@@ -170,9 +170,7 @@ function wp_roadmap_taxonomies_page() {
     if (!current_user_can('manage_options')) {
         wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'wp-roadmap'));
     }
-    // Check if Pro version is active
-    $is_pro_active = function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active();
-
+   
     // Fetch custom taxonomies
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
 

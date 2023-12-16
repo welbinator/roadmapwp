@@ -32,12 +32,6 @@ get_header(); ?>
                     // Always include 'idea-tag' taxonomy
                     $taxonomies = array('idea-tag');
 
-                    // Include custom taxonomies only if Pro version is active
-                    if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
-                        $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
-                        $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
-                    }
-
                     // Exclude 'status' taxonomy
                     $exclude_taxonomies = array('status');
                     $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
