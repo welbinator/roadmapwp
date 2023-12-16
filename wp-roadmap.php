@@ -56,8 +56,8 @@ function wp_roadmap_custom_template($template) {
     global $post;
 
     if ('idea' === $post->post_type) {
-        $options = get_option('wp_roadmap_settings');
-        $chosen_idea_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
+        $pro_options = get_option('wp_roadmap_pro_settings');
+        $chosen_idea_template = isset($pro_options['single_idea_template']) ? $pro_options['single_idea_template'] : 'plugin';
 
         if ($chosen_idea_template === 'plugin' && file_exists(plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php')) {
             return plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php';

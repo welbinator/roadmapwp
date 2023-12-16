@@ -31,7 +31,7 @@ function wp_roadmap_new_idea_form_shortcode() {
 
     $taxonomies = get_object_taxonomies('idea', 'objects');
     foreach ($taxonomies as $taxonomy) {
-        if ($taxonomy->name !== 'status' && ($taxonomy->name === 'idea-tag' || (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()))) {
+        if ( $taxonomy->name !== 'status' && ( $taxonomy->name === 'idea-tag' ) ) {
             $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
             if (!empty($terms) && !is_wp_error($terms)) {
@@ -116,12 +116,10 @@ function wp_roadmap_display_ideas_shortcode() {
     // Always include 'idea-tag' taxonomy
     $taxonomies = array('idea-tag');
 
-    // Include custom taxonomies only if Pro version is active
-    if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
-        $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
-        $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
-    }
-
+    // Include custom taxonomies 
+    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+    $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
+    
     // Exclude 'status' taxonomy
     $exclude_taxonomies = array('status');
     $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
@@ -378,10 +376,8 @@ function wp_roadmap_single_idea_shortcode($atts) {
             <?php
             // Taxonomy logic
             $taxonomies = ['idea-tag'];
-            if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
-                $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', []);
-                $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
-            }
+            $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', []);
+            $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
             $exclude_taxonomies = ['status'];
             $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
             $terms = wp_get_post_terms($post->ID, $taxonomies, ['exclude' => $exclude_taxonomies]);
