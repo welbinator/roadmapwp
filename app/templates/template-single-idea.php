@@ -14,20 +14,20 @@
 get_header(); ?>
 
 <main id="primary" class="flex-grow px-4 py-8 site-main">
-    <div class="roadmap_wrapper container mx-auto">
-        <article class="flex flex-col space-y-8">
-            <?php
-            while ( have_posts() ) :
-                the_post();
-                $idea_id = get_the_ID();
-                $vote_count = get_post_meta($idea_id, 'idea_votes', true) ?: '0';
-                ?>
-                <div id="post-<?php the_ID(); ?>" <?php post_class('p-6 flex flex-col space-y-2'); ?>>
-                    <header class="entry-header">
-                        <?php the_title( '<h1 class="entry-title text-4xl font-bold">', '</h1>' ); ?>
-                        <p class="publish-date text-gray-600"><?php echo get_the_date(); ?></p> <!-- Published date -->
-                    </header><!-- .entry-header -->
 
+<div class="roadmap-wrapper container mx-auto">
+    <article class="flex flex-col space-y-8">
+        <?php
+        while ( have_posts() ) :
+            the_post();
+            $idea_id = get_the_ID();
+            $vote_count = get_post_meta($idea_id, 'idea_votes', true) ?: '0';
+            ?>
+            <div id="post-<?php the_ID(); ?>" <?php post_class('p-6 flex flex-col space-y-2'); ?>>
+                <header class="entry-header">
+                    <?php the_title( '<h1 class="entry-title text-4xl font-bold">', '</h1>' ); ?>
+                    <p class="publish-date text-gray-600"><?php echo get_the_date(); ?></p> <!-- Published date -->
+                </header><!-- .entry-header -->
                     <?php
                     // Always include 'idea-tag' taxonomy
                     $taxonomies = array('idea-tag');
@@ -110,13 +110,15 @@ get_header(); ?>
                     </footer><!-- .entry-footer -->
                 
 
-                <?php
-                if ( comments_open() || get_comments_number() ) :
-                    comments_template();
-                endif;
-            endwhile; // End of the loop.
-            ?>
-        </article>
+
+            <?php
+            if ( comments_open() || get_comments_number() ) :
+                comments_template();
+            endif;
+        endwhile; // End of the loop.
+        ?>
+    </article>
+
     </div>
 </main><!-- #main -->
 
