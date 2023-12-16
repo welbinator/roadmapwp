@@ -3,7 +3,7 @@
 Plugin Name: WP Road Map
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
-Version:     1.0.5
+Version:     1.1.0
 Author:      James Welbes
 Author URI:  https://apexbranding.design
 License:     GPL2
@@ -37,7 +37,10 @@ require_once plugin_dir_path(__FILE__) . 'app/admin-functions.php';
 require_once plugin_dir_path(__FILE__) . 'app/cpt-ideas.php';
 require_once plugin_dir_path(__FILE__) . 'app/ajax-handlers.php';
 require_once plugin_dir_path(__FILE__) . 'app/admin-pages.php';
-require_once plugin_dir_path(__FILE__) . 'app/shortcodes.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/display-ideas.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/new-idea-form.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/single-idea.php';
 
 function wp_roadmap_on_activation() {
     // Directly call the function that registers your taxonomies here
