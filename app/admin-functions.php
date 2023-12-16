@@ -201,34 +201,7 @@ add_action('admin_menu', 'wp_roadmap_add_admin_menu');
  * @return void
  */
 
- function roadmapwp_pro_license_page() {
-	add_settings_section(
-		'roadmapwp_pro_license',
-		__( 'License' ),
-		'roadmapwp_pro_license_key_settings_section',
-		ROADMAPWP_PRO_PLUGIN_LICENSE_PAGE
-	);
-	add_settings_field(
-		'roadmapwp_pro_license_key',
-		'<label for="roadmapwp_pro_license_key">' . __( 'License Key' ) . '</label>',
-		'roadmapwp_pro_license_key_settings_field',
-		ROADMAPWP_PRO_PLUGIN_LICENSE_PAGE,
-		'roadmapwp_pro_license',
-	);
-	?>
-	<div class="wrap">
-		<h2><?php esc_html_e( 'License Options' ); ?></h2>
-		<form method="post" action="options.php">
-
-			<?php
-			do_settings_sections( ROADMAPWP_PRO_PLUGIN_LICENSE_PAGE );
-			settings_fields( 'roadmapwp_pro_license' );
-			submit_button();
-			?>
-
-		</form>
-	<?php
-}
+ 
 
 
 
