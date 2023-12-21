@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (response.success) {
-                    $('.idea-vote-box[data-idea-id="' + post_id + '"] .idea-vote-count').text(response.data.new_count);
+                    $('.idea-vote-box[data-idea-id="' + post_id + '"] .idea-vote-count').text(response.data.new_count + " votes");
                     
                     if (response.data.voted) {
                         // Vote was added, set the cookie

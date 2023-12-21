@@ -190,9 +190,58 @@ function wp_roadmap_add_admin_menu() {
         'wp_roadmap_taxonomies_page'
     );
 
+    // Check if Pro version is active, then add the submenu
+    if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
+        add_submenu_page(
+            'wp-roadmap',
+            __('License', 'wp-roadmap'),
+            __('License', 'wp-roadmap'),
+            'manage_options',
+            'roadmapwp-license', // You can use a constant here if defined
+            'roadmapwp_pro_license_page' // Ensure this function exists and renders the license page
+        );
+    }
+
     remove_submenu_page('wp-roadmap', 'wp-roadmap');
 }
 add_action('admin_menu', 'wp_roadmap_add_admin_menu');
+
+/**
+ * Adds the plugin license page to the admin menu.
+ *
+ * @return void
+ */
+
+ function roadmapwp_pro_license_page() {
+	add_settings_section(
+		'roadmapwp_pro_license',
+		__( 'License' ),
+		'roadmapwp_pro_license_key_settings_section',
+		ROADMAPWP_PRO_PLUGIN_LICENSE_PAGE
+	);
+	add_settings_field(
+		'roadmapwp_pro_license_key',
+		'<label for="roadmapwp_pro_license_key">' . __( 'License Key' ) . '</label>',
+		'roadmapwp_pro_license_key_settings_field',
+		ROADMAPWP_PRO_PLUGIN_LICENSE_PAGE,
+		'roadmapwp_pro_license',
+	);
+	?>
+	<div class="wrap">
+		<h2><?php esc_html_e( 'License Options' ); ?></h2>
+		<form method="post" action="options.php">
+
+			<?php
+			do_settings_sections( ROADMAPWP_PRO_PLUGIN_LICENSE_PAGE );
+			settings_fields( 'roadmapwp_pro_license' );
+			submit_button();
+			?>
+
+		</form>
+	<?php
+}
+
+
 
 /**
  * Registers settings for the RoadMap plugin.
