@@ -7,7 +7,7 @@ function wp_roadmap_settings_page() {
     $options = get_option('wp_roadmap_settings');
     $selected_page = isset($options['single_idea_page']) ? $options['single_idea_page'] : '';
      
-    $allow_comments = isset($options['allow_comments']) ? $options['allow_comments'] : '';
+    
     
     // New Styling Section
     $vote_button_bg_color = isset($options['vote_button_bg_color']) ? $options['vote_button_bg_color'] : '#0000ff'; // Default to blue if not set
@@ -34,7 +34,10 @@ function wp_roadmap_settings_page() {
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Allow Comments on Ideas', 'wp-roadmap'); ?></th>
                     <td>
-                        <input type="checkbox" name="wp_roadmap_settings[allow_comments]" value="1" <?php checked(1, $allow_comments); ?>/>
+                        <?php
+                        // Filter hook to allow the Pro version to override this setting
+                        echo apply_filters('wp_roadmap_enable_comments_setting', '<a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
+                        ?>
                     </td>
                 </tr>
                 
@@ -44,7 +47,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
+                        echo apply_filters('wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -53,7 +56,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // This filter will be handled in choose-idea-template.php
-                        echo apply_filters('wp_roadmap_single_idea_template_setting', '');
+                        echo apply_filters('wp_roadmap_single_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -78,7 +81,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
+                        echo apply_filters('wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -87,7 +90,7 @@ function wp_roadmap_settings_page() {
                     <td>
                         <?php
                         // Filter hook to allow the Pro version to override this setting
-                        echo apply_filters('wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
+                        echo apply_filters('wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>');
                         ?>
                     </td>
                 </tr>
@@ -167,9 +170,7 @@ function wp_roadmap_taxonomies_page() {
     if (!current_user_can('manage_options')) {
         wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'wp-roadmap'));
     }
-    // Check if Pro version is active
-    $is_pro_active = function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active();
-
+   
     // Fetch custom taxonomies
     $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
 
@@ -202,7 +203,7 @@ function wp_roadmap_taxonomies_page() {
         echo $pro_feature;
         echo '<h2>Existing Taxonomies</h2>';
     } else {
-        echo '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>';
+        echo '<a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'wp-roadmap') . '</a>';
         echo '<h2>Existing Taxonomies</h2>';
     }
 

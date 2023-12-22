@@ -132,7 +132,7 @@ function wp_roadmap_filter_ideas() {
                                 Vote
                             </button>
                             
-                        <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+                        <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
                             </div>
                         </div>
                     </div>

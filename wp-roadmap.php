@@ -3,13 +3,32 @@
 Plugin Name: WP Road Map
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
-Version:     1.0
+Version:     1.0.5
 Author:      James Welbes
 Author URI:  https://apexbranding.design
 License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: wp-roadmap
 */
+
+function wp_roadmap_free_activate() {
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+    if (is_plugin_active('wproadmap-pro/wp-roadmap-pro.php')) {
+        // Schedule the admin notice
+        add_action('admin_notices', 'wp_roadmap_free_admin_notice');
+
+        // Redirect back to plugins page
+        wp_redirect(admin_url('plugins.php'));
+        exit;
+    }
+    // Additional activation code for Free version goes here...
+}
+register_activation_hook(__FILE__, 'wp_roadmap_free_activate');
+
+function wp_roadmap_free_admin_notice() {
+    echo '<div class="notice notice-warning is-dismissible"><p>RoadMapWP Pro is already installed. The free version has been deactivated.</p></div>';
+}
+
 
 defined('ABSPATH') or die('No script kiddies please!');
 
@@ -42,8 +61,8 @@ function wp_roadmap_custom_template($template) {
     global $post;
 
     if ('idea' === $post->post_type) {
-        $options = get_option('wp_roadmap_settings');
-        $chosen_idea_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
+        $pro_options = get_option('wp_roadmap_pro_settings');
+        $chosen_idea_template = isset($pro_options['single_idea_template']) ? $pro_options['single_idea_template'] : 'plugin';
 
         if ($chosen_idea_template === 'plugin' && file_exists(plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php')) {
             return plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php';

@@ -16,10 +16,12 @@ function wp_roadmap_new_idea_form_shortcode() {
     
     $hide_submit_idea_heading = apply_filters('wp_roadmap_hide_custom_idea_heading', false);
     $new_submit_idea_heading = apply_filters('wp_roadmap_custom_idea_heading_text', 'Submit new Idea');
+
     ?>
     <div class="roadmap-wrapper container mx-auto">
     <div class="new_idea_form_frontend">
     <?php
+
     if (!$hide_submit_idea_heading) {
         $output .= '<h2>' . esc_html($new_submit_idea_heading) . '</h2>';
     }
@@ -32,7 +34,7 @@ function wp_roadmap_new_idea_form_shortcode() {
 
     $taxonomies = get_object_taxonomies('idea', 'objects');
     foreach ($taxonomies as $taxonomy) {
-        if ($taxonomy->name !== 'status' && ($taxonomy->name === 'idea-tag' || (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()))) {
+        if ( $taxonomy->name !== 'status' && ( $taxonomy->name === 'idea-tag' ) ) {
             $terms = get_terms(array('taxonomy' => $taxonomy->name, 'hide_empty' => false));
 
             if (!empty($terms) && !is_wp_error($terms)) {
@@ -59,7 +61,7 @@ function wp_roadmap_new_idea_form_shortcode() {
     $output .= '</form>';
     $output .= '</div>';
     $output .= '</div>';
-    
+
     return $output;
 }
 
@@ -117,12 +119,10 @@ function wp_roadmap_display_ideas_shortcode() {
     // Always include 'idea-tag' taxonomy
     $taxonomies = array('idea-tag');
 
-    // Include custom taxonomies only if Pro version is active
-    if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
-        $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
-        $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
-    }
-
+    // Include custom taxonomies 
+    $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', array());
+    $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
+    
     // Exclude 'status' taxonomy
     $exclude_taxonomies = array('status');
     $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
@@ -138,11 +138,13 @@ function wp_roadmap_display_ideas_shortcode() {
     // Check if the pro version is installed and settings are enabled
     $hide_display_ideas_heading = apply_filters('wp_roadmap_hide_display_ideas_heading', false);
     $new_display_ideas_heading = apply_filters('wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas');
+
 ?>
 <div class="roadmap-wrapper container mx-auto">
    <div class="browse_ideas_frontend">
     <h2> <?php echo esc_html($new_display_ideas_heading); ?> </h2>
        <?php if (!$hide_display_ideas_heading) {
+
             echo $output;
             
         }
@@ -231,7 +233,7 @@ function wp_roadmap_display_ideas_shortcode() {
                                         </svg>
                                         Vote
                                     </button>
-                                    <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+                                    <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
                                 </div>
                             </div>
                         </div>
@@ -280,7 +282,9 @@ function wp_roadmap_roadmap_shortcode() {
 
     ob_start(); // Start output buffering
     ?>
+
     <div class="roadmap-wrapper container mx-auto">
+
     <div class="roadmap-grid">
         <?php
         $statuses = array('Up Next', 'On Roadmap');
@@ -339,6 +343,7 @@ function wp_roadmap_roadmap_shortcode() {
         ?>
     </div>
     </div> <!-- Close grid -->
+    </div>
     <?php
     return ob_get_clean(); // Return the buffered output
 }
@@ -369,7 +374,9 @@ function wp_roadmap_single_idea_shortcode($atts) {
     ob_start();
     ?>
     <main id="primary" class="site-main">
+
     <div class="roadmap-wrapper container mx-auto">
+
         <article id="post-<?php echo esc_attr($post->ID); ?>" <?php post_class(); ?>>
             <header class="entry-header">
                 <h1 class="entry-title"><?php echo esc_html($post->post_title); ?></h1>
@@ -379,10 +386,8 @@ function wp_roadmap_single_idea_shortcode($atts) {
             <?php
             // Taxonomy logic
             $taxonomies = ['idea-tag'];
-            if (function_exists('is_wp_roadmap_pro_active') && is_wp_roadmap_pro_active()) {
-                $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', []);
-                $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
-            }
+            $custom_taxonomies = get_option('wp_roadmap_custom_taxonomies', []);
+            $taxonomies = array_merge($taxonomies, array_keys($custom_taxonomies));
             $exclude_taxonomies = ['status'];
             $taxonomies = array_diff($taxonomies, $exclude_taxonomies);
             $terms = wp_get_post_terms($post->ID, $taxonomies, ['exclude' => $exclude_taxonomies]);
@@ -423,7 +428,7 @@ function wp_roadmap_single_idea_shortcode($atts) {
                         </svg>
                         Vote
             </button>
-            <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+            <div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
             </div>
 
             <footer class="entry-footer">

@@ -190,9 +190,20 @@ function wp_roadmap_add_admin_menu() {
         'wp_roadmap_taxonomies_page'
     );
 
+
     remove_submenu_page('wp-roadmap', 'wp-roadmap');
 }
 add_action('admin_menu', 'wp_roadmap_add_admin_menu');
+
+/**
+ * Adds the plugin license page to the admin menu.
+ *
+ * @return void
+ */
+
+ 
+
+
 
 /**
  * Registers settings for the RoadMap plugin.
