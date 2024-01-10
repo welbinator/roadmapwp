@@ -70,10 +70,16 @@ function wp_roadmap_enqueue_admin_styles($hook) {
         wp_enqueue_style('wp-roadmap-idea-admin-styles', $css_url);
     }
 
-    // Enqueue CSS for specific plugin admin pages
-    if (in_array($hook, ['roadmap_page_wp-roadmap-taxonomies', 'roadmap_page_wp-roadmap-settings'])) {
+    // Enqueue CSS for taxonomies admin page
+    if ($hook === 'roadmap_page_wp-roadmap-taxonomies') {
         $css_url = plugin_dir_url(__FILE__) . 'assets/css/admin-styles.css';
         wp_enqueue_style('wp-roadmap-general-admin-styles', $css_url);
+    }
+
+    // Enqueue CSS for help page
+    if ($hook === 'roadmap_page_wp-roadmap-help') {
+        $tailwind_css_url = plugin_dir_url(__FILE__) . '../dist/styles.css';
+        wp_enqueue_style('wp-roadmap-tailwind-styles', $tailwind_css_url);
     }
 
     // Enqueue JS for the 'Taxonomies' admin page
