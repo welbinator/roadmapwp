@@ -314,17 +314,17 @@ function wp_roadmap_free_help_page() {
         <h2 class="text-xl font-bold tracking-tight mb-2"><a href="https://roadmapwp.com/kb_category/shortcodes/" target="_blank">Shortcodes</a></h2>
         
             <div class="grid gap-6">
-                <div class="border rounded-lg p-4">
+                <div class="border-2 rounded-lg p-4">
                     <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/new-idea-form-shortcode/" target="_blank">[new_idea_form]</a></h3>
                     <p class="text-gray-500 leading-6">Displays form for submitting ideas</p>
                 </div>
 
-                <div class="border rounded-lg p-4">
+                <div class="border-2 rounded-lg p-4">
                     <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/display-ideas-shortcode/" target="_blank">[display_ideas]</a> </h3>
                     <p class="text-gray-500 leading-6">Displays grid filled with published ideas</p>
                 </div>
 
-                <div class="border rounded-lg p-4">
+                <div class="border-2 rounded-lg p-4">
                     <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/roadmap-shortcode/" target=_blank">[roadmap status=""]</a> </h3>
                     <p class="text-gray-500 leading-6">Displays columns filled with ideas based on statuses entered in the status parameter</p>
                     <p class="text-gray-500 leading-6">Use "status" parameter to choose which status or statuses to display Example: [roadmap status="Up Next, On Roadmap"]</p>
@@ -339,7 +339,7 @@ function wp_roadmap_free_help_page() {
                     </ul>
                 </div>
 
-                <div class="border rounded-lg p-4">
+                <div class="border-2 rounded-lg p-4">
                     <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/roadmap-with-tabs-shortcode/" target="_blank">[roadmap_tabs status=""]</a> </h3>
                     <p class="text-gray-500 leading-6">Displays tabs based on statuses entered in the status parameter. Clicking a tab displays corresponding ideas</p>
                     <p class="text-gray-500 leading-6">Use "status" parameter to choose which status or statuses to display Example: [roadmap_tabs status="Up Next, On Roadmap"]</p>
@@ -357,17 +357,17 @@ function wp_roadmap_free_help_page() {
         
         <h2 class="text-xl font-bold tracking-tight mt-6 mb-2"><a href="https://roadmapwp.com/kb_category/blocks/" target="_blank">Blocks (pro only)</a></h2>
         <div class="grid gap-6">
-            <div class="border rounded-lg p-4">
+            <div class="border-2 rounded-lg p-4">
                 <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/new-idea-form-block/" target="_target">New Idea Form</a> </h3>
                 <p class="text-gray-500 leading-6">Displays form for submitting ideas</p>
             </div>
 
-            <div class="border rounded-lg p-4">
+            <div class="border-2 rounded-lg p-4">
                 <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/display-ideas-block/" target="_blank">Display Ideas</a> </h3>
                 <p class="text-gray-500 leading-6">Displays grid filled with published ideas</p>
             </div>
 
-            <div class="border rounded-lg p-4">
+            <div class="border-2 rounded-lg p-4">
                 <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/roadmap-block/" target="_blank">Roadmap</a> </h3>
                 <p class="text-gray-500 leading-6">Displays columns filled with ideas based on statuses selected.</p>
                 <p class="text-gray-500 leading-6">After adding the block to the page, in the block editor choose which statuses you want to display.</p>
@@ -382,7 +382,7 @@ function wp_roadmap_free_help_page() {
                 </ul>
             </div>
 
-            <div class="border rounded-lg p-4">
+            <div class="border-2 rounded-lg p-4">
                 <h3 class="font-semibold text-lg"><a href="https://roadmapwp.com/kb_article/roadmap-tabs-block/" target="_blank">Roadmap Tabs</a> </h3>
                 <p class="text-gray-500 leading-6">Displays tabs based on statuses selected. Clicking a tab displays corresponding ideas</p>
                 <p class="text-gray-500 leading-6">After adding the block to the page, in the block editor choose which statuses you want to display.</p>
