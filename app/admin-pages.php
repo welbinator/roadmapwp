@@ -263,7 +263,7 @@ function wp_roadmap_taxonomies_page() {
     $taxonomies = get_taxonomies(array('object_type' => array('idea')), 'objects');
 
     foreach ($taxonomies as $taxonomy) {
-        if (!$is_pro_active && $taxonomy->name !== 'idea-tag') {
+        if ($taxonomy->name !== 'idea-tag') {
             continue; // Skip non-idea-tag taxonomies if Pro is not active
         }
         if ($taxonomy->name === 'status') {
