@@ -3,7 +3,7 @@
 Plugin Name: WP Road Map
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
-Version:     1.1.0
+Version:     1.1.1
 Author:      James Welbes
 Author URI:  https://apexbranding.design
 License:     GPL2
@@ -13,7 +13,7 @@ Text Domain: wp-roadmap
 
 function wp_roadmap_free_activate() {
     include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-    if (is_plugin_active('wproadmap-pro/wp-roadmap-pro.php')) {
+    if (is_plugin_active('roadmapwp-pro/wp-roadmap-pro.php')) {
         // Schedule the admin notice
         add_action('admin_notices', 'wp_roadmap_free_admin_notice');
 

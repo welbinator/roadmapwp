@@ -96,10 +96,8 @@ h3.idea-title a {
     margin-top: 10px;
 }
 
-.roadmap-idea {
-    /* box-shadow: 0px 0px 5px #0000002e;
-    padding: 10px;
-    border-radius: 5px; */
+.filter-match-type label {
+    display: unset;
 }
 
 .wp-roadmap-ideas-list {
@@ -146,13 +144,12 @@ h3.idea-title a {
 
 
 /* roadmap shortcode */
-.roadmap-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+
+form.idea-status-update-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-
-
 
 /* Media query for responsiveness */
 @media screen and (max-width: 768px) {

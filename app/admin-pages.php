@@ -30,7 +30,7 @@ function wp_roadmap_settings_page() {
             do_settings_sections('wp_roadmap_settings');
             ?>
 
-            <table class="form-table">
+<table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Allow Comments on Ideas', 'wp-roadmap'); ?></th>
                     <td>
@@ -97,10 +97,19 @@ function wp_roadmap_settings_page() {
            
                 <tr>
                     <td style="padding:0;padding-block:20px;">
+                        <hr>
                         <h1>Styling</h1>
+                        <hr>
                     </td>
                 </tr>
-            <!-- Styling section -->
+
+
+                <tr>
+                    <td style="padding:0;padding-block:20px;">
+                        <h4 style="margin: 0px;">Vote Button</h4>
+                    </td>
+                </tr>
+
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Vote Button Background Color', 'wp-roadmap'); ?></th>
                     <td>
@@ -108,13 +117,23 @@ function wp_roadmap_settings_page() {
                         <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
                     </td>
                 </tr>
+
+
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Vote Button Text Color', 'wp-roadmap'); ?></th>
                     <td>
                         <input type="text" name="wp_roadmap_settings[vote_button_text_color]" value="<?php echo esc_attr($vote_button_text_color); ?>" class="wp-roadmap-color-picker"/>
-                        <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
+                       
+                    </td>
+                    
+                </tr>
+                <tr><td><hr></td></tr>
+                <tr>
+                    <td style="padding:0;padding-block:20px;">
+                        <h4 style="margin: 0px;">Filters</h4>
                     </td>
                 </tr>
+
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Filter Tags Background Color', 'wp-roadmap'); ?></th>
                     <td>
@@ -122,6 +141,8 @@ function wp_roadmap_settings_page() {
                         <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
                     </td>
                 </tr>
+
+
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Filter Tags Text Color', 'wp-roadmap'); ?></th>
                     <td>
@@ -129,11 +150,43 @@ function wp_roadmap_settings_page() {
                         <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
                     </td>
                 </tr>
+
+
                 <tr valign="top">
                     <th scope="row"><?php esc_html_e('Filters Background Color', 'wp-roadmap'); ?></th>
                     <td>
                         <input type="text" name="wp_roadmap_settings[filters_bg_color]" value="<?php echo esc_attr($filters_bg_color); ?>" class="wp-roadmap-color-picker"/>
                         <!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
+                    </td>
+                </tr>
+                <tr><td><hr></td></tr>
+                <tr>
+                    <td style="padding:0;padding-block:20px;">
+                        <h4 style="margin: 0px;">Roadmap Tabs</h4>
+                    </td>
+                </tr>
+
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Roadmap Tabs Container Background Color', 'wp-roadmap'); ?></th>
+                    <td>
+                    <a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__('Available in Pro', 'wp-roadmap'); ?></a>
+                        
+                    </td>
+                </tr>
+
+
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Roadmap Tabs Background Color', 'wp-roadmap'); ?></th>
+                    <td>
+                    <a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__('Available in Pro', 'wp-roadmap'); ?></a>
+                    </td>
+                </tr>
+
+
+                <tr valign="top">
+                    <th scope="row"><?php esc_html_e('Roadmap Tabs Text Color', 'wp-roadmap'); ?></th>
+                    <td>
+                    <a target="_blank" href="https://roadmapwp.com/download" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__('Available in Pro', 'wp-roadmap'); ?></a>
                     </td>
                 </tr>
             </table>
