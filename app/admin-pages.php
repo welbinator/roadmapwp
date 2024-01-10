@@ -304,4 +304,76 @@ function wp_roadmap_taxonomies_page() {
     }
 }
 
+function wp_roadmap_free_help_page() {
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <hr />
+        <h2 style="font-size: 1.5em;"><a href="https://roadmapwp.com/kb_category/shortcodes/" target="_blank">Shortcodes</a></h2>
+        <hr />
+        <ul>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/new-idea-form-shortcode/" target="_blank">New Idea Form:</a></strong><span> [new_idea_form]</span></li>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/display-ideas-shortcode/" target="_blank">Display Ideas:</a></strong><span> [display_ideas]</span></li>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/roadmap-shortcode/" target=_blank">Roadmap:</a></strong><span> [roadmap status=""]</span></li>
+            <li style="font-size: 1.1em;">Use "status" parameter to choose which status or statuses to display Example: [roadmap status="Up Next, On Roadmap"]</li>
+            <li style="font-size: 1.1em;">Possible values for status parameter (these are the default options but can be changed in Taxonomies page):</li>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>New Idea</li>
+                    <li>Not Now</li>
+                    <li>Maybe</li>
+                    <li>Up Next</li>
+                    <li>On Roadmap</li>
+                    <li>Closed</li>
+                </ul>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/roadmap-with-tabs-shortcode/" target="_blank">Roadmap Tabs:</a></strong><span> [roadmap_tabs status=""] (Pro Only)</span></li>
+            <li style="font-size: 1.1em;">Use "status" parameter to choose which status or statuses to display Example: [roadmap_tabs status="Up Next, On Roadmap"]</li>
+            <li style="font-size: 1.1em;">Possible values for status parameter (these are the default options but can be changed in Taxonomies page):</li>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>New Idea</li>
+                    <li>Not Now</li>
+                    <li>Maybe</li>
+                    <li>Up Next</li>
+                    <li>On Roadmap</li>
+                    <li>Closed</li>
+                </ul>
+        </ul>
+        <hr />
+        <h2 style="font-size: 1.5em;"><a href="https://roadmapwp.com/kb_category/blocks/" target="_blank">Blocks</a> (Pro Only)</h2>
+        <hr />
+        <ul>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/new-idea-form-block/" target="_target">New Idea Form</a></strong></li>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/display-ideas-block/" target="_blank">Display Ideas</a></strong></li>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/roadmap-block/" target="_blank">Roadmap</a></strong></li>
+            <li style="font-size: 1.1em;">After adding the block to the page, in the block editor choose which statuses you want to display.<li>
+            <li style="font-size: 1.1em;">Available statuses (these are the default options but can be changed in Taxonomies page):</li>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>New Idea</li>
+                    <li>Not Now</li>
+                    <li>Maybe</li>
+                    <li>Up Next</li>
+                    <li>On Roadmap</li>
+                    <li>Closed</li>
+                </ul>
+            <li style="font-size: 1.1em;"><strong><a href="https://roadmapwp.com/kb_article/roadmap-tabs-block/" target="_blank">Roadmap Tabs</a></strong></li>
+            <li style="font-size: 1.1em;">After adding the block to the page, in the block editor choose which statuses you want to display.</li>
+            <li style="font-size: 1.1em;">Available statuses (these are the default options but can be changed in Taxonomies page):</li>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>New Idea</li>
+                    <li>Not Now</li>
+                    <li>Maybe</li>
+                    <li>Up Next</li>
+                    <li>On Roadmap</li>
+                    <li>Closed</li>
+                </ul>
+        </ul>
+        <!-- Add more content or instructions here as needed -->
+    </div>
+    <style>
+        li {
+            margin: 10px;
+        }
+        </style>
+    <?php
+}
+
 

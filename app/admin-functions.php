@@ -190,6 +190,15 @@ function wp_roadmap_add_admin_menu() {
         'wp_roadmap_taxonomies_page'
     );
 
+    add_submenu_page(
+        'wp-roadmap',
+        __('Help', 'wp-roadmap'),
+        __('Help', 'wp-roadmap'),
+        'manage_options',
+        'wp-roadmap-help',
+        'wp_roadmap_free_help_page' // This is the function you created
+    );
+
 
     remove_submenu_page('wp-roadmap', 'wp-roadmap');
 }
