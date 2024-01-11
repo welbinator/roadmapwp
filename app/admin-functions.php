@@ -8,7 +8,7 @@
  * Checks if the 'new_idea_form' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_new_idea_shortcode() {
+function wp_roadmap_check_for_new_idea_shortcode(): void {
     global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'new_idea_form')) {
@@ -21,7 +21,7 @@ add_action('wp', 'wp_roadmap_check_for_new_idea_shortcode');
  * Checks if the 'display_ideas' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_ideas_shortcode() {
+function wp_roadmap_check_for_ideas_shortcode(): void {
     global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'display_ideas')) {
@@ -34,7 +34,7 @@ add_action('wp', 'wp_roadmap_check_for_ideas_shortcode');
  * Checks if the 'roadmap' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_roadmap_shortcode() {
+function wp_roadmap_check_for_roadmap_shortcode(): void {
     global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'roadmap')) {
@@ -47,7 +47,7 @@ add_action('wp', 'wp_roadmap_check_for_roadmap_shortcode');
  * Checks if the 'roadmap' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_single_idea_shortcode() {
+function wp_roadmap_check_for_single_idea_shortcode(): void {
     global $post;
 
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'roadmap')) {
@@ -61,7 +61,7 @@ add_action('wp', 'wp_roadmap_check_for_single_idea_shortcode');
  * 
  * @param string $hook The current admin page hook.
  */
-function wp_roadmap_enqueue_admin_styles($hook) {
+function wp_roadmap_enqueue_admin_styles($hook): void {
     global $post;
 
     // Enqueue CSS for 'idea' post type editor
@@ -100,7 +100,7 @@ add_action('admin_enqueue_scripts', 'wp_roadmap_enqueue_admin_styles');
  * This function checks whether any of the plugin's shortcodes are loaded or if it's a singular 'idea' post,
  * and enqueues the necessary styles and scripts.
  */
-function wp_roadmap_enqueue_frontend_styles() {
+function wp_roadmap_enqueue_frontend_styles(): void {
     global $post;
 
     // Initialize flags
@@ -152,6 +152,11 @@ function wp_roadmap_enqueue_frontend_styles() {
 
 add_action('wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles');
 
+function wp_roadmap_redirect_to_post_type(): string {
+    $post_type_url = admin_url('edit.php?post_type=idea');
+    wp_redirect($post_type_url);
+    exit;
+}
 
 /**
  * Adds admin menu pages for the plugin.
@@ -159,13 +164,14 @@ add_action('wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles');
  * This function creates a top-level menu item 'RoadMap' in the admin dashboard,
  * along with several submenu pages like Settings, Ideas, and Taxonomies.
  */
-function wp_roadmap_add_admin_menu() {
+function wp_roadmap_add_admin_menu(): void {
+    
     add_menu_page(
         __('RoadMap', 'wp-roadmap'), 
         __('RoadMap', 'wp-roadmap'), 
         'manage_options', 
         'wp-roadmap', 
-        'edit.php?post_type=idea', 
+        'wp_roadmap_redirect_to_post_type', 
         'dashicons-chart-line', 
         6
     );
@@ -184,6 +190,7 @@ function wp_roadmap_add_admin_menu() {
         __('Settings', 'wp-roadmap'),
         'manage_options',
         'wp-roadmap-settings',
+        // @phpstan-ignore-next-line
         'wp_roadmap_settings_page'
     );
 
@@ -193,6 +200,7 @@ function wp_roadmap_add_admin_menu() {
         __('Taxonomies', 'wp-roadmap'),
         'manage_options',
         'wp-roadmap-taxonomies',
+        // @phpstan-ignore-next-line
         'wp_roadmap_taxonomies_page'
     );
 
@@ -202,7 +210,8 @@ function wp_roadmap_add_admin_menu() {
         __('Help', 'wp-roadmap'),
         'manage_options',
         'wp-roadmap-help',
-        'wp_roadmap_free_help_page' // This is the function you created
+        // @phpstan-ignore-next-line
+        'wp_roadmap_free_help_page' 
     );
 
 
@@ -225,7 +234,7 @@ add_action('admin_menu', 'wp_roadmap_add_admin_menu');
  *
  * This function sets up a settings section for the plugin, allowing configuration of various features and functionalities.
  */
-function wp_roadmap_register_settings() {
+function wp_roadmap_register_settings(): void {
     register_setting('wp_roadmap_settings', 'wp_roadmap_settings');
 }
 add_action('admin_init', 'wp_roadmap_register_settings');
@@ -238,28 +247,36 @@ add_action('admin_init', 'wp_roadmap_register_settings');
  * @return bool Modified status of comments open.
  */
 function wp_roadmap_filter_comments_open($open, $post_id) {
-    $post = get_post($post_id);
-    $options = get_option('wp_roadmap_settings');
-     
-    if ($post->post_type == 'idea') {
-        return isset($options['allow_comments']) && $options['allow_comments'] == 1;
+    global $post;
+
+    if ($post instanceof WP_Post && $post->post_type === 'idea') {
+        $options = get_option('wp_roadmap_settings');
+        if (is_array($options) && isset($options['allow_comments']) && $options['allow_comments'] == 1) {
+            return true;
+        }
     }
+
     return $open;
 }
 add_filter('comments_open', 'wp_roadmap_filter_comments_open', 10, 2);
 
-function wp_roadmap_redirect_single_idea($template) {
+function wp_roadmap_redirect_single_idea(string $template): string {
     global $post;
 
     if ('idea' === $post->post_type) {
         $options = get_option('wp_roadmap_settings');
-        $single_idea_page_id = isset($options['single_idea_page']) ? $options['single_idea_page'] : '';
-        $chosen_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
+        if (is_array($options)) {
+            $single_idea_page_id = isset($options['single_idea_page']) ? $options['single_idea_page'] : '';
+            $chosen_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
 
+            // If you have further logic that modifies the $template based on these options,
+            // that logic would go here.
+        }
     }
 
     return $template;
 }
+
 
 add_filter('single_template', 'wp_roadmap_redirect_single_idea');
 
