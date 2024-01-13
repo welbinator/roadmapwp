@@ -25,16 +25,16 @@ jobs:
 
     - name: Rename directory
       run: |
-        mv temp_dir roadmapwp-free
+        mv temp_dir roadmap-free
 
     - name: Zip the folder
       run: |
-        zip -r roadmapwp-free-${{ github.event.inputs.tag }}.zip roadmapwp-free -x "*.git/*" "*.github/*"
+        zip -r roadmap-free-${{ github.event.inputs.tag }}.zip roadmap-free -x "*.git/*" "*.github/*"
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: roadmapwp-free-${{ github.event.inputs.tag }}.zip
+        files: roadmap-free-${{ github.event.inputs.tag }}.zip
         tag_name: ${{ github.event.inputs.tag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
