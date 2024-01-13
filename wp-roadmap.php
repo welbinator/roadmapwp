@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP Road Map
+Plugin Name: Road Map WP
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
 Version:     1.1.2
