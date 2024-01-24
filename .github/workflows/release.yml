@@ -25,23 +25,23 @@ jobs:
 
     - name: Rename directory
       run: |
-        mv temp_dir roadmap-free
+        mv temp_dir roadmapwp-free
 
     - name: Zip the folder
       run: |
-        zip -r roadmap-free-${{ github.event.inputs.tag }}.zip roadmap-free \
-        -x "*.git/*" "*.github/*" "roadmap-free/.gitignore" "roadmap-free/.git/*" "roadmap-free/.github/*" \
-        "roadmap-free/composer.json" "roadmap-free/composer.lock" \
-        "roadmap-free/package.json" "roadmap-free/package-lock.json" \
-        "roadmap-free/phpstan.neon" "roadmap-free/phpstan-baseline.neon" \
-        "roadmap-free/postcss.config.js" "roadmap-free/tailwind.config.js"
+        zip -r roadmapwp-free-${{ github.event.inputs.tag }}.zip roadmapwp-free \
+        -x "*.git/*" "*.github/*" "roadmapwp-free/.gitignore" "roadmapwp-free/.git/*" "roadmapwp-free/.github/*" \
+        "roadmapwp-free/composer.json" "roadmapwp-free/composer.lock" \
+        "roadmapwp-free/package.json" "roadmapwp-free/package-lock.json" \
+        "roadmapwp-free/phpstan.neon" "roadmapwp-free/phpstan-baseline.neon" \
+        "roadmapwp-free/postcss.config.js" "roadmapwp-free/tailwind.config.js"
 
 
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: roadmap-free-${{ github.event.inputs.tag }}.zip
+        files: roadmapwp-free-${{ github.event.inputs.tag }}.zip
         tag_name: ${{ github.event.inputs.tag }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
