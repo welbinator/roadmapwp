@@ -10,7 +10,7 @@ function wp_roadmap_new_idea_form_shortcode() {
 
 	$output = '';
 
-	if ( isset( $_GET['new_idea_submitted'] ) && $_GET['new_idea_submitted'] == '1' ) {
+	if (isset($_GET['new_idea_submitted']) && $_GET['new_idea_submitted'] == '1' && isset($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'new_idea_submitted')) {
 		$output .= '<p>Thank you for your submission!</p>';
 	}
 
@@ -94,15 +94,16 @@ function wp_roadmap_handle_new_idea_submission() {
 			)
 		);
 
-		if ( isset( $_POST['idea_taxonomies'] ) && is_array( $_POST['idea_taxonomies'] ) ) {
+		if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['idea_title']) && isset($_POST['wp_roadmap_new_idea_nonce']) && wp_verify_nonce($_POST['wp_roadmap_new_idea_nonce'], 'wp_roadmap_new_idea')) {
 			foreach ( $_POST['idea_taxonomies'] as $tax_slug => $term_ids ) {
 				$term_ids = array_map( 'intval', $term_ids );
 				wp_set_object_terms( $idea_id, $term_ids, $tax_slug );
 			}
 		}
 
-		$redirect_url = add_query_arg( 'new_idea_submitted', '1', esc_url_raw( $_SERVER['REQUEST_URI'] ) );
-		wp_redirect( $redirect_url );
+		$redirect_nonce = wp_create_nonce('new_idea_submitted');
+		$redirect_url = add_query_arg(['new_idea_submitted' => '1', 'nonce' => $redirect_nonce], $your_redirect_url);
+		wp_redirect($redirect_url);
 		exit;
 	}
 }

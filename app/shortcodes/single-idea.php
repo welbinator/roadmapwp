@@ -4,6 +4,13 @@ function wp_roadmap_single_idea_shortcode( $atts ) {
 	// Flag to indicate the roadmap shortcode is loaded
 	update_option( 'wp_roadmap_single_idea_shortcode_loaded', true );
 
+	 // Verify nonce
+	 if (isset($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'view_idea_' . $_GET['idea_id'])) {
+        $idea_id = isset($_GET['idea_id']) ? intval($_GET['idea_id']) : 0;
+    } else {
+        return '<p>' . esc_html__('Invalid request.', 'roadmapwp-free') . '</p>';
+    }
+
 	$idea_id = isset( $_GET['idea_id'] ) ? intval( $_GET['idea_id'] ) : 0;
 	$post    = get_post( $idea_id );
 
