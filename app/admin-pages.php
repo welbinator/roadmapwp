@@ -8,11 +8,14 @@ function wp_roadmap_settings_page() {
 	$selected_page = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
 
 	// New Styling Section
-	$vote_button_bg_color   = isset( $options['vote_button_bg_color'] ) ? $options['vote_button_bg_color'] : '#0000ff'; // Default to blue if not set
-	$vote_button_text_color = isset( $options['vote_button_text_color'] ) ? $options['vote_button_text_color'] : '#000000'; // Default to blue if not set
-	$filter_tags_bg_color   = isset( $options['filter_tags_bg_color'] ) ? $options['filter_tags_bg_color'] : '#0000ff'; // Default to blue if not set
-	$filter_tags_text_color = isset( $options['filter_tags_text_color'] ) ? $options['filter_tags_text_color'] : '#000000'; // Default to blue if not set
-	$filters_bg_color       = isset( $options['filters_bg_color'] ) ? $options['filters_bg_color'] : '#f5f5f5'; // Default to blue if not set
+	$vote_button_bg_color    = isset( $options['vote_button_bg_color'] ) ? $options['vote_button_bg_color'] : '#0000ff';
+	$vote_button_text_color  = isset( $options['vote_button_text_color'] ) ? $options['vote_button_text_color'] : '#ffffff';
+	$filter_tags_bg_color    = isset( $options['filter_tags_bg_color'] ) ? $options['filter_tags_bg_color'] : '#0000ff';
+	$filter_tags_text_color  = isset( $options['filter_tags_text_color'] ) ? $options['filter_tags_text_color'] : '#ffffff';
+	$filters_bg_color        = isset( $options['filters_bg_color'] ) ? $options['filters_bg_color'] : '#f5f5f5';
+	$tabs_container_bg_color = isset( $options['tabs_container_bg_color'] ) ? $options['tabs_container_bg_color'] : '#dddddd';
+	$tabs_button_bg_color    = isset( $options['tabs_button_bg_color'] ) ? $options['tabs_button_bg_color'] : '#ffffff';
+	$tabs_text_color         = isset( $options['tabs_text_color'] ) ? $options['tabs_text_color'] : '#000000';
 
 	?>
 	<div class="wrap">
@@ -21,7 +24,7 @@ function wp_roadmap_settings_page() {
 		<?php
 		settings_fields( 'wp_roadmap_settings' );
 		do_settings_sections( 'wp_roadmap_settings' );
-		wp_nonce_field( 'wp_roadmap_pro_settings_action', 'wp_roadmap_pro_settings_nonce' );
+		wp_nonce_field( 'wp_roadmap_settings_action', 'wp_roadmap_settings_nonce' );
 		?>
 			<?php
 			settings_fields( 'wp_roadmap_settings' );
@@ -30,36 +33,36 @@ function wp_roadmap_settings_page() {
 
 <table class="form-table">
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'wp-roadmap' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
 				
 				<!-- Default Status Setting -->
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Set New Idea Default Status', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Set New Idea Default Status', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'wp-roadmap' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Single Idea Template', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Single Idea Template', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// This filter will be handled in choose-idea-template.php
-						echo apply_filters( 'wp_roadmap_single_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'wp-roadmap' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_single_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
 				<tr valign="top" id="single_idea_page_setting" style="display: none;">
-					<th scope="row"><?php esc_html_e( 'Set page for single idea', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Set page for single idea', 'roadmapwp-free' ); ?></th>
 					<td>
 						<select name="wp_roadmap_settings[single_idea_page]">
 							<?php
@@ -75,20 +78,20 @@ function wp_roadmap_settings_page() {
 
 				<!-- Hide New Idea Heading Setting -->
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Custom "Submit Idea" Heading', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Custom "Submit Idea" Heading', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'wp-roadmap' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Custom "Browse Ideas" Heading', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Custom "Browse Ideas" Heading', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'wp-roadmap' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
@@ -109,17 +112,18 @@ function wp_roadmap_settings_page() {
 				</tr>
 
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Vote Button Background Color', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Vote Button Background Color', 'roadmapwp-free' ); ?></th>
 					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
+						<input type="text" name="wp_roadmap_settings[vote_button_bg_color]" value="<?php echo esc_attr( $vote_button_bg_color ); ?>" class="wp-roadmap-color-picker"/>
+						
 					</td>
 				</tr>
 
 
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Vote Button Text Color', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Vote Button Text Color', 'roadmapwp-free' ); ?></th>
 					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
+						<input type="text" name="wp_roadmap_settings[vote_button_text_color]" value="<?php echo esc_attr( $vote_button_text_color ); ?>" class="wp-roadmap-color-picker"/>
 					   
 					</td>
 					
@@ -132,25 +136,28 @@ function wp_roadmap_settings_page() {
 				</tr>
 
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Filter Tags Background Color', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Filter Tags Background Color', 'roadmapwp-free' ); ?></th>
 					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
+						<input type="text" name="wp_roadmap_settings[filter_tags_bg_color]" value="<?php echo esc_attr( $filter_tags_bg_color ); ?>" class="wp-roadmap-color-picker"/>
+						<!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
 					</td>
 				</tr>
 
 
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Filter Tags Text Color', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Filter Tags Text Color', 'roadmapwp-free' ); ?></th>
 					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
+						<input type="text" name="wp_roadmap_settings[filter_tags_text_color]" value="<?php echo esc_attr( $filter_tags_text_color ); ?>" class="wp-roadmap-color-picker"/>
+						<!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
 					</td>
 				</tr>
 
 
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Filters Background Color', 'wp-roadmap' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Filters Background Color', 'roadmapwp-free' ); ?></th>
 					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
+						<input type="text" name="wp_roadmap_settings[filters_bg_color]" value="<?php echo esc_attr( $filters_bg_color ); ?>" class="wp-roadmap-color-picker"/>
+						<!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
 					</td>
 				</tr>
 				<tr><td><hr></td></tr>
@@ -214,7 +221,7 @@ function wp_roadmap_settings_page() {
 function wp_roadmap_taxonomies_page() {
 	// Check if the current user has the 'manage_options' capability
 	if ( ! current_user_can( 'manage_options' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wp-roadmap' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'roadmapwp-free' ) );
 	}
 
 	// Fetch custom taxonomies
@@ -224,7 +231,7 @@ function wp_roadmap_taxonomies_page() {
 	if ( 'POST' === $_SERVER['REQUEST_METHOD'] && ! empty( $_POST['new_term'] ) && ! empty( $_POST['taxonomy_slug'] ) ) {
 		// Verify the nonce
 		if ( ! isset( $_POST['wp_roadmap_add_term_nonce'] ) || ! check_admin_referer( 'add_term_to_' . sanitize_text_field( $_POST['taxonomy_slug'] ), 'wp_roadmap_add_term_nonce' ) ) {
-			wp_die( esc_html__( 'Nonce verification failed.', 'wp-roadmap' ) );
+			wp_die( esc_html__( 'Nonce verification failed.', 'roadmapwp-free' ) );
 		}
 
 		$new_term      = sanitize_text_field( $_POST['new_term'] );
@@ -249,7 +256,7 @@ function wp_roadmap_taxonomies_page() {
 		echo $pro_feature;
 		echo '<h2>Existing Taxonomies</h2>';
 	} else {
-		echo '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'wp-roadmap' ) . '</a>';
+		echo '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>';
 		echo '<h2>Existing Taxonomies</h2>';
 	}
 

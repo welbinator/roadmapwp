@@ -7,20 +7,20 @@ function wp_roadmap_register_post_type() {
 	$supports = array( 'title', 'editor', 'author' ); // include 'comments' support
 
 	$labels = array(
-		'name'               => _x( 'Ideas', 'post type general name', 'wp-roadmap' ),
-		'singular_name'      => _x( 'Idea', 'post type singular name', 'wp-roadmap' ),
-		'menu_name'          => _x( 'Ideas', 'admin menu', 'wp-roadmap' ),
-		'name_admin_bar'     => _x( 'Idea', 'add new on admin bar', 'wp-roadmap' ),
-		'add_new'            => _x( 'Add New', 'idea', 'wp-roadmap' ),
-		'add_new_item'       => __( 'Add New Idea', 'wp-roadmap' ),
-		'new_item'           => __( 'New Idea', 'wp-roadmap' ),
-		'edit_item'          => __( 'Edit Idea', 'wp-roadmap' ),
-		'view_item'          => __( 'View Idea', 'wp-roadmap' ),
-		'all_items'          => __( 'All Ideas', 'wp-roadmap' ),
-		'search_items'       => __( 'Search Ideas', 'wp-roadmap' ),
-		'parent_item_colon'  => __( 'Parent Ideas:', 'wp-roadmap' ),
-		'not_found'          => __( 'No ideas found.', 'wp-roadmap' ),
-		'not_found_in_trash' => __( 'No ideas found in Trash.', 'wp-roadmap' ),
+		'name'               => _x( 'Ideas', 'post type general name', 'roadmapwp-free' ),
+		'singular_name'      => _x( 'Idea', 'post type singular name', 'roadmapwp-free' ),
+		'menu_name'          => _x( 'Ideas', 'admin menu', 'roadmapwp-free' ),
+		'name_admin_bar'     => _x( 'Idea', 'add new on admin bar', 'roadmapwp-free' ),
+		'add_new'            => _x( 'Add New', 'idea', 'roadmapwp-free' ),
+		'add_new_item'       => __( 'Add New Idea', 'roadmapwp-free' ),
+		'new_item'           => __( 'New Idea', 'roadmapwp-free' ),
+		'edit_item'          => __( 'Edit Idea', 'roadmapwp-free' ),
+		'view_item'          => __( 'View Idea', 'roadmapwp-free' ),
+		'all_items'          => __( 'All Ideas', 'roadmapwp-free' ),
+		'search_items'       => __( 'Search Ideas', 'roadmapwp-free' ),
+		'parent_item_colon'  => __( 'Parent Ideas:', 'roadmapwp-free' ),
+		'not_found'          => __( 'No ideas found.', 'roadmapwp-free' ),
+		'not_found_in_trash' => __( 'No ideas found in Trash.', 'roadmapwp-free' ),
 	);
 
 	// Fetch all taxonomies associated with 'idea' post type
@@ -62,13 +62,13 @@ function wp_roadmap_register_default_taxonomies() {
 	// Define default taxonomies with their properties
 	$default_taxonomies = array(
 		'status'   => array(
-			'singular' => __( 'Status', 'wp-roadmap' ), // Translatable
-			'plural'   => __( 'Status', 'wp-roadmap' ),   // Translatable
+			'singular' => __( 'Status', 'roadmapwp-free' ), // Translatable
+			'plural'   => __( 'Status', 'roadmapwp-free' ),   // Translatable
 			'public'   => true,  // Make status taxonomy private
 		),
 		'idea-tag' => array(
-			'singular' => __( 'Tag', 'wp-roadmap' ),    // Translatable
-			'plural'   => __( 'Tags', 'wp-roadmap' ),     // Translatable
+			'singular' => __( 'Tag', 'roadmapwp-free' ),    // Translatable
+			'plural'   => __( 'Tags', 'roadmapwp-free' ),     // Translatable
 			'public'   => true,  // Keep tag taxonomy public
 		),
 	);

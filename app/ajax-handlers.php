@@ -104,7 +104,7 @@ function wp_roadmap_filter_ideas() {
 					<div class="p-6">
 						<h2 class="text-2xl font-bold"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
 	
-						<p class="text-gray-500 mt-2 text-sm"><?php esc_html_e( 'Submitted on:', 'wp-roadmap' ); ?> <?php echo get_the_date(); ?></p>
+						<p class="text-gray-500 mt-2 text-sm"><?php esc_html_e( 'Submitted on:', 'roadmapwp-free' ); ?> <?php echo get_the_date(); ?></p>
 						<div class="flex flex-wrap space-x-2 mt-2">
 							<?php
 							$terms = wp_get_post_terms( $idea_id, $display_taxonomies );
@@ -152,7 +152,7 @@ function wp_roadmap_filter_ideas() {
 			<?php endwhile; ?>
 		</div>
 	<?php else : ?>
-		<p><?php esc_html_e( 'No ideas found.', 'wp-roadmap' ); ?></p>
+		<p><?php esc_html_e( 'No ideas found.', 'roadmapwp-free' ); ?></p>
 		<?php
 	endif;
 
@@ -178,7 +178,7 @@ function handle_delete_custom_taxonomy() {
 		update_option( 'wp_roadmap_custom_taxonomies', $custom_taxonomies );
 		wp_send_json_success();
 	} else {
-		wp_send_json_error( array( 'message' => __( 'Taxonomy not found.', 'wp-roadmap' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Taxonomy not found.', 'roadmapwp-free' ) ) );
 	}
 }
 add_action( 'wp_ajax_delete_custom_taxonomy', 'handle_delete_custom_taxonomy' );

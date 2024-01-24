@@ -3,7 +3,7 @@
 Contributors: welbinator
 Tags: roadmap, feedback, product owner, product management
 Requires at least: 6.2.0
-Stable tag: 6.2.9
+Stable tag: 1.1.3
 Tested up to: 6.4.2
 Requires PHP: 8.0
 License: GPLv2 or later

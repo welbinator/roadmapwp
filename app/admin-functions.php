@@ -178,27 +178,27 @@ function wp_roadmap_redirect_to_post_type(): string {
 function wp_roadmap_add_admin_menu(): void {
 
 	add_menu_page(
-		__( 'RoadMap', 'wp-roadmap' ),
-		__( 'RoadMap', 'wp-roadmap' ),
+		__( 'RoadMap', 'roadmapwp-free' ),
+		__( 'RoadMap', 'roadmapwp-free' ),
 		'manage_options',
-		'wp-roadmap',
+		'roadmapwp-free',
 		'wp_roadmap_redirect_to_post_type',
 		'dashicons-chart-line',
 		6
 	);
 
 	add_submenu_page(
-		'wp-roadmap',
-		__( 'Ideas', 'wp-roadmap' ),
-		__( 'Ideas', 'wp-roadmap' ),
+		'roadmapwp-free',
+		__( 'Ideas', 'roadmapwp-free' ),
+		__( 'Ideas', 'roadmapwp-free' ),
 		'manage_options',
 		'edit.php?post_type=idea'
 	);
 
 	add_submenu_page(
-		'wp-roadmap',
-		__( 'Settings', 'wp-roadmap' ),
-		__( 'Settings', 'wp-roadmap' ),
+		'roadmapwp-free',
+		__( 'Settings', 'roadmapwp-free' ),
+		__( 'Settings', 'roadmapwp-free' ),
 		'manage_options',
 		'wp-roadmap-settings',
 		// @phpstan-ignore-next-line
@@ -206,9 +206,9 @@ function wp_roadmap_add_admin_menu(): void {
 	);
 
 	add_submenu_page(
-		'wp-roadmap',
-		__( 'Taxonomies', 'wp-roadmap' ),
-		__( 'Taxonomies', 'wp-roadmap' ),
+		'roadmapwp-free',
+		__( 'Taxonomies', 'roadmapwp-free' ),
+		__( 'Taxonomies', 'roadmapwp-free' ),
 		'manage_options',
 		'wp-roadmap-taxonomies',
 		// @phpstan-ignore-next-line
@@ -216,16 +216,16 @@ function wp_roadmap_add_admin_menu(): void {
 	);
 
 	add_submenu_page(
-		'wp-roadmap',
-		__( 'Help', 'wp-roadmap' ),
-		__( 'Help', 'wp-roadmap' ),
+		'roadmapwp-free',
+		__( 'Help', 'roadmapwp-free' ),
+		__( 'Help', 'roadmapwp-free' ),
 		'manage_options',
 		'wp-roadmap-help',
 		// @phpstan-ignore-next-line
 		'wp_roadmap_free_help_page'
 	);
 
-	remove_submenu_page( 'wp-roadmap', 'wp-roadmap' );
+	remove_submenu_page( 'roadmapwp-free', 'roadmapwp-free' );
 }
 add_action( 'admin_menu', 'wp_roadmap_add_admin_menu' );
 

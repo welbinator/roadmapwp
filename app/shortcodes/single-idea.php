@@ -8,7 +8,7 @@ function wp_roadmap_single_idea_shortcode( $atts ) {
 	$post    = get_post( $idea_id );
 
 	if ( ! $post || $post->post_type !== 'idea' ) {
-		return '<p>' . esc_html__( 'Idea not found.', 'wp-roadmap' ) . '</p>';
+		return '<p>' . esc_html__( 'Idea not found.', 'roadmapwp-free' ) . '</p>';
 	}
 
 	// Fetch options for styling (assumed to be saved in your options table)
@@ -81,7 +81,7 @@ function wp_roadmap_single_idea_shortcode( $atts ) {
 			</div>
 
 			<footer class="entry-footer">
-				<?php edit_post_link( __( 'Edit', 'wp-roadmap' ), '<span class="edit-link">', '</span>', $post->ID ); ?>
+				<?php edit_post_link( __( 'Edit', 'roadmapwp-free' ), '<span class="edit-link">', '</span>', $post->ID ); ?>
 			</footer>
 		</article>
 		</div>
