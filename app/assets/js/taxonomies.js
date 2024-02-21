@@ -3,6 +3,13 @@ jQuery(document).ready(function($) {
     $('.delete-taxonomy').on('click', function(e) {
         e.preventDefault();
         var taxonomy = $(this).data('taxonomy');
+
+        // Make sure the taxonomy value is being captured
+        if (!taxonomy) {
+            alert('Taxonomy not specified.');
+            return;
+        }
+        
         $.ajax({
             url: wpRoadmapAjax.ajax_url,
             type: 'post',

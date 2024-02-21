@@ -4,7 +4,15 @@
  *
  * @return string The HTML output for displaying the roadmap.
  */
-function wp_roadmap_roadmap_shortcode( $atts ) {
+
+ namespace RoadMapWP\Free\Shortcodes\Roadmap;
+
+ // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
+
+function roadmap_shortcode( $atts ) {
 	// Flag to indicate the roadmap shortcode is loaded
 	update_option( 'wp_roadmap_roadmap_shortcode_loaded', true );
 
@@ -72,10 +80,16 @@ function wp_roadmap_roadmap_shortcode( $atts ) {
 						),
 					),
 				);
-				$query = new WP_Query( $args );
+				$query = new \WP_Query( $args );
 				?>
 				<div class="roadmap-column">
-					<h3 style="text-align:center;"><?php echo esc_html__( $status, 'wp-roadmap-pro' ); ?></h3>
+				
+				<h3 style="text-align:center;">
+					<?php 
+						/* translators: %s: status name */
+						echo sprintf( esc_html__( '%s', 'wp-roadmap-pro' ), esc_html( $status ) ); 
+					?>
+				</h3>
 					<?php
 					if ( $query->have_posts() ) {
 						while ( $query->have_posts() ) :
@@ -86,7 +100,7 @@ function wp_roadmap_roadmap_shortcode( $atts ) {
 							<div class="border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden m-2 wp-roadmap-idea">
 								<div class="p-6">
 									<h4 class="idea-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h4>
-									<p class="text-gray-500 mt-2 mb-0 text-sm"><?php echo get_the_date(); ?></p>
+									<p class="text-gray-500 mt-2 mb-0 text-sm"><?php echo esc_html( get_the_date() ); ?></p>
 									<div class="flex flex-wrap space-x-2 mt-2 idea-tags">
 									<?php
 									$terms = wp_get_post_terms( $idea_id, $taxonomies );
@@ -122,7 +136,7 @@ function wp_roadmap_roadmap_shortcode( $atts ) {
 												</svg>
 												Vote
 											</button>
-											<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
+											<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
 										</div>
 									</div>
 								</div>
@@ -144,4 +158,4 @@ function wp_roadmap_roadmap_shortcode( $atts ) {
 	<?php
 	return ob_get_clean(); // Return the buffered output
 }
-add_shortcode( 'roadmap', 'wp_roadmap_roadmap_shortcode' );
+add_shortcode( 'roadmap', __NAMESPACE__ . '\\roadmap_shortcode' );

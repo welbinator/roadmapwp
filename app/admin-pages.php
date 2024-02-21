@@ -2,7 +2,15 @@
 /**
  * Function to display WP RoadMap settings page.
  */
-function wp_roadmap_settings_page() {
+
+namespace RoadMapWP\Free\Admin\Pages;
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
+
+function settings_page() {
 	// Fetch current settings
 	$options       = get_option( 'wp_roadmap_settings' );
 	$selected_page = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
@@ -31,13 +39,13 @@ function wp_roadmap_settings_page() {
 			do_settings_sections( 'wp_roadmap_settings' );
 			?>
 
-<table class="form-table">
+			<table class="form-table">
 				<tr valign="top">
 					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
@@ -48,7 +56,7 @@ function wp_roadmap_settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
@@ -57,7 +65,7 @@ function wp_roadmap_settings_page() {
 					<td>
 						<?php
 						// This filter will be handled in choose-idea-template.php
-						echo apply_filters( 'wp_roadmap_single_idea_template_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo apply_filters( 'wp_roadmap_single_idea_template_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
 						?>
 					</td>
 				</tr>
@@ -204,22 +212,17 @@ function wp_roadmap_settings_page() {
 	jQuery(document).ready(function($) {
 		// Initialize color picker
 		$('.wp-roadmap-color-picker').wpColorPicker();
-	
 	});
 	</script>
-	
-	
-
 	<?php
 }
-
 
 /**
  * Function to display the Taxonomies management page.
  * This function allows adding terms to the "Tags" taxonomy.
  */
-function wp_roadmap_taxonomies_page() {
-	// Check if the current user has the 'manage_options' capability
+function taxonomies_page() {
+	// Check if the current user has the 'manage_options' capability.
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'roadmapwp-free' ) );
 	}
@@ -309,7 +312,7 @@ function wp_roadmap_taxonomies_page() {
 	}
 }
 
-function wp_roadmap_free_help_page() {
+function free_help_page() {
 	?>
 	<div class="wrap">
 	

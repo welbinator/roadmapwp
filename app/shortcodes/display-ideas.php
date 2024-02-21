@@ -5,7 +5,15 @@
  *
  * @return string The HTML output for displaying ideas.
  */
-function wp_roadmap_display_ideas_shortcode() {
+
+ namespace RoadMapWP\Free\Shortcodes\DisplayIdeas;
+
+ // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
+
+function display_ideas_shortcode() {
 	// Flag to indicate the display ideas shortcode is loaded
 	update_option( 'wp_roadmap_ideas_shortcode_loaded', true );
 
@@ -40,8 +48,7 @@ function wp_roadmap_display_ideas_shortcode() {
 	$output .= '<div class="browse_ideas_frontend">';
 	$output .= '<h2>' . esc_html( $new_display_ideas_heading ) . '</h2>';
 	if ( ! $hide_display_ideas_heading ) {
-		echo $output;
-
+		echo wp_kses_post( $output );
 	}
 	?>
 		<div class="filters-wrapper" style="background-color: <?php echo esc_attr( $filters_bg_color ); ?>;">
@@ -90,7 +97,7 @@ function wp_roadmap_display_ideas_shortcode() {
 			'post_type'      => 'idea',
 			'posts_per_page' => -1, // Adjust as needed
 		);
-		$query = new WP_Query( $args );
+		$query = new \WP_Query( $args );
 
 		if ( $query->have_posts() ) :
 			?>
@@ -106,7 +113,7 @@ function wp_roadmap_display_ideas_shortcode() {
 						<div class="p-6">
 							<h2 class="text-2xl font-bold"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
 		
-							<p class="text-gray-500 mt-2 text-sm">Submitted on: <?php echo get_the_date(); ?></p>
+							<p class="text-gray-500 mt-2 text-sm">Submitted on: <?php echo esc_html( get_the_date() ); ?></p>
 							<div class="flex flex-wrap space-x-2 mt-2">
 								<?php
 								$terms = wp_get_post_terms( $idea_id, $taxonomies );
@@ -145,7 +152,7 @@ function wp_roadmap_display_ideas_shortcode() {
 										</svg>
 										Vote
 									</button>
-									<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
+									<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
 								</div>
 							</div>
 						</div>
@@ -167,4 +174,4 @@ function wp_roadmap_display_ideas_shortcode() {
 
 
 
-add_shortcode( 'display_ideas', 'wp_roadmap_display_ideas_shortcode' );
+add_shortcode( 'display_ideas', __NAMESPACE__ . '\\display_ideas_shortcode' );
