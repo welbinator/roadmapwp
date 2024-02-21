@@ -1,67 +1,71 @@
 <?php
 
-/**
- * Check for the presence of specific shortcodes on the page and set options for enqueuing CSS files.
- */
+namespace RoadMapWP\Free\Admin\Functions;
+use RoadMapWP\Free\Admin\Pages;
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
 
 /**
  * Checks if the 'new_idea_form' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_new_idea_shortcode(): void {
+function check_for_new_idea_shortcode(): void {
 	global $post;
 
 	if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'new_idea_form' ) ) {
 		update_option( 'wp_roadmap_new_idea_shortcode_loaded', true );
 	}
 }
-add_action( 'wp', 'wp_roadmap_check_for_new_idea_shortcode' );
+add_action( 'wp', __NAMESPACE__ . '\\check_for_new_idea_shortcode' );
 
 /**
  * Checks if the 'display_ideas' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_ideas_shortcode(): void {
+function check_for_ideas_shortcode(): void {
 	global $post;
 
 	if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'display_ideas' ) ) {
 		update_option( 'wp_roadmap_ideas_shortcode_loaded', true );
 	}
 }
-add_action( 'wp', 'wp_roadmap_check_for_ideas_shortcode' );
+add_action( 'wp', __NAMESPACE__ . '\\check_for_ideas_shortcode' );
 
 /**
  * Checks if the 'roadmap' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_roadmap_shortcode(): void {
+function check_for_roadmap_shortcode(): void {
 	global $post;
 
 	if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'roadmap' ) ) {
 		update_option( 'wp_roadmap_roadmap_shortcode_loaded', true );
 	}
 }
-add_action( 'wp', 'wp_roadmap_check_for_roadmap_shortcode' );
+add_action( 'wp', __NAMESPACE__ . '\\check_for_roadmap_shortcode' );
 
 /**
  * Checks if the 'roadmap' shortcode is present on the current page.
  * Sets an option for enqueuing related CSS files if the shortcode is found.
  */
-function wp_roadmap_check_for_single_idea_shortcode(): void {
+function check_for_single_idea_shortcode(): void {
 	global $post;
 
 	if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'roadmap' ) ) {
 		update_option( 'wp_roadmap_single_idea_shortcode_loaded', true );
 	}
 }
-add_action( 'wp', 'wp_roadmap_check_for_single_idea_shortcode' );
+add_action( 'wp', __NAMESPACE__ . '\\check_for_single_idea_shortcode' );
 
 /**
  * Enqueues admin styles for specific admin pages and post types.
  *
  * @param string $hook The current admin page hook.
  */
-function wp_roadmap_enqueue_admin_styles( $hook ): void {
+function enqueue_admin_styles( $hook ): void {
 	global $post;
 
 	// Enqueue CSS for 'idea' post type editor
@@ -96,7 +100,7 @@ function wp_roadmap_enqueue_admin_styles( $hook ): void {
 		);
 	}
 }
-add_action( 'admin_enqueue_scripts', 'wp_roadmap_enqueue_admin_styles' );
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_styles' );
 
 /**
  * Enqueues front end styles and scripts for the plugin.
@@ -104,7 +108,7 @@ add_action( 'admin_enqueue_scripts', 'wp_roadmap_enqueue_admin_styles' );
  * This function checks whether any of the plugin's shortcodes are loaded or if it's a singular 'idea' post,
  * and enqueues the necessary styles and scripts.
  */
-function wp_roadmap_enqueue_frontend_styles(): void {
+function enqueue_frontend_styles(): void {
 	global $post;
 
 	// Initialize flags
@@ -155,15 +159,15 @@ function wp_roadmap_enqueue_frontend_styles(): void {
 			'wpRoadMapAjax',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'wp-roadmap-vote-nonce' ),
+				'nonce'    => wp_create_nonce( 'wp-roadmap-filter-nonce' ),
 			)
 		);
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'wp_roadmap_enqueue_frontend_styles' );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_frontend_styles' );
 
-function wp_roadmap_redirect_to_post_type(): string {
+function redirect_to_post_type(): string {
 	$post_type_url = admin_url( 'edit.php?post_type=idea' );
 	wp_redirect( $post_type_url );
 	exit;
@@ -175,14 +179,14 @@ function wp_roadmap_redirect_to_post_type(): string {
  * This function creates a top-level menu item 'RoadMap' in the admin dashboard,
  * along with several submenu pages like Settings, Ideas, and Taxonomies.
  */
-function wp_roadmap_add_admin_menu(): void {
+function add_admin_menu(): void {
 
 	add_menu_page(
 		__( 'RoadMap', 'roadmapwp-free' ),
 		__( 'RoadMap', 'roadmapwp-free' ),
 		'manage_options',
 		'roadmapwp-free',
-		'wp_roadmap_redirect_to_post_type',
+		'RoadMapWP\Free\Admin\Functions\wp_roadmap_redirect_to_post_type',
 		'dashicons-chart-line',
 		6
 	);
@@ -202,7 +206,7 @@ function wp_roadmap_add_admin_menu(): void {
 		'manage_options',
 		'wp-roadmap-settings',
 		// @phpstan-ignore-next-line
-		'wp_roadmap_settings_page'
+		'RoadMapWP\Free\Admin\Pages\settings_page'
 	);
 
 	add_submenu_page(
@@ -212,7 +216,7 @@ function wp_roadmap_add_admin_menu(): void {
 		'manage_options',
 		'wp-roadmap-taxonomies',
 		// @phpstan-ignore-next-line
-		'wp_roadmap_taxonomies_page'
+		'RoadMapWP\Free\Admin\Pages\taxonomies_page'
 	);
 
 	add_submenu_page(
@@ -222,12 +226,12 @@ function wp_roadmap_add_admin_menu(): void {
 		'manage_options',
 		'wp-roadmap-help',
 		// @phpstan-ignore-next-line
-		'wp_roadmap_free_help_page'
+		'RoadMapWP\Free\Admin\Pages\free_help_page'
 	);
 
 	remove_submenu_page( 'roadmapwp-free', 'roadmapwp-free' );
 }
-add_action( 'admin_menu', 'wp_roadmap_add_admin_menu' );
+add_action( 'admin_menu', __NAMESPACE__ . '\\add_admin_menu' );
 
 /**
  * Adds the plugin license page to the admin menu.
@@ -236,18 +240,15 @@ add_action( 'admin_menu', 'wp_roadmap_add_admin_menu' );
  */
 
 
-
-
-
 /**
  * Registers settings for the RoadMap plugin.
  *
  * This function sets up a settings section for the plugin, allowing configuration of various features and functionalities.
  */
-function wp_roadmap_register_settings(): void {
+function register_settings(): void {
 	register_setting( 'wp_roadmap_settings', 'wp_roadmap_settings' );
 }
-add_action( 'admin_init', 'wp_roadmap_register_settings' );
+add_action( 'admin_init', __NAMESPACE__ . '\\register_settings' );
 
 /**
  * Dynamically enables or disables comments on 'idea' post types.
@@ -256,7 +257,7 @@ add_action( 'admin_init', 'wp_roadmap_register_settings' );
  * @param int  $post_id The post ID.
  * @return bool Modified status of comments open.
  */
-function wp_roadmap_filter_comments_open( $open, $post_id ) {
+function filter_comments_open( $open, $post_id ) {
 	global $post;
 
 	if ( $post instanceof WP_Post && $post->post_type === 'idea' ) {
@@ -268,9 +269,9 @@ function wp_roadmap_filter_comments_open( $open, $post_id ) {
 
 	return $open;
 }
-add_filter( 'comments_open', 'wp_roadmap_filter_comments_open', 10, 2 );
+add_filter( 'comments_open', __NAMESPACE__ . '\\filter_comments_open', 10, 2 );
 
-function wp_roadmap_redirect_single_idea( string $template ): string {
+function redirect_single_idea( string $template ): string {
 	global $post;
 
 	if ( 'idea' === $post->post_type ) {
@@ -288,4 +289,4 @@ function wp_roadmap_redirect_single_idea( string $template ): string {
 }
 
 
-add_filter( 'single_template', 'wp_roadmap_redirect_single_idea' );
+add_filter( 'single_template', __NAMESPACE__ . '\\redirect_single_idea' );

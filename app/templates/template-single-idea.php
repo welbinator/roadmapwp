@@ -3,6 +3,11 @@
  * The Template for displaying all single posts of the 'idea' CPT.
  */
 
+ // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
+
 // Retrieve color settings
 $options                = get_option( 'wp_roadmap_settings' );
 $vote_button_bg_color   = isset( $options['vote_button_bg_color'] ) ? $options['vote_button_bg_color'] : '#ff0000';
@@ -26,7 +31,7 @@ get_header(); ?>
 			<div id="post-<?php the_ID(); ?>" <?php post_class( 'p-6 flex flex-col space-y-2' ); ?>>
 				<header class="entry-header">
 					<?php the_title( '<h1 class="entry-title text-4xl font-bold">', '</h1>' ); ?>
-					<p class="publish-date text-gray-600"><?php echo get_the_date(); ?></p> <!-- Published date -->
+					<p class="publish-date text-gray-600"><?php echo esc_html( get_the_date() ); ?></p> <!-- Published date -->
 				</header><!-- .entry-header -->
 					<?php
 					// Always include 'idea-tag' taxonomy
@@ -84,7 +89,7 @@ get_header(); ?>
 							</svg>
 							Vote
 						</button>
-						<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
+						<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
 					</div>
 					</div>
 					

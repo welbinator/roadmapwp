@@ -2,14 +2,26 @@
 /**
  * Ajax handling for voting functionality.
  */
-function wp_roadmap_handle_vote() {
+
+namespace RoadMapWP\Free\Ajax;
+use RoadMapWP\Free\Admin\Functions;
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
+
+function handle_vote() {
 	check_ajax_referer( 'wp-roadmap-vote-nonce', 'nonce' );
 
 	$post_id = intval( $_POST['post_id'] );
 	$user_id = get_current_user_id();
 
 	// Generate a unique key for non-logged-in user
-	$user_key = $user_id ? 'user_' . $user_id : 'guest_' . md5( $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] );
+	$remote_addr = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '';
+	$http_user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : '';
+	$user_key = $user_id ? 'user_' . $user_id : 'guest_' . md5($remote_addr . $http_user_agent);
+
 
 	// Retrieve the current vote count
 	$current_votes = get_post_meta( $post_id, 'idea_votes', true ) ?: 0;
@@ -40,16 +52,16 @@ function wp_roadmap_handle_vote() {
 	wp_die();
 }
 
-add_action( 'wp_ajax_wp_roadmap_handle_vote', 'wp_roadmap_handle_vote' );
-add_action( 'wp_ajax_nopriv_wp_roadmap_handle_vote', 'wp_roadmap_handle_vote' );
+add_action( 'wp_ajax_wp_roadmap_handle_vote', __NAMESPACE__ . '\\handle_vote' );
+add_action( 'wp_ajax_nopriv_wp_roadmap_handle_vote', __NAMESPACE__ . '\\handle_vote' );
 
 /**
  * Handle AJAX requests for ideas filter.
  */
-function wp_roadmap_filter_ideas() {
-	check_ajax_referer( 'wp-roadmap-vote-nonce', 'nonce' );
+function filter_ideas() {
+	check_ajax_referer( 'wp-roadmap-filter-nonce', 'nonce' );
 
-	$filter_data = $_POST['filter_data'];
+	$filter_data = isset($_POST['filter_data']) ? (array) $_POST['filter_data'] : array();
 	$tax_query   = array();
 
 	$custom_taxonomies  = get_option( 'wp_roadmap_custom_taxonomies', array() );
@@ -63,16 +75,27 @@ function wp_roadmap_filter_ideas() {
 	$filter_tags_text_color = isset( $options['filter_tags_text_color'] ) ? $options['filter_tags_text_color'] : '#000000';
 	$filters_bg_color       = isset( $options['filters_bg_color'] ) ? $options['filters_bg_color'] : '#f5f5f5';
 
-	foreach ( $filter_data as $taxonomy => $data ) {
-		if ( ! empty( $data['terms'] ) ) {
+	foreach ($filter_data as $taxonomy => $data) {
+		// Sanitize taxonomy to ensure it's a valid taxonomy name
+		$taxonomy = sanitize_key($taxonomy);
+		if (!taxonomy_exists($taxonomy)) {
+			continue; // Skip this iteration if the taxonomy is not valid
+		}
+	
+		// Validate and sanitize 'terms' if they are set and is an array
+		if (!empty($data['terms']) && is_array($data['terms'])) {
+			$sanitized_terms = array_map('sanitize_text_field', $data['terms']);
+			$operator = isset($data['matchType']) && $data['matchType'] === 'all' ? 'AND' : 'IN';
+			
 			$tax_query[] = array(
 				'taxonomy' => $taxonomy,
 				'field'    => 'slug',
-				'terms'    => $data['terms'],
-				'operator' => ( $data['matchType'] === 'all' ) ? 'AND' : 'IN',
+				'terms'    => $sanitized_terms,
+				'operator' => $operator,
 			);
 		}
 	}
+	
 
 	if ( count( $tax_query ) > 1 ) {
 		$tax_query['relation'] = 'AND';
@@ -90,7 +113,7 @@ function wp_roadmap_filter_ideas() {
 	$filter_tags_bg_color   = sanitize_hex_color( $options['filter_tags_bg_color'] );
 	$filter_tags_text_color = sanitize_hex_color( $options['filter_tags_text_color'] );
 
-	$query = new WP_Query( $args );
+	$query = new \WP_Query( $args );
 
 	if ( $query->have_posts() ) : ?>
 		<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 px-6 py-8">
@@ -104,7 +127,7 @@ function wp_roadmap_filter_ideas() {
 					<div class="p-6">
 						<h2 class="text-2xl font-bold"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
 	
-						<p class="text-gray-500 mt-2 text-sm"><?php esc_html_e( 'Submitted on:', 'roadmapwp-free' ); ?> <?php echo get_the_date(); ?></p>
+						<p class="text-gray-500 mt-2 text-sm"><?php esc_html_e( 'Submitted on:', 'roadmapwp-free' ); ?> <?php echo esc_html( get_the_date() ); ?></p>
 						<div class="flex flex-wrap space-x-2 mt-2">
 							<?php
 							$terms = wp_get_post_terms( $idea_id, $display_taxonomies );
@@ -124,7 +147,7 @@ function wp_roadmap_filter_ideas() {
 	
 						<div class="flex items-center justify-between mt-6">
 							<a class="text-blue-500 hover:underline" href="<?php echo esc_url( get_permalink() ); ?>" rel="ugc">Read More</a>
-							<div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
+							<div class="flex items-center idea-vote-box" data-idea-id="<?php echo esc_attr( $idea_id ); ?>">
 							<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr( $vote_button_bg_color ); ?>!important;background-image: none!important;color: <?php echo esc_attr( $vote_button_text_color ); ?>!important;">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +167,7 @@ function wp_roadmap_filter_ideas() {
 								Vote
 							</button>
 							
-						<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?> votes</div>
+							<div class="text-gray-600 ml-2 idea-vote-count"><?php echo esc_html( $vote_count ); ?></div>
 							</div>
 						</div>
 					</div>
@@ -161,8 +184,8 @@ function wp_roadmap_filter_ideas() {
 }
 
 
-add_action( 'wp_ajax_filter_ideas', 'wp_roadmap_filter_ideas' );
-add_action( 'wp_ajax_nopriv_filter_ideas', 'wp_roadmap_filter_ideas' );
+add_action( 'wp_ajax_filter_ideas', __NAMESPACE__ . '\\filter_ideas' );
+add_action( 'wp_ajax_nopriv_filter_ideas', __NAMESPACE__ . '\\filter_ideas' );
 
 
 
@@ -181,7 +204,7 @@ function handle_delete_custom_taxonomy() {
 		wp_send_json_error( array( 'message' => __( 'Taxonomy not found.', 'roadmapwp-free' ) ) );
 	}
 }
-add_action( 'wp_ajax_delete_custom_taxonomy', 'handle_delete_custom_taxonomy' );
+add_action( 'wp_ajax_delete_custom_taxonomy', __NAMESPACE__ . '\\handle_delete_custom_taxonomy' );
 
 // Handles the AJAX request for deleting selected terms
 function handle_delete_selected_terms() {
@@ -196,6 +219,6 @@ function handle_delete_selected_terms() {
 
 	wp_send_json_success();
 }
-add_action( 'wp_ajax_delete_selected_terms', 'handle_delete_selected_terms' );
+add_action( 'wp_ajax_delete_selected_terms', __NAMESPACE__ . '\\handle_delete_selected_terms' );
 
 

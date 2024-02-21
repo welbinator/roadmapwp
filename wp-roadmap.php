@@ -11,11 +11,13 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: roadmapwp-free
 */
 
-function wp_roadmap_free_activate() {
+namespace RoadMapWP\Free;
+
+function free_activate() {
     include_once(ABSPATH . 'wp-admin/includes/plugin.php');
     if (is_plugin_active('roadmapwp-pro/wp-roadmap-pro.php')) {
         // Schedule the admin notice
-        add_action('admin_notices', 'wp_roadmap_free_admin_notice');
+        add_action('admin_notices', __NAMESPACE__ . '\\admin_notice');
 
         // Redirect back to plugins page
         wp_redirect(admin_url('plugins.php'));
@@ -23,9 +25,9 @@ function wp_roadmap_free_activate() {
     }
     // Additional activation code for Free version goes here...
 }
-register_activation_hook(__FILE__, 'wp_roadmap_free_activate');
+register_activation_hook(__FILE__, __NAMESPACE__ . '\\free_activate');
 
-function wp_roadmap_free_admin_notice() {
+function admin_notice() {
     echo '<div class="notice notice-warning is-dismissible"><p>RoadMapWP Pro is already installed. The free version has been deactivated.</p></div>';
 }
 
@@ -40,11 +42,11 @@ require_once plugin_dir_path(__FILE__) . 'app/admin-pages.php';
 require_once plugin_dir_path(__FILE__) . 'app/shortcodes/display-ideas.php';
 require_once plugin_dir_path(__FILE__) . 'app/shortcodes/new-idea-form.php';
 require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap.php';
-require_once plugin_dir_path(__FILE__) . 'app/shortcodes/single-idea.php';
 
-function wp_roadmap_on_activation() {
+
+function on_activation() {
     // Directly call the function that registers your taxonomies here
-    wp_roadmap_register_default_taxonomies();
+    \RoadMapWP\Free\CPT\register_default_taxonomies();
 
     // Now add the terms
     $status_terms = array('New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed');
@@ -58,5 +60,5 @@ function wp_roadmap_on_activation() {
     }
 }
 
-register_activation_hook(__FILE__, 'wp_roadmap_on_activation');
+register_activation_hook(__FILE__, __NAMESPACE__ . '\\on_activation');
 

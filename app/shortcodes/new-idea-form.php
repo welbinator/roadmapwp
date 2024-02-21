@@ -4,107 +4,128 @@
  *
  * @return string The HTML output for the new idea form.
  */
-function wp_roadmap_new_idea_form_shortcode() {
-	// Flag to indicate the new idea form shortcode is loaded
-	update_option( 'wp_roadmap_new_idea_shortcode_loaded', true );
 
-	$output = '';
+ namespace RoadMapWP\Free\Shortcodes\NewIdeaForm;
 
-	if (isset($_GET['new_idea_submitted']) && $_GET['new_idea_submitted'] == '1' && isset($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'new_idea_submitted')) {
-		$output .= '<p>Thank you for your submission!</p>';
-	}
+ // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+};
 
-	$hide_submit_idea_heading = apply_filters( 'wp_roadmap_hide_custom_idea_heading', false );
-	$new_submit_idea_heading  = apply_filters( 'wp_roadmap_custom_idea_heading_text', 'Submit new Idea' );
+function new_idea_form_shortcode() {
+	ob_start();
+    // Flag to indicate the new idea form shortcode is loaded
+    update_option( 'wp_roadmap_new_idea_shortcode_loaded', true );
 
-	$output .= '<div class="roadmap_wrapper container mx-auto">';
-	$output .= '<div class="new_idea_form__frontend">';
-	if ( ! $hide_submit_idea_heading ) {
-		$output .= '<h2>' . esc_html( $new_submit_idea_heading ) . '</h2>';
-	}
-	$output .= '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
-	$output .= '<ul class="flex-outer">';
-	$output .= '<li class="new_idea_form_input"><label for="idea_title">Title:</label>';
-	$output .= '<input type="text" name="idea_title" id="idea_title" required></li>';
-	$output .= '<li class="new_idea_form_input"><label for="idea_description">Description:</label>';
-	$output .= '<textarea name="idea_description" id="idea_description" required></textarea></li>';
+	$form_submitted_nonce = isset($_GET['nonce']) ? sanitize_text_field($_GET['nonce']) : '';
+    if (isset($_GET['new_idea_submitted']) && $_GET['new_idea_submitted'] == '1' && isset($_GET['nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['nonce'])), 'new_idea_submitted')) {
+        echo '<p>Thank you for your submission!</p>';
+    }
 
-	$taxonomies = get_object_taxonomies( 'idea', 'objects' );
-	foreach ( $taxonomies as $taxonomy ) {
-		if ( $taxonomy->name !== 'status' && ( $taxonomy->name === 'idea-tag' ) ) {
-			$terms = get_terms(
-				array(
-					'taxonomy'   => $taxonomy->name,
-					'hide_empty' => false,
-				)
-			);
+    $hide_submit_idea_heading = apply_filters( 'wp_roadmap_hide_custom_idea_heading', false );
+    $new_submit_idea_heading  = apply_filters( 'wp_roadmap_custom_idea_heading_text', 'Submit new Idea' );
+?>
+<div class="roadmap_wrapper container mx-auto">
+    <div class="new_idea_form__frontend">
+        <?php if ( ! $hide_submit_idea_heading ): ?>
+            <h2><?php echo esc_html( $new_submit_idea_heading ); ?></h2>
+        <?php endif; 
+        $form_action = esc_url_raw($_SERVER['REQUEST_URI']);
+        ?>
+        <form action="<?php echo esc_url($form_action); ?>" method="post">
+            <ul class="flex-outer">
+                <li class="new_idea_form_input">
+                    <label for="idea_title">Title:</label>
+                    <input type="text" name="idea_title" id="idea_title" required>
+                </li>
+                <li class="new_idea_form_input">
+                    <label for="idea_description">Description:</label>
+                    <textarea name="idea_description" id="idea_description" required></textarea>
+                </li>
+                <?php
+                $taxonomies = get_object_taxonomies( 'idea', 'objects' );
+                foreach ( $taxonomies as $taxonomy ) {
+                    if ( $taxonomy->name !== 'status' && ( $taxonomy->name === 'idea-tag' ) ) {
+                        $terms = get_terms(
+                            array(
+                                'taxonomy'   => $taxonomy->name,
+                                'hide_empty' => false,
+                            )
+                        );
 
-			if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-				$output .= '<li class="new_idea_form_input">';
-				$output .= '<label>' . esc_html( $taxonomy->labels->singular_name ) . ':</label>';
-				$output .= '<div class="taxonomy-term-labels">';
-
-				foreach ( $terms as $term ) {
-					$output .= '<label class="taxonomy-term-label">';
-					$output .= '<input type="checkbox" name="idea_taxonomies[' . esc_attr( $taxonomy->name ) . '][]" value="' . esc_attr( $term->term_id ) . '"> ';
-					$output .= esc_html( $term->name );
-					$output .= '</label>';
-				}
-
-				$output .= '</div>';
-				$output .= '</li>';
-			}
-		}
-	}
-
-	// Generate a nonce and add it as a hidden input field
-	$nonce   = wp_create_nonce( 'wp_roadmap_new_idea' );
-	$output .= '<input type="hidden" name="wp_roadmap_new_idea_nonce" value="' . esc_attr( $nonce ) . '">';
-	$output .= '<li class="new_idea_form_input"><input type="submit" value="Submit Idea"></li>';
-	$output .= '</ul>';
-	$output .= '</form>';
-	$output .= '</div>';
-	$output .= '</div>';
-
-	return $output;
+                        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ): ?>
+                            <li class="new_idea_form_input">
+                                <label><?php echo esc_html( $taxonomy->labels->singular_name ); ?>:</label>
+                                <div class="taxonomy-term-labels">
+                                    <?php foreach ( $terms as $term ): ?>
+                                        <label class="taxonomy-term-label">
+                                            <input type="checkbox" name="idea_taxonomies[<?php echo esc_attr( $taxonomy->name ); ?>][]" value="<?php echo esc_attr( $term->term_id ); ?>"> <?php echo esc_html( $term->name ); ?>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                            </li>
+                        <?php endif;
+                    }
+                }
+                ?>
+                <?php $form_submission_nonce = wp_create_nonce('wp_roadmap_new_idea'); ?>
+                <input type="hidden" name="wp_roadmap_new_idea_nonce" value="<?php echo esc_attr($form_submission_nonce); ?>">
+                <li class="new_idea_form_input">
+                    <input type="submit" value="Submit Idea">
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<?php
+return ob_get_clean();
 }
 
-add_shortcode( 'new_idea_form', 'wp_roadmap_new_idea_form_shortcode' );
+
+add_shortcode( 'new_idea_form', __NAMESPACE__ . '\\new_idea_form_shortcode' );
 
 /**
  * Function to handle the submission of the new idea form.
  */
-function wp_roadmap_handle_new_idea_submission() {
-	if ( 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['idea_title'] ) && isset( $_POST['wp_roadmap_new_idea_nonce'] ) && wp_verify_nonce( $_POST['wp_roadmap_new_idea_nonce'], 'wp_roadmap_new_idea' ) ) {
-		$title       = sanitize_text_field( $_POST['idea_title'] );
-		$description = sanitize_textarea_field( $_POST['idea_description'] );
+function handle_new_idea_submission() {
+    $submission_nonce = ''; // Initialize outside to ensure scope availability
+    $idea_id = 0; // Initialize to ensure scope availability
 
-		// Get the default post status option from the settings
-		// Fetch Pro plugin settings
-		$options = get_option( 'wp_roadmap_settings', array() );
-		// Retrieve the default status from Pro plugin settings
-		$default_idea_status = isset( $options['default_idea_status'] ) ? $options['default_idea_status'] : 'pending';
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['idea_title']) && isset($_POST['wp_roadmap_new_idea_nonce'])) {
+        $submission_nonce = sanitize_text_field(wp_unslash($_POST['wp_roadmap_new_idea_nonce']));
+        if (wp_verify_nonce($submission_nonce, 'wp_roadmap_new_idea')) {
+            $title = sanitize_text_field($_POST['idea_title']);
+            $description = sanitize_textarea_field($_POST['idea_description']);
 
-		$idea_id = wp_insert_post(
-			array(
-				'post_title'   => $title,
-				'post_content' => $description,
-				'post_status'  => $default_idea_status, // Use the default post status
-				'post_type'    => 'idea',
-			)
-		);
+            $options = get_option('wp_roadmap_settings', array());
+            $default_idea_status = isset($options['default_idea_status']) ? $options['default_idea_status'] : 'pending';
 
-		if ('POST' === $_SERVER['REQUEST_METHOD'] && isset($_POST['idea_title']) && isset($_POST['wp_roadmap_new_idea_nonce']) && wp_verify_nonce($_POST['wp_roadmap_new_idea_nonce'], 'wp_roadmap_new_idea')) {
-			foreach ( $_POST['idea_taxonomies'] as $tax_slug => $term_ids ) {
-				$term_ids = array_map( 'intval', $term_ids );
-				wp_set_object_terms( $idea_id, $term_ids, $tax_slug );
-			}
-		}
+            $idea_id = wp_insert_post([
+                'post_title' => $title,
+                'post_content' => $description,
+                'post_status' => $default_idea_status,
+                'post_type' => 'idea',
+            ]);
+        }
+    }
 
-		$redirect_nonce = wp_create_nonce('new_idea_submitted');
-		$redirect_url = add_query_arg(['new_idea_submitted' => '1', 'nonce' => $redirect_nonce], $your_redirect_url);
-		wp_redirect($redirect_url);
-		exit;
-	}
+    // Ensure this conditional only runs if the nonce was verified successfully
+    if ('POST' === $_SERVER['REQUEST_METHOD'] && !empty($submission_nonce) && $idea_id) {
+        if (!empty($_POST['idea_taxonomies']) && is_array($_POST['idea_taxonomies'])) {
+            foreach ($_POST['idea_taxonomies'] as $tax_slug => $term_ids) {
+                if (!taxonomy_exists($tax_slug)) {
+                    continue; // Skip processing for non-existing taxonomies
+                }
+                $term_ids = array_map('intval', $term_ids); // Ensure term IDs are integers
+                wp_set_object_terms($idea_id, $term_ids, $tax_slug);
+            }
+        }
+
+        $redirect_nonce = wp_create_nonce('new_idea_submitted');
+        $redirect_url = add_query_arg(['new_idea_submitted' => '1', 'nonce' => $redirect_nonce], esc_url_raw( $_SERVER['REQUEST_URI'] )); // Replace with your actual URL
+        wp_redirect($redirect_url);
+        exit;
+    }
 }
-add_action( 'template_redirect', 'wp_roadmap_handle_new_idea_submission' );
+add_action('template_redirect', __NAMESPACE__ . '\\handle_new_idea_submission');
+
