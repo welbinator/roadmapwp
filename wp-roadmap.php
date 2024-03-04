@@ -35,15 +35,15 @@ function admin_notice() {
 defined('ABSPATH') or die('No script kiddies please!');
 
 // Include necessary files
-require_once plugin_dir_path(__FILE__) . 'app/admin-functions.php';
-require_once plugin_dir_path(__FILE__) . 'app/cpt-ideas.php';
-require_once plugin_dir_path(__FILE__) . 'app/ajax-handlers.php';
-require_once plugin_dir_path(__FILE__) . 'app/admin-pages.php';
-require_once plugin_dir_path(__FILE__) . 'app/shortcodes/display-ideas.php';
-require_once plugin_dir_path(__FILE__) . 'app/shortcodes/new-idea-form.php';
-require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap.php';
-require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap-tabs.php';
-
+require_once plugin_dir_path( __FILE__ ) . 'app/admin-functions.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/cpt-ideas.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/admin-pages.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/display-ideas.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/new-idea-form.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap-tabs.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/customizer-styles.php';
 
 function on_activation() {
     // Directly call the function that registers your taxonomies here
