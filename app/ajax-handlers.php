@@ -204,7 +204,7 @@ function handle_delete_custom_taxonomy() {
 		wp_send_json_error( array( 'message' => __( 'Taxonomy not found.', 'roadmapwp-free' ) ) );
 	}
 }
-add_action( 'wp_ajax_delete_custom_taxonomy', __NAMESPACE__ . '\\handle_delete_custom_taxonomy' );
+// add_action( 'wp_ajax_delete_custom_taxonomy', __NAMESPACE__ . '\\handle_delete_custom_taxonomy' );
 
 // Handles the AJAX request for deleting selected terms
 function handle_delete_selected_terms() {
@@ -220,5 +220,161 @@ function handle_delete_selected_terms() {
 	wp_send_json_success();
 }
 add_action( 'wp_ajax_delete_selected_terms', __NAMESPACE__ . '\\handle_delete_selected_terms' );
+
+/**
+ * Loads ideas for a given status via AJAX.
+ */
+function load_ideas_for_status() {
+	$options                = get_option( 'wp_roadmap_settings' );
+
+	check_ajax_referer( 'roadmap_nonce', 'nonce' );
+
+	$status                  = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : '';
+	$selected_taxonomiesSlugs = isset( $_POST['selectedTaxonomies'] ) ? explode( ',', sanitize_text_field( $_POST['selectedTaxonomies'] ) ) : array();
+
+	// Initialize the tax query with the status term
+	$tax_query = array(
+		'relation' => 'AND',
+		array(
+			'taxonomy' => 'status',
+			'field'    => 'slug',
+			'terms'    => $status,
+		),
+	);
+
+	$taxonomy_queries        = array();
+	$empty_taxonomy_selected = false;
+
+	// Modify the tax query if selected taxonomies are provided
+	// foreach ( $selected_taxonomiesSlugs as $slug ) {
+	// 	if ( ! empty( $slug ) ) {
+	// 		$terms = get_terms(
+	// 			array(
+	// 				'taxonomy' => $slug,
+	// 				'fields'   => 'slugs',
+	// 			)
+	// 		);
+	// 		if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+	// 			$taxonomy_queries[] = array(
+	// 				'taxonomy' => $slug,
+	// 				'field'    => 'slug',
+	// 				'terms'    => $terms,
+	// 				'operator' => 'IN',
+	// 			);
+	// 		} else {
+	// 			$empty_taxonomy_selected = true;
+	// 		}
+	// 	}
+	// }
+
+	// if ( ! empty( $taxonomy_queries ) ) {
+	// 	$tax_query[] = array_merge( array( 'relation' => 'OR' ), $taxonomy_queries );
+	// }
+
+	// if ( $empty_taxonomy_selected && count( $taxonomy_queries ) === 0 ) {
+	// 	wp_send_json_success( array( 'html' => '<p>No ideas found for the selected taxonomies.</p>' ) );
+	// 	return;
+	// }
+
+	$args = array(
+		'post_type'      => 'idea',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'tax_query'      => $tax_query,
+	);
+
+	$query = new \WP_Query( $args );
+
+	ob_start();
+
+	if ( $query->have_posts() ) {
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			$idea_id = get_the_ID();
+			// Retrieve all taxonomies associated with the 'idea' post type, excluding 'status'
+			$idea_taxonomies     = get_object_taxonomies( 'idea', 'names' );
+			$excluded_taxonomies = array( 'status' ); // Add more taxonomy names to exclude if needed
+			$included_taxonomies = array_diff( $idea_taxonomies, $excluded_taxonomies );
+
+			$idea_class = Functions\get_idea_class_with_votes($idea_id);
+
+			// Fetch terms for each included taxonomy
+			$tags = array();
+			foreach ( $included_taxonomies as $taxonomy ) {
+				$terms = wp_get_post_terms( $idea_id, $taxonomy, array( 'fields' => 'all' ) );
+				if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+					$tags[ $taxonomy ] = $terms;
+				}
+			}
+			$vote_count = intval( get_post_meta( $idea_id, 'idea_votes', true ) );
+		
+
+			?>
+
+			<div class="wp-roadmap-idea rounded-lg border bg-card text-card-foreground shadow-sm <?php echo esc_attr($idea_class); ?>" data-v0-t="card">
+				<div class="flex flex-col space-y-1.5 p-6">
+					<h3 class="text-2xl font-semibold leading-none tracking-tight">
+						<a href="<?php echo get_permalink( $idea_id ); ?>"><?php echo esc_html( get_the_title() ); ?></a>
+					</h3>
+
+					<?php if ( ! empty( $tags ) ) : ?>
+						<div class="flex flex-wrap space-x-2 mt-2 idea-tags">
+							<?php foreach ( $tags as $tag_name => $tag_terms ) : ?>
+								<?php foreach ( $tag_terms as $tag_term ) : ?>
+									<?php $tag_link = get_term_link( $tag_term, $tag_name ); ?>
+									<?php if ( ! is_wp_error( $tag_link ) ) : ?>
+										<a href="<?php echo esc_url( $tag_link ); ?>" class="inline-flex items-center border font-semibold bg-blue-500 px-3 py-1 rounded-full text-sm !no-underline" style="background-color: <?php echo esc_attr( $filter_tags_bg_color ); ?>;color: <?php echo esc_attr( $filter_tags_text_color ); ?>;">
+											<?php echo esc_html( $tag_term->name ); ?>
+										</a>
+									<?php endif; ?>
+								<?php endforeach; ?>
+							<?php endforeach; ?>
+						</div>
+					<?php endif; ?>
+				</div>
+
+				<div class="p-6">
+					<p class="text-gray-700 mt-4 break-all">
+						<?php
+							echo wp_trim_words( get_the_excerpt(), 20 ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '" rel="ugc">read more...</a>';
+						?>
+					</p>
+				</div>
+
+				<div class="p-6 flex items-center idea-vote-box" data-idea-id="<?php echo intval( $idea_id ); ?>">
+					<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 px-4 py-2 rounded-lg idea-vote-button">
+						<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="w-5 h-5 mr-1"
+						>
+							<path d="M7 10v12"></path>
+							<path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"></path>
+						</svg>
+						<div class="text-gray-600 ml-2 idea-vote-count"><?php echo esc_html( $vote_count ); ?></div>
+					</button>
+				</div>
+			</div>
+
+			<?php
+		}
+	} else {
+		echo '<p>No ideas found for this status.</p>';
+	}
+
+	wp_reset_postdata();
+
+	$html = ob_get_clean();
+	wp_send_json_success( array( 'html' => $html ) );
+}
+add_action( 'wp_ajax_load_ideas_for_status', __NAMESPACE__ . '\\load_ideas_for_status' );
+add_action( 'wp_ajax_nopriv_load_ideas_for_status', __NAMESPACE__ . '\\load_ideas_for_status' );
 
 

@@ -45,7 +45,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -56,7 +56,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -65,7 +65,7 @@ function settings_page() {
 					<td>
 						<?php
 						// This filter will be handled in choose-idea-template.php
-						echo apply_filters( 'wp_roadmap_single_idea_template_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post(apply_filters('wp_roadmap_single_idea_template_setting', '<a target="_blank" href="' . esc_url('https://roadmapwp.com/#pricing') . '" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'roadmapwp-free') . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -90,7 +90,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -99,7 +99,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -256,7 +256,7 @@ function taxonomies_page() {
 	echo '<h2>Add Custom Taxonomy</h2>';
 
 	if ( $pro_feature ) {
-		echo $pro_feature;
+		echo wp_kses_post ( $pro_feature );
 		echo '<h2>Existing Taxonomies</h2>';
 	} else {
 		echo '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>';
@@ -306,7 +306,7 @@ function taxonomies_page() {
 		echo '<input type="text" name="new_term" placeholder="New Term for ' . esc_attr( $taxonomy->labels->singular_name ) . '" />';
 		echo '<input type="hidden" name="taxonomy_slug" value="' . esc_attr( $taxonomy->name ) . '" />';
 		echo '<input type="submit" value="Add Term" />';
-		echo wp_nonce_field( 'add_term_to_' . $taxonomy->name, 'wp_roadmap_add_term_nonce' );
+		echo wp_nonce_field( 'add_term_to_' . sanitize_key($taxonomy->name), 'wp_roadmap_add_term_nonce' );
 		echo '</form>';
 		echo '<hr style="margin:20px; border:2px solid #8080802e;" />';
 	}

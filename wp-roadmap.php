@@ -3,7 +3,7 @@
 Plugin Name: Road Map WP
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
-Version:     1.1.4
+Version:     1.1.5
 Author:      James Welbes
 Author URI:  https://apexbranding.design
 License:     GPL2
@@ -42,6 +42,7 @@ require_once plugin_dir_path(__FILE__) . 'app/admin-pages.php';
 require_once plugin_dir_path(__FILE__) . 'app/shortcodes/display-ideas.php';
 require_once plugin_dir_path(__FILE__) . 'app/shortcodes/new-idea-form.php';
 require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap-tabs.php';
 
 
 function on_activation() {
@@ -62,3 +63,19 @@ function on_activation() {
 
 register_activation_hook(__FILE__, __NAMESPACE__ . '\\on_activation');
 
+function custom_template( $template ) {
+	global $post;
+
+	if ( 'idea' === $post->post_type ) {
+		$options          = get_option( 'wp_roadmap_settings' );
+		$chosen_idea_template = isset( $options['single_idea_template'] ) ? $options['single_idea_template'] : 'plugin';
+
+		if ( $chosen_idea_template === 'plugin' && file_exists( plugin_dir_path( __FILE__ ) . 'app/templates/template-single-idea.php' ) ) {
+			return plugin_dir_path( __FILE__ ) . 'app/templates/template-single-idea.php';
+		}
+	}
+
+	return $template;
+}
+
+add_filter( 'single_template', __NAMESPACE__ . '\\custom_template' );

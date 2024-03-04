@@ -66,7 +66,7 @@ function roadmap_shortcode( $atts ) {
 	$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 	?>
 	<div class="roadmap_wrapper container mx-auto">
-	<div class="roadmap-columns grid gap-4 <?php echo $md_cols_class; ?> <?php echo $lg_cols_class; ?> <?php echo $xl_cols_class; ?>">
+	<div class="roadmap-columns grid gap-4 <?php echo htmlspecialchars($md_cols_class, ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($lg_cols_class, ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($xl_cols_class, ENT_QUOTES, 'UTF-8'); ?>">
 			<?php
 			foreach ( $statuses as $status ) {
 				$args  = array(
@@ -99,8 +99,7 @@ function roadmap_shortcode( $atts ) {
 							?>
 							<div class="border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden m-2 wp-roadmap-idea">
 								<div class="p-6">
-									<h4 class="idea-title"><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></h4>
-									<p class="text-gray-500 mt-2 mb-0 text-sm"><?php echo esc_html( get_the_date() ); ?></p>
+								<h4 class="idea-title"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h4>									<p class="text-gray-500 mt-2 mb-0 text-sm"><?php echo esc_html( get_the_date() ); ?></p>
 									<div class="flex flex-wrap space-x-2 mt-2 idea-tags">
 									<?php
 									$terms = wp_get_post_terms( $idea_id, $taxonomies );
@@ -117,7 +116,7 @@ function roadmap_shortcode( $atts ) {
 									<p class="idea-excerpt"><?php the_excerpt(); ?></p>
 									<div class="flex items-center justify-start mt-6 gap-6">
 										<a class="text-blue-500 hover:underline" href="<?php the_permalink(); ?>" rel="ugc">Read More</a>
-										<div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
+										<div class="flex items-center idea-vote-box" data-idea-id="<?php echo esc_attr( $idea_id ) ?>">
 											<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr( $vote_button_bg_color ); ?>!important;background-image: none!important;color: <?php echo esc_attr( $vote_button_text_color ); ?>!important;">
 												<svg
 												xmlns="http://www.w3.org/2000/svg"

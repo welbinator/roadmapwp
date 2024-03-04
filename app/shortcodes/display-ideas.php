@@ -133,7 +133,7 @@ function display_ideas_shortcode() {
 		
 							<div class="flex items-center justify-between mt-6">
 								<a class="text-blue-500 hover:underline" href="<?php echo esc_url( get_permalink() ); ?>" rel="ugc">Read More</a>
-								<div class="flex items-center idea-vote-box" data-idea-id="<?php echo $idea_id; ?>">
+								<div class="flex items-center idea-vote-box" data-idea-id="<?php echo esc_attr($idea_id); ?>">
 									<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button" style="background-color: <?php echo esc_attr( $vote_button_bg_color ); ?>!important;background-image: none!important;color: <?php echo esc_attr( $vote_button_text_color ); ?>!important;">
 										<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +152,7 @@ function display_ideas_shortcode() {
 										</svg>
 										Vote
 									</button>
-									<div class="text-gray-600 ml-2 idea-vote-count"><?php echo $vote_count; ?></div>
+									<div class="text-gray-600 ml-2 idea-vote-count"><?php echo esc_html( $vote_count ) ?></div>
 								</div>
 							</div>
 						</div>
