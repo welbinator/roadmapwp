@@ -15,16 +15,6 @@ function settings_page() {
 	$options       = get_option( 'wp_roadmap_settings' );
 	$selected_page = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
 
-	// New Styling Section
-	$vote_button_bg_color    = isset( $options['vote_button_bg_color'] ) ? $options['vote_button_bg_color'] : '#0000ff';
-	$vote_button_text_color  = isset( $options['vote_button_text_color'] ) ? $options['vote_button_text_color'] : '#ffffff';
-	$filter_tags_bg_color    = isset( $options['filter_tags_bg_color'] ) ? $options['filter_tags_bg_color'] : '#0000ff';
-	$filter_tags_text_color  = isset( $options['filter_tags_text_color'] ) ? $options['filter_tags_text_color'] : '#ffffff';
-	$filters_bg_color        = isset( $options['filters_bg_color'] ) ? $options['filters_bg_color'] : '#f5f5f5';
-	$tabs_container_bg_color = isset( $options['tabs_container_bg_color'] ) ? $options['tabs_container_bg_color'] : '#dddddd';
-	$tabs_button_bg_color    = isset( $options['tabs_button_bg_color'] ) ? $options['tabs_button_bg_color'] : '#ffffff';
-	$tabs_text_color         = isset( $options['tabs_text_color'] ) ? $options['tabs_text_color'] : '#000000';
-
 	?>
 	<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
@@ -45,7 +35,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -56,7 +46,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -65,7 +55,7 @@ function settings_page() {
 					<td>
 						<?php
 						// This filter will be handled in choose-idea-template.php
-						echo apply_filters( 'wp_roadmap_single_idea_template_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post(apply_filters('wp_roadmap_single_idea_template_setting', '<a target="_blank" href="' . esc_url('https://roadmapwp.com/#pricing') . '" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'roadmapwp-free') . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -90,7 +80,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
@@ -99,103 +89,8 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
-					</td>
-				</tr>
-		   
-				<tr>
-					<td style="padding:0;padding-block:20px;">
-						<hr>
-						<h1>Styling</h1>
-						<hr>
-					</td>
-				</tr>
-
-
-				<tr>
-					<td style="padding:0;padding-block:20px;">
-						<h4 style="margin: 0px;">Vote Button</h4>
-					</td>
-				</tr>
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Vote Button Background Color', 'roadmapwp-free' ); ?></th>
-					<td>
-						<input type="text" name="wp_roadmap_settings[vote_button_bg_color]" value="<?php echo esc_attr( $vote_button_bg_color ); ?>" class="wp-roadmap-color-picker"/>
-						
-					</td>
-				</tr>
-
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Vote Button Text Color', 'roadmapwp-free' ); ?></th>
-					<td>
-						<input type="text" name="wp_roadmap_settings[vote_button_text_color]" value="<?php echo esc_attr( $vote_button_text_color ); ?>" class="wp-roadmap-color-picker"/>
-					   
-					</td>
-					
-				</tr>
-				<tr><td><hr></td></tr>
-				<tr>
-					<td style="padding:0;padding-block:20px;">
-						<h4 style="margin: 0px;">Filters</h4>
-					</td>
-				</tr>
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Filter Tags Background Color', 'roadmapwp-free' ); ?></th>
-					<td>
-						<input type="text" name="wp_roadmap_settings[filter_tags_bg_color]" value="<?php echo esc_attr( $filter_tags_bg_color ); ?>" class="wp-roadmap-color-picker"/>
-						<!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
-					</td>
-				</tr>
-
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Filter Tags Text Color', 'roadmapwp-free' ); ?></th>
-					<td>
-						<input type="text" name="wp_roadmap_settings[filter_tags_text_color]" value="<?php echo esc_attr( $filter_tags_text_color ); ?>" class="wp-roadmap-color-picker"/>
-						<!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
-					</td>
-				</tr>
-
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Filters Background Color', 'roadmapwp-free' ); ?></th>
-					<td>
-						<input type="text" name="wp_roadmap_settings[filters_bg_color]" value="<?php echo esc_attr( $filters_bg_color ); ?>" class="wp-roadmap-color-picker"/>
-						<!-- <button type="button" class="wp-roadmap-reset-color" data-default-color="#0000ff">Reset</button> -->
-					</td>
-				</tr>
-				<tr><td><hr></td></tr>
-				<tr>
-					<td style="padding:0;padding-block:20px;">
-						<h4 style="margin: 0px;">Roadmap Tabs</h4>
-					</td>
-				</tr>
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Roadmap Tabs Container Background Color', 'wp-roadmap' ); ?></th>
-					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
-						
-					</td>
-				</tr>
-
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Roadmap Tabs Background Color', 'wp-roadmap' ); ?></th>
-					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
-					</td>
-				</tr>
-
-
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Roadmap Tabs Text Color', 'wp-roadmap' ); ?></th>
-					<td>
-					<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;"><?php echo esc_html__( 'Available in Pro', 'wp-roadmap' ); ?></a>
 					</td>
 				</tr>
 			</table>
@@ -256,7 +151,7 @@ function taxonomies_page() {
 	echo '<h2>Add Custom Taxonomy</h2>';
 
 	if ( $pro_feature ) {
-		echo $pro_feature;
+		echo wp_kses_post ( $pro_feature );
 		echo '<h2>Existing Taxonomies</h2>';
 	} else {
 		echo '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>';
@@ -306,7 +201,7 @@ function taxonomies_page() {
 		echo '<input type="text" name="new_term" placeholder="New Term for ' . esc_attr( $taxonomy->labels->singular_name ) . '" />';
 		echo '<input type="hidden" name="taxonomy_slug" value="' . esc_attr( $taxonomy->name ) . '" />';
 		echo '<input type="submit" value="Add Term" />';
-		echo wp_nonce_field( 'add_term_to_' . $taxonomy->name, 'wp_roadmap_add_term_nonce' );
+		echo wp_nonce_field( 'add_term_to_' . sanitize_key($taxonomy->name), 'wp_roadmap_add_term_nonce' );
 		echo '</form>';
 		echo '<hr style="margin:20px; border:2px solid #8080802e;" />';
 	}
