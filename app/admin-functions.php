@@ -115,6 +115,7 @@ function enqueue_frontend_styles(): void {
 	$has_new_idea_form_shortcode = false;
 	$has_display_ideas_shortcode = false;
 	$has_roadmap_shortcode       = false;
+	$has_roadmap_tabs_shortcode  = false;
 	$has_single_idea_shortcode   = false;
 	$has_block                   = false;
 
@@ -123,6 +124,7 @@ function enqueue_frontend_styles(): void {
 		$has_new_idea_form_shortcode = has_shortcode( $post->post_content, 'new_idea_form' );
 		$has_display_ideas_shortcode = has_shortcode( $post->post_content, 'display_ideas' );
 		$has_roadmap_shortcode       = has_shortcode( $post->post_content, 'roadmap' );
+		$has_roadmap_tabs_shortcode  = has_shortcode( $post->post_content, 'roadmap_tabs' );
 		$has_single_idea_shortcode   = has_shortcode( $post->post_content, 'single_idea' );
 
 		// Check for block presence
@@ -132,7 +134,7 @@ function enqueue_frontend_styles(): void {
 	}
 
 	// Enqueue styles if a shortcode or block is loaded
-	if ( $has_new_idea_form_shortcode || $has_display_ideas_shortcode || $has_roadmap_shortcode || $has_single_idea_shortcode || $has_block || is_singular( 'idea' ) ) {
+	if ( $has_new_idea_form_shortcode || $has_display_ideas_shortcode || $has_roadmap_shortcode || $has_roadmap_tabs_shortcode || $has_single_idea_shortcode || $has_block || is_singular( 'idea' ) ) {
 
 		// Enqueue Tailwind CSS
 		$tailwind_css_url = plugin_dir_url( __FILE__ ) . '../dist/styles.css';
@@ -160,6 +162,16 @@ function enqueue_frontend_styles(): void {
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce'    => wp_create_nonce( 'wp-roadmap-filter-nonce' ),
+			)
+		);
+
+		wp_enqueue_script('wp-roadmap-roadmap-tabs', plugin_dir_url(__FILE__) . 'assets/js/roadmap-tabs.js', array('jquery'), '', true);
+		wp_localize_script(
+			'wp-roadmap-roadmap-tabs', // Make sure this handle matches the one used in wp_enqueue_script.
+			'wpRoadMapAjax', // Object name in JavaScript to access the variables.
+			array(
+				'ajax_url' => admin_url('admin-ajax.php'), // The AJAX URL.
+				'nonce'    => wp_create_nonce('roadmap_nonce') // Your nonce, slightly renamed for clarity.
 			)
 		);
 	}
@@ -279,14 +291,22 @@ function redirect_single_idea( string $template ): string {
 		if ( is_array( $options ) ) {
 			$single_idea_page_id = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
 			$chosen_template     = isset( $options['single_idea_template'] ) ? $options['single_idea_template'] : 'plugin';
-
-			// If you have further logic that modifies the $template based on these options,
-			// that logic would go here.
 		}
 	}
 
 	return $template;
 }
 
-
 add_filter( 'single_template', __NAMESPACE__ . '\\redirect_single_idea' );
+
+// Check if the idea has at least one vote
+function get_idea_class_with_votes($idea_id) {
+    
+    $current_votes = get_post_meta($idea_id, 'idea_votes', true) ?: 0;
+    $has_votes = $current_votes > 0;
+
+    // Define the class based on whether the idea has votes
+    $idea_class = $has_votes ? 'has-votes' : '';
+
+    return $idea_class;
+}
