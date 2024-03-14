@@ -15,18 +15,18 @@ jQuery(document).ready(function($) {
         });
 
         $.ajax({
-            url: wpRoadMapAjax.ajax_url,
+            url: wpRoadMapFilter.ajax_url,
             type: 'POST',
             data: {
-                'action': 'filter_ideas',
-                'filter_data': filterData,
-                'nonce': wpRoadMapAjax.nonce // Include the nonce for security
+                action: 'filter_ideas',
+                filter_data: filterData,
+                nonce: wpRoadMapFilter.nonce
             },
             success: function(response) {
                 $('.wp-roadmap-ideas-list').html(response);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log('AJAX error:', textStatus, errorThrown); // Log errors for debugging
+                console.log('AJAX error:', textStatus, errorThrown);
             }
         });
     });
