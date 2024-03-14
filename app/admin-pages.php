@@ -99,17 +99,6 @@ function settings_page() {
 		</form>
 	</div>
 	<?php
-	// Enqueue the color picker JavaScript and styles
-	wp_enqueue_script( 'wp-color-picker' );
-	wp_enqueue_style( 'wp-color-picker' );
-	?>
-	<script type="text/javascript">
-	jQuery(document).ready(function($) {
-		// Initialize color picker
-		$('.wp-roadmap-color-picker').wpColorPicker();
-	});
-	</script>
-	<?php
 }
 
 /**

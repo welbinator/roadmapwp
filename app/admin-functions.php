@@ -164,6 +164,16 @@ function enqueue_frontend_styles(): void {
 				'nonce'    => wp_create_nonce( 'wp-roadmap-filter-nonce' ),
 			)
 		);
+
+		wp_enqueue_script('wp-roadmap-roadmap-tabs', plugin_dir_url(__FILE__) . 'assets/js/roadmap-tabs.js', array('jquery'), '', true);
+		wp_localize_script(
+			'wp-roadmap-roadmap-tabs', // Make sure this handle matches the one used in wp_enqueue_script.
+			'wpRoadMapAjax', // Object name in JavaScript to access the variables.
+			array(
+				'ajax_url' => admin_url('admin-ajax.php'), // The AJAX URL.
+				'nonce'    => wp_create_nonce('roadmap_nonce') // Your nonce, slightly renamed for clarity.
+			)
+		);
 	}
 }
 
