@@ -11,5 +11,25 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 RoadMapWP is the number one roadmap plugin for WordPress. Easily create and manage forms and roadmaps for collecting feedback and keeping your customers in the loop.
 
 == Description ==
-Empower your WordPress website with RoadMapWP, the ultimate solution for building user-driven roadmaps. Engage your audience, gather valuable insights, and stay ahead of the competition.
+Empower your WordPress website with [RoadMapWP](https://roadmapwp.com), the ultimate solution for building user-driven roadmaps. Engage your audience, gather valuable insights, and stay ahead of the competition.
 
+https://www.youtube.com/watch?v=rAxzMLXRE7s
+
+Easy to use shortcodes (and blocks for pro users) make RoadMapWP ready to go right out of the box. You can literally be up and running, ready to collect feedback and feature ideas from your users within a matter of minutes!
+
+RoadMapWP allows Product Managers, Software Developers, or anybody with a product or service that they are continuously iterating on and improving to collect feedback, and organize the ideas on a public facing roadmap that lets you keep your customers in the loop and helps you build trust with your users.
+
+Customize all the buttons and colors in RoadMapWP with easy to use color pickers built right into the WordPress Customizer.
+
+= ✨ Take RoadMapWP To the Next Level =
+
+Looking for more advanced features, like custom headings, custom filters and advanced blocks? Checkout [RoadMapWP Pro](https://roadmapwp.com/#pricing)
+
+== 📃 Documentation ==
+
+Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started/) knowledgebase article to see just how quick and easy it is to get setup.
+
+== Screenshots ==
+1. Submit an Idea Form
+2. Browse Ideas 
+3. Custom Roadmap
