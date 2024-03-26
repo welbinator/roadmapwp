@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 };
 
+$options                = get_option( 'wp_roadmap_settings' );
+$allow_comments         = isset( $options['allow_comments'] ) ? $options['allow_comments'] : false;
 
 get_header(); ?>
 
@@ -110,11 +112,11 @@ get_header(); ?>
 					
 
 
-				<?php
-				if ( comments_open() || get_comments_number() ) :
-					comments_template();
-				endif;
-			endwhile; // End of the loop.
+						<?php
+					if ( ( $allow_comments ) && ( comments_open() || get_comments_number() ) ) :
+						comments_template();
+						endif;
+						endwhile;
 			?>
 		</article>
 

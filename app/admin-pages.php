@@ -42,8 +42,8 @@ function settings_page() {
 					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
-						// Filter hook to allow the Pro version to override this setting
-						echo wp_kses_post( apply_filters( 'wp_roadmap_enable_comments_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
+						// Apply the filter here
+						echo apply_filters( 'wp_roadmap_enable_comments_setting', '' );
 						?>
 					</td>
 				</tr>
