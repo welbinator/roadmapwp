@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Road Map WP
+Plugin Name: RoadMapWP
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
 Version:     1.1.6
@@ -45,20 +45,22 @@ require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap-tabs.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/customizer-styles.php';
 
+
 function on_activation() {
     // Directly call the function that registers your taxonomies here
     \RoadMapWP\Free\CPT\register_default_taxonomies();
 
     // Now add the terms
-    $status_terms = array('New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed');
-    foreach ($status_terms as $term) {
-        if (!term_exists($term, 'status')) {
-            $result = wp_insert_term($term, 'status');
-            if (is_wp_error($result)) {
-                error_log('Error inserting term ' . $term . ': ' . $result->get_error_message());
-            }
-        }
-    }
+    $status_terms = array( 'New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed' );
+	foreach ( $status_terms as $term ) {
+		if ( ! term_exists( $term, 'status' ) ) {
+			$result = wp_insert_term( $term, 'status' );
+			if ( is_wp_error( $result ) ) {
+				error_log( 'Error inserting term ' . $term . ': ' . $result->get_error_message() );
+			}
+		}
+	}
+    flush_rewrite_rules();
 }
 
 register_activation_hook(__FILE__, __NAMESPACE__ . '\\on_activation');

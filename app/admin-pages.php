@@ -12,8 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function settings_page() {
 	// Fetch current settings
-	$options       = get_option( 'wp_roadmap_settings' );
+	$options             = get_option( 'wp_roadmap_settings', array( 'default_status_term' => 'new-idea' ) );
+	$status_terms        = get_terms(
+		array(
+			'taxonomy'   => 'status',
+			'hide_empty' => false,
+		)
+	);
+	$default_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'new-idea';
 	$selected_page = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
+	
 
 	?>
 	<div class="wrap">
@@ -42,11 +50,25 @@ function settings_page() {
 				
 				<!-- Default Status Setting -->
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Set New Idea Default Status', 'roadmapwp-free' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Set Default Status Term for New Ideas', 'roadmapwp-pro' ); ?></th>
+				<td>
+					<select name="wp_roadmap_settings[default_status_term]">
+						<?php foreach ( $status_terms as $term ) : ?>
+							<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $default_status_term, $term->slug ); ?>>
+								<?php echo esc_html( $term->name ); ?>
+							</option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+			</tr>
+				
+
+				<tr valign="top">
+					<th scope="row"><?php esc_html_e( 'Set Published/Pending/Draft', 'roadmapwp-pro' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="' . esc_url( 'https://roadmapwp.com/#pricing' ) . '" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
+						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-pro' ) . '</a>' );
 						?>
 					</td>
 				</tr>

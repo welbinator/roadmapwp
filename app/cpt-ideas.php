@@ -7,7 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 };
 
-// Function to register the custom post type
+/**
+ * Register the custom post type.
+ */
 function rmwp_register_post_type() {
 	$options = get_option( 'wp_roadmap_settings' );
 
@@ -56,6 +58,7 @@ function rmwp_register_post_type() {
 		'menu_position'      => null,
 		'taxonomies'         => $taxonomies,
 		'supports'           => array( 'title', 'editor', 'author', 'comments' ),
+		'show_in_rest'       => true,
 	);
 
 	register_post_type( 'idea', $args );
@@ -63,8 +66,9 @@ function rmwp_register_post_type() {
 
 add_action( 'init', __NAMESPACE__ . '\\rmwp_register_post_type' );
 
-
-// default taxonomies
+/**
+ * Register default taxonomies.
+ */
 function register_default_taxonomies() {
 	// Define default taxonomies with their properties
 	$default_taxonomies = array(
@@ -104,37 +108,9 @@ function register_default_taxonomies() {
 }
 add_action( 'init', __NAMESPACE__ . '\\register_default_taxonomies' );
 
-// automatically assign Status of New Idea to new idea posts
-// Hook into the save_post action
-add_action( 'save_post_idea', __NAMESPACE__ . '\\auto_assign_new_idea_status', 10, 3 );
-
-// Function to auto-assign "New Idea" status to new Idea posts
-function auto_assign_new_idea_status( $post_id, $post, $update ) {
-	// If this is an update, not a new post, or if it's an autosave, don't do anything
-	if ( $update || wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
-		return;
-	}
-
-	// Check if the term exists
-	$term = term_exists( 'New Idea', 'status' );
-
-	// If the term doesn't exist, add it
-	if ( $term === 0 || $term === null ) {
-		$term = wp_insert_term( 'New Idea', 'status' );
-	}
-
-	// Check for errors
-	if ( is_wp_error( $term ) ) {
-		error_log( 'Error auto-assigning "New Idea" status: ' . $term->get_error_message() );
-		return;
-	}
-
-	// Assign "New Idea" status to this idea post using the term slug
-	wp_set_object_terms( $post_id, 'new-idea', 'status' );
-}
-
-
-// Register custom taxonomies
+/**
+ * Register custom taxonomies.
+ */
 function register_custom_taxonomies() {
 	$custom_taxonomies = get_option( 'wp_roadmap_custom_taxonomies', array() );
 

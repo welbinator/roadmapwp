@@ -34,6 +34,7 @@ module.exports = {
         'xl:grid-cols-3',
         'xl:grid-cols-4',
         'xl:grid-cols-5',
+        '!no-underline',
       ],
     
   presets: [],
