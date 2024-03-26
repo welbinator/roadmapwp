@@ -121,6 +121,20 @@ function handle_new_idea_submission() {
             }
         }
 
+		$default_idea_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'new-idea';
+		
+			// Check if selected statuses is set, not empty, and contains valid numeric values.
+			$valid_selected_statuses = isset( $_POST['selected_statuses'] ) && is_array( $_POST['selected_statuses'] )
+										&& count( array_filter( $_POST['selected_statuses'], 'is_numeric' ) ) > 0;
+
+			if ( $valid_selected_statuses ) {
+				$selected_status_terms = array_map( 'intval', $_POST['selected_statuses'] );
+				wp_set_object_terms( $idea_id, $selected_status_terms, 'status' );
+			} else {
+				// Fallback to default status term if none or invalid selected.
+				wp_set_object_terms( $idea_id, array( $default_idea_status_term ), 'status' );
+			}
+			
         $redirect_nonce = wp_create_nonce('new_idea_submitted');
         $redirect_url = add_query_arg(['new_idea_submitted' => '1', 'nonce' => $redirect_nonce], esc_url_raw( $_SERVER['REQUEST_URI'] )); // Replace with your actual URL
         wp_redirect($redirect_url);
@@ -128,4 +142,3 @@ function handle_new_idea_submission() {
     }
 }
 add_action('template_redirect', __NAMESPACE__ . '\\handle_new_idea_submission');
-
