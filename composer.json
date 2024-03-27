@@ -27,6 +27,6 @@
     "scripts": {
         "phpcs:wp": "vendor/bin/phpcs --standard=WordPress --extensions=php",
         "phpcbf:wp": "vendor/bin/phpcbf --standard=WordPress --extensions=php",
-        "sync-to-svn": "rsync -av --progress --exclude=/.github --exclude=/.vscode --exclude=/node_modules --exclude=/src --exclude=/vendor --exclude=.gitignore --exclude=composer.json --exclude=composer.lock --exclude=package-lock.json --exclude=package.json --exclude=phpstan-baseline.neon --exclude=phpstan.neon --exclude=postcss.config.js --exclude=/.wordpress-org --exclude=/svn --exclude=tailwind.config.js ./ svn/trunk/"   
+        "sync-to-trunk": "rsync -av --progress --exclude=/.github --exclude=/.vscode --exclude=/node_modules --exclude=/src --exclude=/vendor --exclude=.gitignore --exclude=composer.json --exclude=composer.lock --exclude=package-lock.json --exclude=package.json --exclude=phpstan-baseline.neon --exclude=phpstan.neon --exclude=postcss.config.js --exclude=/.wordpress-org --exclude=/svn --exclude=tailwind.config.js ./ svn/trunk/"   
     }
 }
