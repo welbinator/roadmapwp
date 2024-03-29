@@ -36,6 +36,9 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.2.4 =
+* Fix bug with roadmap shortcode ignoring status parameter
+
 = 1.2.3 =
 * Fix bug when creating new idea in admin
 

@@ -17,7 +17,7 @@ namespace RoadMapWP\Free\Shortcodes\RoadmapTabs;
 function roadmap_tabs_shortcode( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'idea-status'        => '',
+			'status'        => '',
 			'showNewIdea'   => true,
 			'showUpNext'    => true,
 			'showMaybe'     => true,
@@ -31,9 +31,9 @@ function roadmap_tabs_shortcode( $atts ) {
 
 	// Assume true if the attribute is not passed
 	$statuses = array();
-	if ( ! empty( $atts['idea-status'] ) ) {
+	if ( ! empty( $atts['status'] ) ) {
 		// Use the 'idea-status' attribute if it's provided (for the shortcode)
-		$statuses = array_map( 'trim', explode( ',', $atts['idea-status'] ) );
+		$statuses = array_map( 'trim', explode( ',', $atts['status'] ) );
 	} else {
 		// Otherwise, use the boolean attributes (for the block)
 		if ( $atts['showNewIdea'] ) {
