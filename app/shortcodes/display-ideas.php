@@ -29,7 +29,7 @@ function display_ideas_shortcode() {
 	$taxonomies        = array_merge( $taxonomies, array_keys( $custom_taxonomies ) );
 
 	// Exclude 'status' taxonomy
-	$exclude_taxonomies = array( 'status' );
+	$exclude_taxonomies = array( 'idea-status' );
 	$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 
 	// Check if the pro version is installed and settings are enabled
@@ -42,7 +42,7 @@ function display_ideas_shortcode() {
 	if ( ! $hide_display_ideas_heading ) {
 		echo wp_kses_post( $output );
 	}
-	
+
 			// Flag to check if there are any terms in the taxonomies
 			$show_filters = false;
 

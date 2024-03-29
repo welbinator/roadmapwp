@@ -37,8 +37,8 @@ function rmwp_register_post_type() {
 	$taxonomies        = array_keys( $custom_taxonomies );
 
 	// Add default taxonomies if they aren't already included
-	if ( ! in_array( 'status', $taxonomies ) ) {
-		$taxonomies[] = 'status';  // Default taxonomy 'status'
+	if ( ! in_array( 'idea-status', $taxonomies ) ) {
+		$taxonomies[] = 'idea-status';  // Default taxonomy 'status'
 	}
 	if ( ! in_array( 'tag', $taxonomies ) ) {
 		$taxonomies[] = 'tag';  // Default taxonomy 'tag'
@@ -72,7 +72,7 @@ add_action( 'init', __NAMESPACE__ . '\\rmwp_register_post_type' );
 function register_default_taxonomies() {
 	// Define default taxonomies with their properties
 	$default_taxonomies = array(
-		'status'   => array(
+		'idea-status'   => array(
 			'singular' => __( 'Status', 'roadmapwp-free' ), // Translatable
 			'plural'   => __( 'Status', 'roadmapwp-free' ),   // Translatable
 			'public'   => true,  // Make status taxonomy private
@@ -97,7 +97,7 @@ function register_default_taxonomies() {
 						// ... other labels ...
 					),
 					'public'            => $properties['public'],
-					'hierarchical'      => ( $slug == 'status' ),
+					'hierarchical'      => ( $slug == 'idea-status' ),
 					'show_ui'           => true,
 					'show_in_rest'      => true,
 					'show_admin_column' => true,

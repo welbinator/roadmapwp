@@ -19,7 +19,7 @@ function roadmap_shortcode( $atts ) {
 	// Retrieve dynamic status terms
 	$dynamic_status_terms = get_terms(
 		array(
-			'taxonomy'   => 'status',
+			'taxonomy'   => 'idea-status',
 			'hide_empty' => false,
 		)
 	);
@@ -33,13 +33,13 @@ function roadmap_shortcode( $atts ) {
 	// Parse the shortcode attributes
 	$atts = shortcode_atts(
 		array(
-			'status' => implode( ',', $dynamic_statuses ), // Default to all dynamic statuses
+			'idea-status' => implode( ',', $dynamic_statuses ), // Default to all dynamic statuses
 		),
 		$atts,
 		'roadmap'
 	);
 
-	$statuses = ! empty( $atts['status'] ) ? array_map( 'trim', explode( ',', $atts['status'] ) ) : $dynamic_statuses;
+	$statuses = ! empty( $atts['idea-status'] ) ? array_map( 'trim', explode( ',', $atts['idea-status'] ) ) : $dynamic_statuses;
 
 	$num_statuses  = count( $statuses );
 	$md_cols_class = 'md:grid-cols-' . ( $num_statuses > 3 ? 3 : $num_statuses ); // Set to number of statuses, but max out at 4
@@ -55,7 +55,7 @@ function roadmap_shortcode( $atts ) {
 	$taxonomies        = array_merge( $taxonomies, array_keys( $custom_taxonomies ) );
 
 	// Exclude 'status' taxonomy
-	$exclude_taxonomies = array( 'status' );
+	$exclude_taxonomies = array( 'idea-status' );
 	$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 	?>
 	<div class="roadmap_wrapper container mx-auto">
@@ -67,7 +67,7 @@ function roadmap_shortcode( $atts ) {
 					'posts_per_page' => -1,
 					'tax_query'      => array(
 						array(
-							'taxonomy' => 'status',
+							'taxonomy' => 'idea-status',
 							'field'    => 'name',
 							'terms'    => $status,
 						),
@@ -110,7 +110,7 @@ function roadmap_shortcode( $atts ) {
 									<div class="flex items-center justify-start mt-6 gap-6">
 										<a class="text-blue-500 hover:underline" href="<?php the_permalink(); ?>" rel="ugc">Read More</a>
 										<div class="flex items-center idea-vote-box" data-idea-id="<?php echo esc_attr( $idea_id ) ?>">
-											<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 px-4 py-2 rounded-lg idea-vote-button">
+											<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button">
 												<svg
 												xmlns="http://www.w3.org/2000/svg"
 												width="24"

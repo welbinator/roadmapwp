@@ -54,8 +54,8 @@ function on_activation() {
     // Now add the terms
     $status_terms = array( 'New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed' );
 	foreach ( $status_terms as $term ) {
-		if ( ! term_exists( $term, 'status' ) ) {
-			$result = wp_insert_term( $term, 'status' );
+		if ( ! term_exists( $term, 'idea-status' ) ) {
+			$result = wp_insert_term( $term, 'idea-status' );
 			if ( is_wp_error( $result ) ) {
 				error_log( 'Error inserting term ' . $term . ': ' . $result->get_error_message() );
 			}
