@@ -33,3 +33,12 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 1. Submit an Idea Form
 2. Browse Ideas 
 3. Custom Roadmap
+
+== Changelog ==
+
+= 1.2.2 =
+* Hide filters box on display ideas shortcode if there aren't any filters yet.
+
+= 1.2.1 =
+* Updated help page
+
