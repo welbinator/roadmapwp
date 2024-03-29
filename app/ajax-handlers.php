@@ -127,7 +127,7 @@ function filter_ideas() {
 								$term_link = get_term_link( $term );
 								if ( ! is_wp_error( $term_link ) ) :
 									?>
-									<a href="<?php echo esc_url( $term_link ); ?>" class="inline-flex items-center border font-semibold bg-blue-500 px-3 py-1 rounded-full text-sm !no-underline"><?php echo esc_html( $term->name ); ?></a>
+									<a href="<?php echo esc_url( $term_link ); ?>" class="inline-flex items-center border font-semibold bg-blue-500 px-3 py-1 rounded-full text-sm !no-underline text-white"><?php echo esc_html( $term->name ); ?></a>
 									<?php
 								endif;
 							endforeach;
@@ -317,7 +317,7 @@ function load_ideas_for_status() {
 								<?php foreach ( $tag_terms as $tag_term ) : ?>
 									<?php $tag_link = get_term_link( $tag_term, $tag_name ); ?>
 									<?php if ( ! is_wp_error( $tag_link ) ) : ?>
-										<a href="<?php echo esc_url( $tag_link ); ?>" class="inline-flex items-center border font-semibold bg-blue-500 px-3 py-1 rounded-full text-sm !no-underline">
+										<a href="<?php echo esc_url( $tag_link ); ?>" class="inline-flex items-center border font-semibold bg-blue-500 px-3 py-1 rounded-full text-sm !no-underline text-white">
 											<?php echo esc_html( $tag_term->name ); ?>
 										</a>
 									<?php endif; ?>
