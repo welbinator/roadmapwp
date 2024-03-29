@@ -230,7 +230,7 @@ function load_ideas_for_status() {
 	$tax_query = array(
 		'relation' => 'AND',
 		array(
-			'taxonomy' => 'status',
+			'taxonomy' => 'idea-status',
 			'field'    => 'slug',
 			'terms'    => $status,
 		),
@@ -287,7 +287,7 @@ function load_ideas_for_status() {
 			$idea_id = get_the_ID();
 			// Retrieve all taxonomies associated with the 'idea' post type, excluding 'status'
 			$idea_taxonomies     = get_object_taxonomies( 'idea', 'names' );
-			$excluded_taxonomies = array( 'status' ); // Add more taxonomy names to exclude if needed
+			$excluded_taxonomies = array( 'idea-status' ); // Add more taxonomy names to exclude if needed
 			$included_taxonomies = array_diff( $idea_taxonomies, $excluded_taxonomies );
 
 			$idea_class = Functions\get_idea_class_with_votes($idea_id);
@@ -336,7 +336,7 @@ function load_ideas_for_status() {
 				</div>
 
 				<div class="p-6 flex items-center idea-vote-box" data-idea-id="<?php echo intval( $idea_id ); ?>">
-					<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 px-4 py-2 rounded-lg idea-vote-button">
+					<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button">
 						<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"

@@ -3,7 +3,7 @@
 Plugin Name: RoadMapWP
 Plugin URI:  https://apexbranding.design/wp-roadmap
 Description: A roadmap plugin where users can submit and vote on ideas, and admins can organize them into a roadmap.
-Version:     1.2.1
+Version:     1.2.2
 Author:      James Welbes
 Author URI:  https://apexbranding.design
 License:     GPL2
@@ -54,8 +54,8 @@ function on_activation() {
     // Now add the terms
     $status_terms = array( 'New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed' );
 	foreach ( $status_terms as $term ) {
-		if ( ! term_exists( $term, 'status' ) ) {
-			$result = wp_insert_term( $term, 'status' );
+		if ( ! term_exists( $term, 'idea-status' ) ) {
+			$result = wp_insert_term( $term, 'idea-status' );
 			if ( is_wp_error( $result ) ) {
 				error_log( 'Error inserting term ' . $term . ': ' . $result->get_error_message() );
 			}

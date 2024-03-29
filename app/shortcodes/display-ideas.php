@@ -29,7 +29,7 @@ function display_ideas_shortcode() {
 	$taxonomies        = array_merge( $taxonomies, array_keys( $custom_taxonomies ) );
 
 	// Exclude 'status' taxonomy
-	$exclude_taxonomies = array( 'status' );
+	$exclude_taxonomies = array( 'idea-status' );
 	$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 
 	// Check if the pro version is installed and settings are enabled
@@ -49,7 +49,7 @@ function display_ideas_shortcode() {
 				<?php
 				foreach ( $taxonomies as $taxonomy_slug ) :
 					$taxonomy = get_taxonomy( $taxonomy_slug );
-					if ( $taxonomy && $taxonomy_slug != 'status' ) :
+					if ( $taxonomy && $taxonomy_slug != 'idea-status' ) :
 						?>
 						<div class="wp-roadmap-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr( $taxonomy_slug ); ?>">
 							<label><?php echo esc_html( $taxonomy->labels->singular_name ); ?>:</label>

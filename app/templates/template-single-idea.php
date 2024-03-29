@@ -33,7 +33,7 @@ get_header(); ?>
 						$taxonomies = array( 'idea-tag' );
 
 						// Exclude 'status' taxonomy
-						$exclude_taxonomies = array( 'status' );
+						$exclude_taxonomies = array( 'idea-status' );
 						$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 
 						$terms = wp_get_post_terms( get_the_ID(), $taxonomies, array( 'exclude' => $exclude_taxonomies ) );

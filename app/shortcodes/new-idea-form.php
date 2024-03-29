@@ -45,7 +45,7 @@ function new_idea_form_shortcode() {
                 <?php
                 $taxonomies = get_object_taxonomies( 'idea', 'objects' );
                 foreach ( $taxonomies as $taxonomy ) {
-                    if ( $taxonomy->name !== 'status' && ( $taxonomy->name === 'idea-tag' ) ) {
+                    if ( $taxonomy->name !== 'idea-status' && ( $taxonomy->name === 'idea-tag' ) ) {
                         $terms = get_terms(
                             array(
                                 'taxonomy'   => $taxonomy->name,
@@ -121,7 +121,7 @@ function handle_new_idea_submission() {
             }
         }
 
-		$default_idea_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'new-idea';
+		$default_idea_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'New Idea';
 		
 			// Check if selected statuses is set, not empty, and contains valid numeric values.
 			$valid_selected_statuses = isset( $_POST['selected_statuses'] ) && is_array( $_POST['selected_statuses'] )
@@ -129,10 +129,10 @@ function handle_new_idea_submission() {
 
 			if ( $valid_selected_statuses ) {
 				$selected_status_terms = array_map( 'intval', $_POST['selected_statuses'] );
-				wp_set_object_terms( $idea_id, $selected_status_terms, 'status' );
+				wp_set_object_terms( $idea_id, $selected_status_terms, 'idea-status' );
 			} else {
 				// Fallback to default status term if none or invalid selected.
-				wp_set_object_terms( $idea_id, array( $default_idea_status_term ), 'status' );
+				wp_set_object_terms( $idea_id, array( $default_idea_status_term ), 'idea-status' );
 			}
 			
         $redirect_nonce = wp_create_nonce('new_idea_submitted');

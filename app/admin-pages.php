@@ -12,14 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function settings_page() {
 	// Fetch current settings
-	$options             = get_option( 'wp_roadmap_settings', array( 'default_status_term' => 'new-idea' ) );
+	$options             = get_option( 'wp_roadmap_settings', array( 'default_status_term' => 'New Idea' ) );
 	$status_terms        = get_terms(
 		array(
-			'taxonomy'   => 'status',
+			'taxonomy'   => 'idea-status',
 			'hide_empty' => false,
 		)
 	);
-	$default_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'new-idea';
+	$default_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'New Idea';
 	$selected_page = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
 	
 
@@ -175,7 +175,7 @@ function taxonomies_page() {
 		if ( $taxonomy->name !== 'idea-tag' ) {
 			continue; // Skip non-idea-tag taxonomies if Pro is not active
 		}
-		if ( $taxonomy->name === 'status' ) {
+		if ( $taxonomy->name === 'idea-status' ) {
 			continue; // Always skip 'status' taxonomy
 		}
 
