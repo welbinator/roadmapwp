@@ -36,9 +36,11 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.2.3 =
+* Fix bug when creating new idea in admin
+
 = 1.2.2 =
 * Hide filters box on display ideas shortcode if there aren't any filters yet.
 
 = 1.2.1 =
 * Updated help page
-

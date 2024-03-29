@@ -12,14 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function settings_page() {
 	// Fetch current settings
-	$options             = get_option( 'wp_roadmap_settings', array( 'default_status_term' => 'New Idea' ) );
+	$options             = get_option( 'wp_roadmap_settings', array( 'default_status_term' => 'new-idea' ) );
 	$status_terms        = get_terms(
 		array(
 			'taxonomy'   => 'idea-status',
 			'hide_empty' => false,
 		)
 	);
-	$default_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'New Idea';
+	$default_status_term = isset( $options['default_status_term'] ) ? $options['default_status_term'] : 'new-idea';
 	$selected_page = isset( $options['single_idea_page'] ) ? $options['single_idea_page'] : '';
 	
 
