@@ -285,7 +285,7 @@ function load_ideas_for_status() {
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			$idea_id = get_the_ID();
-			// Retrieve all taxonomies associated with the 'idea' post type, excluding 'status'
+			// Retrieve all taxonomies associated with the 'idea' post type, excluding 'idea-status'
 			$idea_taxonomies     = get_object_taxonomies( 'idea', 'names' );
 			$excluded_taxonomies = array( 'idea-status' ); // Add more taxonomy names to exclude if needed
 			$included_taxonomies = array_diff( $idea_taxonomies, $excluded_taxonomies );

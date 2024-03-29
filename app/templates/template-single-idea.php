@@ -32,7 +32,7 @@ get_header(); ?>
 						// Always include 'idea-tag' taxonomy
 						$taxonomies = array( 'idea-tag' );
 
-						// Exclude 'status' taxonomy
+						// Exclude 'idea-status' taxonomy
 						$exclude_taxonomies = array( 'idea-status' );
 						$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 

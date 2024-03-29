@@ -32,16 +32,16 @@ function rmwp_register_post_type() {
 		'not_found_in_trash' => __( 'No ideas found in Trash.', 'roadmapwp-free' ),
 	);
 
-	// Fetch all taxonomies associated with 'idea' post type
+	// Fetch all taxonomies associated with 'idea' post type.
 	$custom_taxonomies = get_option( 'wp_roadmap_custom_taxonomies', array() );
 	$taxonomies        = array_keys( $custom_taxonomies );
 
-	// Add default taxonomies if they aren't already included
+	// Add default taxonomies if they aren't already included.
 	if ( ! in_array( 'idea-status', $taxonomies ) ) {
-		$taxonomies[] = 'idea-status';  // Default taxonomy 'status'
+		$taxonomies[] = 'idea-status';
 	}
 	if ( ! in_array( 'tag', $taxonomies ) ) {
-		$taxonomies[] = 'tag';  // Default taxonomy 'tag'
+		$taxonomies[] = 'tag';
 	}
 
 	$args = array(

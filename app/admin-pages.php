@@ -133,12 +133,12 @@ function taxonomies_page() {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'roadmapwp-free' ) );
 	}
 
-	// Fetch custom taxonomies
+	// Fetch custom taxonomies.
 	$custom_taxonomies = get_option( 'wp_roadmap_custom_taxonomies', array() );
 
-	// Check if a new term is being added
+	// Check if a new term is being added.
 	if ( 'POST' === $_SERVER['REQUEST_METHOD'] && ! empty( $_POST['new_term'] ) && ! empty( $_POST['taxonomy_slug'] ) ) {
-		// Verify the nonce
+		
 		if ( ! isset( $_POST['wp_roadmap_add_term_nonce'] ) || ! check_admin_referer( 'add_term_to_' . sanitize_text_field( $_POST['taxonomy_slug'] ), 'wp_roadmap_add_term_nonce' ) ) {
 			wp_die( esc_html__( 'Nonce verification failed.', 'roadmapwp-free' ) );
 		}
@@ -149,12 +149,12 @@ function taxonomies_page() {
 		if ( ! term_exists( $new_term, $taxonomy_slug ) ) {
 			$inserted_term = wp_insert_term( $new_term, $taxonomy_slug );
 			if ( is_wp_error( $inserted_term ) ) {
-				echo 'term could not be added'; // Handle error: Term could not be added
+				echo 'term could not be added';
 			} else {
 				echo 'Term added successfully';
 			}
 		} else {
-			echo 'term already exists'; // Handle error: Term already exists
+			echo 'term already exists';
 		}
 	}
 	$pro_feature = apply_filters( 'wp_roadmap_pro_add_taxonomy_feature', '' );
@@ -173,10 +173,10 @@ function taxonomies_page() {
 
 	foreach ( $taxonomies as $taxonomy ) {
 		if ( $taxonomy->name !== 'idea-tag' ) {
-			continue; // Skip non-idea-tag taxonomies if Pro is not active
+			continue;
 		}
 		if ( $taxonomy->name === 'idea-status' ) {
-			continue; // Always skip 'status' taxonomy
+			continue;
 		}
 
 		echo '<h3>' . esc_html( $taxonomy->labels->name ) . '</h3>';
