@@ -33,13 +33,13 @@ function roadmap_shortcode( $atts ) {
 	// Parse the shortcode attributes
 	$atts = shortcode_atts(
 		array(
-			'idea-status' => implode( ',', $dynamic_statuses ), // Default to all dynamic statuses
+			'status' => implode( ',', $dynamic_statuses ), // Default to all dynamic statuses
 		),
 		$atts,
 		'roadmap'
 	);
 
-	$statuses = ! empty( $atts['idea-status'] ) ? array_map( 'trim', explode( ',', $atts['idea-status'] ) ) : $dynamic_statuses;
+	$statuses = ! empty( $atts['status'] ) ? array_map( 'trim', explode( ',', $atts['status'] ) ) : $dynamic_statuses;
 
 	$num_statuses  = count( $statuses );
 	$md_cols_class = 'md:grid-cols-' . ( $num_statuses > 3 ? 3 : $num_statuses ); // Set to number of statuses, but max out at 4
