@@ -59,7 +59,7 @@ function roadmap_shortcode( $atts ) {
 	$taxonomies         = array_diff( $taxonomies, $exclude_taxonomies );
 	?>
 	<div class="roadmap_wrapper container mx-auto">
-	<div class="roadmap-columns grid gap-4 <?php echo htmlspecialchars($md_cols_class, ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($lg_cols_class, ENT_QUOTES, 'UTF-8'); ?> <?php echo htmlspecialchars($xl_cols_class, ENT_QUOTES, 'UTF-8'); ?>">
+	<div class="roadmap-columns grid gap-4 <?php echo esc_attr($md_cols_class); ?> <?php echo esc_attr($lg_cols_class); ?> <?php echo esc_attr($xl_cols_class); ?>">
 			<?php
 			foreach ( $statuses as $status ) {
 				$args  = array(
@@ -126,7 +126,7 @@ function roadmap_shortcode( $atts ) {
 													<path d="M7 10v12"></path>
 													<path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"></path>
 												</svg>
-												<div class="idea-vote-count"><?php echo $vote_count; ?></div>
+												<div class="idea-vote-count"><?php echo absint ( $vote_count ); ?></div>
 											</button>
 										</div>
 									</div>

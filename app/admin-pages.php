@@ -43,7 +43,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Apply the filter here
-						echo apply_filters( 'wp_roadmap_enable_comments_setting', '' );
+						echo esc_html( apply_filters( 'wp_roadmap_enable_comments_setting', '' ) );
 						?>
 					</td>
 				</tr>
@@ -68,7 +68,7 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-pro' ) . '</a>' );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/pro" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-pro' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
