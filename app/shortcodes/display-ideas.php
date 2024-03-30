@@ -148,7 +148,8 @@ function display_ideas_shortcode() {
 							</div>
 		
 							
-							<p class="text-gray-700 mt-4"><?php echo get_the_excerpt(); ?></p>
+							<p class="text-gray-700 mt-4"><?php echo wp_kses_post(get_the_excerpt()); ?></p>
+
 		
 							<div class="flex items-center justify-between mt-6">
 								<a class="text-blue-500 hover:underline" href="<?php echo esc_url( get_permalink() ); ?>" rel="ugc">Read More</a>

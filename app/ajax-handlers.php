@@ -137,7 +137,8 @@ function filter_ideas() {
 						
 						<p class="text-gray-700 mt-4 break-all">
 							<?php
-								echo wp_trim_words( get_the_excerpt(), 20 ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '" rel="ugc">read more...</a>';
+								$trimmed_excerpt = wp_trim_words( get_the_excerpt(), 20 );
+								echo esc_html( $trimmed_excerpt ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '" rel="ugc">read more...</a>';
 							?>
 						</p>
 
@@ -239,37 +240,6 @@ function load_ideas_for_status() {
 	$taxonomy_queries        = array();
 	$empty_taxonomy_selected = false;
 
-	// Modify the tax query if selected taxonomies are provided
-	// foreach ( $selected_taxonomiesSlugs as $slug ) {
-	// 	if ( ! empty( $slug ) ) {
-	// 		$terms = get_terms(
-	// 			array(
-	// 				'taxonomy' => $slug,
-	// 				'fields'   => 'slugs',
-	// 			)
-	// 		);
-	// 		if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
-	// 			$taxonomy_queries[] = array(
-	// 				'taxonomy' => $slug,
-	// 				'field'    => 'slug',
-	// 				'terms'    => $terms,
-	// 				'operator' => 'IN',
-	// 			);
-	// 		} else {
-	// 			$empty_taxonomy_selected = true;
-	// 		}
-	// 	}
-	// }
-
-	// if ( ! empty( $taxonomy_queries ) ) {
-	// 	$tax_query[] = array_merge( array( 'relation' => 'OR' ), $taxonomy_queries );
-	// }
-
-	// if ( $empty_taxonomy_selected && count( $taxonomy_queries ) === 0 ) {
-	// 	wp_send_json_success( array( 'html' => '<p>No ideas found for the selected taxonomies.</p>' ) );
-	// 	return;
-	// }
-
 	$args = array(
 		'post_type'      => 'idea',
 		'post_status'    => 'publish',
@@ -308,7 +278,7 @@ function load_ideas_for_status() {
 			<div class="wp-roadmap-idea rounded-lg border bg-card text-card-foreground shadow-sm <?php echo esc_attr($idea_class); ?>" data-v0-t="card">
 				<div class="flex flex-col space-y-1.5 p-6">
 					<h3 class="text-2xl font-semibold leading-none tracking-tight">
-						<a href="<?php echo get_permalink( $idea_id ); ?>"><?php echo esc_html( get_the_title() ); ?></a>
+						<a href="<?php echo esc_url( get_permalink( $idea_id ) ); ?>"><?php echo esc_html( get_the_title() ); ?></a>
 					</h3>
 
 					<?php if ( ! empty( $tags ) ) : ?>
@@ -330,7 +300,7 @@ function load_ideas_for_status() {
 				<div class="p-6">
 					<p class="text-gray-700 mt-4 break-all">
 						<?php
-							echo wp_trim_words( get_the_excerpt(), 20 ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '" rel="ugc">read more...</a>';
+							echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '" rel="ugc">read more...</a>';
 						?>
 					</p>
 				</div>

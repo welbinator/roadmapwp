@@ -65,7 +65,7 @@ get_header(); ?>
 						?>
 					</div>
 							
-					<div class="flex items-center gap-4 mt-4 idea-vote-box" data-idea-id="<?php echo get_the_ID(); ?>">
+					<div class="flex items-center gap-4 mt-4 idea-vote-box" data-idea-id="<?php echo absint( get_the_ID() ); ?>">
 						<button class="inline-flex items-center justify-center text-sm font-medium h-10 bg-blue-500 text-white px-4 py-2 rounded-lg idea-vote-button">
 							<svg
 							xmlns="http://www.w3.org/2000/svg"
