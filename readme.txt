@@ -36,6 +36,11 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.2.5
+* Plugin automatically creates Submit Idea and Roadmap pages on activation
+* Minor code improvements
+* Fixed issues with escaping values (thanks @marklcm for the tip)
+
 = 1.2.4 =
 * Fix bug with roadmap shortcode ignoring status parameter
 
