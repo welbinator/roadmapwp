@@ -44,7 +44,6 @@ require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/new-idea-form.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap-tabs.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/customizer-styles.php';
-require_once plugin_dir_path( __FILE__ ) . 'settings/comments.php';
 
 
 function on_activation() {

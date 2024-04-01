@@ -41,9 +41,10 @@ function settings_page() {
 				<tr valign="top">
 					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'roadmapwp-free' ); ?></th>
 					<td>
-						<?php
-						// Apply the filter here
-						echo esc_html( apply_filters( 'wp_roadmap_enable_comments_setting', '' ) );
+						<?php				
+							$allow_comments = isset( $options['allow_comments'] ) ? $options['allow_comments'] : '';
+							$html = '<input type="checkbox" name="wp_roadmap_settings[allow_comments]" value="1"' . checked( 1, $allow_comments, false ) . '/>';
+							echo $html;
 						?>
 					</td>
 				</tr>
