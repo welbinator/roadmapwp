@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-	<!-- generator="WordPress/6.4.3" created="2024-03-30 18:54" -->
+	<!-- generator="WordPress/6.4.3" created="2024-03-29 02:39" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -26,222 +26,26 @@
 >
 
 <channel>
-	<title>RoadMapWP Demo</title>
-	<link>https://playground.wordpress.net</link>
-	<description></description>
-	<pubDate>Sat, 30 Mar 2024 18:54:27 +0000</pubDate>
+	<title>RoadMapWP</title>
+	<link>https://roadmapwp.com</link>
+	<description>Simple, powerful Roadmap plugin for WordPress</description>
+	<pubDate>Fri, 29 Mar 2024 02:39:16 +0000</pubDate>
 	<language>en-US</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
-	<wp:base_site_url>https://playground.wordpress.net</wp:base_site_url>
-	<wp:base_blog_url>https://playground.wordpress.net</wp:base_blog_url>
+	<wp:base_site_url>https://roadmapwp.com</wp:base_site_url>
+	<wp:base_blog_url>https://roadmapwp.com</wp:base_blog_url>
 
-		<wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[admin]]></wp:author_login><wp:author_email><![CDATA[admin@localhost.com]]></wp:author_email><wp:author_display_name><![CDATA[admin]]></wp:author_display_name><wp:author_first_name><![CDATA[admin]]></wp:author_first_name><wp:author_last_name><![CDATA[admin]]></wp:author_last_name></wp:author>
+		<wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[]]></wp:author_login><wp:author_email><![CDATA[johndoe@email.com]]></wp:author_email><wp:author_display_name><![CDATA[]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[Doe]]></wp:author_last_name></wp:author>
 	
 
-		<wp:category>
-		<wp:term_id>1</wp:term_id>
-		<wp:category_nicename><![CDATA[uncategorized]]></wp:category_nicename>
-		<wp:category_parent><![CDATA[]]></wp:category_parent>
-		<wp:cat_name><![CDATA[Uncategorized]]></wp:cat_name>
-	</wp:category>
-				<wp:term>
-		<wp:term_id>8</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-tag]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[bug]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Bug]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>7</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-status]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[closed]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Closed]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>9</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-tag]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[existing-feature]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Existing Feature]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>10</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-tag]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[feature-request]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Feature Request]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>11</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-tag]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[integration]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Integration]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>3</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-status]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[maybe]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Maybe]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>2</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-status]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[new-idea]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[New Idea]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>6</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-status]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[not-now]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Not Now]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>5</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-status]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[on-roadmap]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[On Roadmap]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>12</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-tag]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[styling]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Styling]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>13</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-tag]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[tec]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[TEC]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>4</wp:term_id>
-		<wp:term_taxonomy><![CDATA[idea-status]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[up-next]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Up Next]]></wp:term_name>
-	</wp:term>
-		
+				
 	<generator>https://wordpress.org/?v=6.4.3</generator>
 
 		<item>
-		<title><![CDATA[Submit Idea]]></title>
-		<link>https://playground.wordpress.net/?page_id=6</link>
-		<pubDate>Tue, 26 Mar 2024 02:25:23 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
-		<guid isPermaLink="false">http://wproadmap.lndo.site/?page_id=6</guid>
-		<description></description>
-		<content:encoded><![CDATA[<!-- wp:shortcode -->
-[new_idea_form]
-<!-- /wp:shortcode -->
-
-<!-- wp:shortcode -->
-[display_ideas]
-<!-- /wp:shortcode -->]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>6</wp:post_id>
-		<wp:post_date><![CDATA[2024-03-26 02:25:23]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-03-26 02:25:23]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-26 02:25:23]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-26 02:25:23]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[submit-idea]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[page]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-														</item>
-					<item>
-		<title><![CDATA[Custom Styles]]></title>
-		<link>https://playground.wordpress.net/?p=7</link>
-		<pubDate>Tue, 26 Mar 2024 02:24:54 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
-		<guid isPermaLink="false">http://wproadmap.lndo.site/2024/03/26/wp-global-styles-twentytwentyfour/</guid>
-		<description></description>
-		<content:encoded><![CDATA[{"version": 2, "isGlobalStylesUserThemeJSON": true }]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>7</wp:post_id>
-		<wp:post_date><![CDATA[2024-03-26 02:24:54]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-03-26 02:24:54]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-26 02:24:54]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-26 02:24:54]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[wp-global-styles-twentytwentyfour]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[wp_global_styles]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="wp_theme" nicename="twentytwentyfour"><![CDATA[twentytwentyfour]]></category>
-						</item>
-					<item>
-		<title><![CDATA[Roadmap]]></title>
-		<link>https://playground.wordpress.net/?page_id=15</link>
-		<pubDate>Tue, 26 Mar 2024 02:28:11 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
-		<guid isPermaLink="false">http://wproadmap.lndo.site/?page_id=15</guid>
-		<description></description>
-		<content:encoded><![CDATA[<!-- wp:shortcode -->
-[roadmap_tabs status="New Idea, Not Now, Maybe, Closed, Up Next, On Roadmap"]
-<!-- /wp:shortcode -->]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>15</wp:post_id>
-		<wp:post_date><![CDATA[2024-03-26 02:28:11]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-03-26 02:28:11]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-26 02:28:11]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-26 02:28:11]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[roadmap]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[page]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-														</item>
-					<item>
-		<title><![CDATA[Custom Styles]]></title>
-		<link>https://playground.wordpress.net/?p=16</link>
-		<pubDate>Tue, 26 Mar 2024 02:27:45 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
-		<guid isPermaLink="false">http://wproadmap.lndo.site/2024/03/26/wp-global-styles-astra/</guid>
-		<description></description>
-		<content:encoded><![CDATA[{"version": 2, "isGlobalStylesUserThemeJSON": true }]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>16</wp:post_id>
-		<wp:post_date><![CDATA[2024-03-26 02:27:45]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-03-26 02:27:45]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-26 02:27:45]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-26 02:27:45]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[wp-global-styles-astra]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[wp_global_styles]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="wp_theme" nicename="astra"><![CDATA[astra]]></category>
-						</item>
-					<item>
 		<title><![CDATA[Change color of "Submit Idea" button]]></title>
-		<link>https://playground.wordpress.net/?idea=change-color-of-submit-idea-button</link>
+		<link>https://roadmapwp.com/idea/change-color-of-submit-idea-button/</link>
 		<pubDate>Wed, 13 Dec 2023 18:08:00 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=101</guid>
 		<description></description>
 		<content:encoded><![CDATA[You can already change the color of the Vote buttons and the tags, I also want to be able to change the color of the Submit Idea button]]></content:encoded>
@@ -265,7 +69,7 @@
 		<category domain="idea-status" nicename="up-next"><![CDATA[Up Next]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -273,26 +77,26 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_51cf7cb45eda873848378e629c245253]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_aff248f1d3e96f7746300809374bff32]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_5a7980c758f3d222143dad40fe195aa3]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_38f3c787e99c7ffaa69c5ac45bda7f8d]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Integrate with Zapier]]></title>
-		<link>https://playground.wordpress.net/?idea=integrate-with-zapier</link>
+		<link>https://roadmapwp.com/idea/integrate-with-zapier/</link>
 		<pubDate>Wed, 13 Dec 2023 18:32:59 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=118</guid>
 		<description></description>
 		<content:encoded><![CDATA[It would be cool if this could integrate with Zapier to trigger things when an idea is submitted]]></content:encoded>
@@ -316,11 +120,11 @@
 		<category domain="idea-status" nicename="not-now"><![CDATA[Not Now]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_51cf7cb45eda873848378e629c245253]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -328,14 +132,14 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_aff248f1d3e96f7746300809374bff32]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Add compact view]]></title>
-		<link>https://playground.wordpress.net/?idea=add-compact-view</link>
+		<link>https://roadmapwp.com/idea/add-compact-view/</link>
 		<pubDate>Wed, 13 Dec 2023 18:34:26 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=119</guid>
 		<description></description>
 		<content:encoded><![CDATA[The current display of ideas looks nice but takes up a lot of space for each idea. Would be nice to have a more compact view.]]></content:encoded>
@@ -343,8 +147,8 @@
 		<wp:post_id>119</wp:post_id>
 		<wp:post_date><![CDATA[2023-12-13 13:34:26]]></wp:post_date>
 		<wp:post_date_gmt><![CDATA[2023-12-13 18:34:26]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2023-12-13 13:34:26]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2023-12-13 18:34:26]]></wp:post_modified_gmt>
+		<wp:post_modified><![CDATA[2023-12-15 10:37:45]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2023-12-15 15:37:45]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[add-compact-view]]></wp:post_name>
@@ -359,7 +163,7 @@
 		<category domain="idea-tag" nicename="styling"><![CDATA[Styling]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -367,15 +171,15 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_51cf7cb45eda873848378e629c245253]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_7cfc69876c0d818a0715c342bb87aeb4]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_aff248f1d3e96f7746300809374bff32]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -415,30 +219,30 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_a1790776c4568bf859d4ce1884afde32]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_043eeb349506b5ebd1fbd404a02bd022]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_93035b9fb2c5ece42009b1db75d0a565]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_7bb3de1de6e4ecc5e1a3a4aa61f134ef]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_1]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Filter by comments]]></title>
-		<link>https://playground.wordpress.net/?idea=filter-by-comments</link>
+		<link>https://roadmapwp.com/idea/filter-by-comments/</link>
 		<pubDate>Wed, 13 Dec 2023 20:57:41 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=122</guid>
 		<description></description>
 		<content:encoded><![CDATA[would be nice to see only ideas that have been commented on]]></content:encoded>
@@ -446,8 +250,8 @@
 		<wp:post_id>122</wp:post_id>
 		<wp:post_date><![CDATA[2023-12-13 15:57:41]]></wp:post_date>
 		<wp:post_date_gmt><![CDATA[2023-12-13 20:57:41]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2023-12-13 15:57:41]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2023-12-13 20:57:41]]></wp:post_modified_gmt>
+		<wp:post_modified><![CDATA[2023-12-22 13:08:56]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2023-12-22 18:08:56]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[filter-by-comments]]></wp:post_name>
@@ -461,7 +265,7 @@
 		<category domain="idea-status" nicename="on-roadmap"><![CDATA[On Roadmap]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -469,7 +273,7 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_aff248f1d3e96f7746300809374bff32]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -509,22 +313,22 @@
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_688064400c5a7d34a75762423db11f17]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_043eeb349506b5ebd1fbd404a02bd022]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_93035b9fb2c5ece42009b1db75d0a565]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Add more columns to roadmap shortcode/block]]></title>
-		<link>https://playground.wordpress.net/?idea=add-more-columns-to-roadmap-shortcode-block</link>
+		<link>https://roadmapwp.com/idea/add-more-columns-to-roadmap-shortcode-block/</link>
 		<pubDate>Fri, 22 Dec 2023 18:08:18 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=338</guid>
 		<description></description>
 		<content:encoded><![CDATA[Current roadmap shortcode/block only has two columns, one for Up Next and one for On Roadmap.
@@ -549,7 +353,7 @@ There are other statuses an Idea can have, would be nice to choose which ones to
 		<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -589,22 +393,22 @@ There are other statuses an Idea can have, would be nice to choose which ones to
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_9f65c8ebf1db4662174c983d49dd3251]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:comment>
-			<wp:comment_id>9</wp:comment_id>
-			<wp:comment_author><![CDATA[john]]></wp:comment_author>
-			<wp:comment_author_email><![CDATA[admin@roadmapwpdemo.com]]></wp:comment_author_email>
+			<wp:comment_id>6</wp:comment_id>
+			<wp:comment_author><![CDATA[james]]></wp:comment_author>
+			<wp:comment_author_email><![CDATA[johndoe@email.com]]></wp:comment_author_email>
 			<wp:comment_author_url>https://roadmapwp.com</wp:comment_author_url>
 			<wp:comment_author_IP><![CDATA[174.228.36.145]]></wp:comment_author_IP>
 			<wp:comment_date><![CDATA[2024-01-09 02:21:27]]></wp:comment_date>
 			<wp:comment_date_gmt><![CDATA[2024-01-09 07:21:27]]></wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Done! Our roadmap block now supports all Status terms]]></wp:comment_content>
-			<wp:comment_approved><![CDATA[admin]]></wp:comment_approved>
+			<wp:comment_approved><![CDATA[1]]></wp:comment_approved>
 			<wp:comment_type><![CDATA[comment]]></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>1</wp:comment_user_id>
@@ -612,9 +416,9 @@ There are other statuses an Idea can have, would be nice to choose which ones to
 					</item>
 					<item>
 		<title><![CDATA[give admins ability to change status of an idea on the frontend]]></title>
-		<link>https://playground.wordpress.net/?idea=give-admins-ability-to-change-status-of-an-idea-on-the-frontend</link>
+		<link>https://roadmapwp.com/idea/give-admins-ability-to-change-status-of-an-idea-on-the-frontend/</link>
 		<pubDate>Mon, 25 Dec 2023 21:27:16 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=434</guid>
 		<description></description>
 		<content:encoded><![CDATA[I don't want to have to go into the WP dashboard/backend to update the status of ideas, I want to be able to do it from the frontend.]]></content:encoded>
@@ -637,7 +441,7 @@ There are other statuses an Idea can have, would be nice to choose which ones to
 		<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -681,18 +485,18 @@ There are other statuses an Idea can have, would be nice to choose which ones to
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_1]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_a13c434e425ef75d63f5be5d4d7e24e7]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Undefined variable warning]]></title>
-		<link>https://playground.wordpress.net/?idea=undefined-variable-warning</link>
+		<link>https://roadmapwp.com/idea/undefined-variable-warning/</link>
 		<pubDate>Thu, 11 Jan 2024 00:36:08 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=549</guid>
 		<description></description>
 		<content:encoded><![CDATA[Using only the free version there are two warnings on the taxonomies page.
@@ -721,7 +525,7 @@ https://www.dropbox.com/scl/fi/u0gcyyh0s7djqx5ui5crp/shot_240105_000425.jpg?rlke
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
@@ -765,7 +569,7 @@ https://www.dropbox.com/scl/fi/u0gcyyh0s7djqx5ui5crp/shot_240105_000425.jpg?rlke
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_f091e4990228a6b20b6f277e3b100bb8]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -773,22 +577,18 @@ https://www.dropbox.com/scl/fi/u0gcyyh0s7djqx5ui5crp/shot_240105_000425.jpg?rlke
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_6c9aa74fe5a577b4196882b6997ef21a]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_oembed_f42ca107510c216ec0c52c0916808ed0]]></wp:meta_key>
-		<wp:meta_value><![CDATA[{{unknown}}]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:comment>
-			<wp:comment_id>10</wp:comment_id>
-			<wp:comment_author><![CDATA[john]]></wp:comment_author>
-			<wp:comment_author_email><![CDATA[admin@roadmapwpdemo.com]]></wp:comment_author_email>
+			<wp:comment_id>7</wp:comment_id>
+			<wp:comment_author><![CDATA[james]]></wp:comment_author>
+			<wp:comment_author_email><![CDATA[johndoe@email.com]]></wp:comment_author_email>
 			<wp:comment_author_url>https://roadmapwp.com</wp:comment_author_url>
 			<wp:comment_author_IP><![CDATA[204.144.199.67]]></wp:comment_author_IP>
 			<wp:comment_date><![CDATA[2024-01-10 19:36:27]]></wp:comment_date>
 			<wp:comment_date_gmt><![CDATA[2024-01-11 00:36:27]]></wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Thanks for the heads up, this issue has been fixed and will be included in the next update!]]></wp:comment_content>
-			<wp:comment_approved><![CDATA[admin]]></wp:comment_approved>
+			<wp:comment_approved><![CDATA[1]]></wp:comment_approved>
 			<wp:comment_type><![CDATA[comment]]></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>1</wp:comment_user_id>
@@ -796,9 +596,9 @@ https://www.dropbox.com/scl/fi/u0gcyyh0s7djqx5ui5crp/shot_240105_000425.jpg?rlke
 					</item>
 					<item>
 		<title><![CDATA[No blocks.]]></title>
-		<link>https://playground.wordpress.net/?idea=no-blocks</link>
+		<link>https://roadmapwp.com/idea/no-blocks/</link>
 		<pubDate>Tue, 09 Jan 2024 07:18:34 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=550</guid>
 		<description></description>
 		<content:encoded><![CDATA[For blocks, do I need the pro version?
@@ -808,8 +608,8 @@ If yes, there's no indication in the KB articles.]]></content:encoded>
 		<wp:post_id>550</wp:post_id>
 		<wp:post_date><![CDATA[2024-01-09 02:18:34]]></wp:post_date>
 		<wp:post_date_gmt><![CDATA[2024-01-09 07:18:34]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-30 18:53:28]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-30 18:53:28]]></wp:post_modified_gmt>
+		<wp:post_modified><![CDATA[2024-01-09 02:18:34]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2024-01-09 07:18:34]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[no-blocks]]></wp:post_name>
@@ -821,10 +621,9 @@ If yes, there's no indication in the KB articles.]]></content:encoded>
 		<wp:is_sticky>0</wp:is_sticky>
 										<category domain="idea-tag" nicename="bug"><![CDATA[Bug]]></category>
 		<category domain="idea-status" nicename="closed"><![CDATA[Closed]]></category>
-		<category domain="idea-status" nicename="new-idea"><![CDATA[New Idea]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
@@ -868,7 +667,7 @@ If yes, there's no indication in the KB articles.]]></content:encoded>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_1debabca4c47c5ced9e3a87cbdb97ba2]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -876,22 +675,22 @@ If yes, there's no indication in the KB articles.]]></content:encoded>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_8ac61c4fa0c0c284bb655e6865f3f1e6]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_94bda3ecf7fcbaed9ec04f3e1c323e89]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:comment>
-			<wp:comment_id>11</wp:comment_id>
-			<wp:comment_author><![CDATA[john]]></wp:comment_author>
-			<wp:comment_author_email><![CDATA[admin@roadmapwpdemo.com]]></wp:comment_author_email>
+			<wp:comment_id>4</wp:comment_id>
+			<wp:comment_author><![CDATA[james]]></wp:comment_author>
+			<wp:comment_author_email><![CDATA[johndoe@email.com]]></wp:comment_author_email>
 			<wp:comment_author_url>https://roadmapwp.com</wp:comment_author_url>
 			<wp:comment_author_IP><![CDATA[174.228.36.145]]></wp:comment_author_IP>
 			<wp:comment_date><![CDATA[2024-01-09 02:19:09]]></wp:comment_date>
 			<wp:comment_date_gmt><![CDATA[2024-01-09 07:19:09]]></wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Yes blocks are a pro only feature, I'll try to figure out how to make that more clear, thank you for your feedback!]]></wp:comment_content>
-			<wp:comment_approved><![CDATA[admin]]></wp:comment_approved>
+			<wp:comment_approved><![CDATA[1]]></wp:comment_approved>
 			<wp:comment_type><![CDATA[comment]]></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>1</wp:comment_user_id>
@@ -899,9 +698,9 @@ If yes, there's no indication in the KB articles.]]></content:encoded>
 					</item>
 					<item>
 		<title><![CDATA[On the dashboard show the list first]]></title>
-		<link>https://playground.wordpress.net/?idea=on-the-dashboard-show-the-list-first</link>
+		<link>https://roadmapwp.com/idea/on-the-dashboard-show-the-list-first/</link>
 		<pubDate>Tue, 09 Jan 2024 07:18:00 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=551</guid>
 		<description></description>
 		<content:encoded><![CDATA[When clicking on "RoadMap" in the left admin bar, it'll take you to the settings page.
@@ -914,8 +713,8 @@ The settings page is not something that you use often, it could be the last sub-
 		<wp:post_id>551</wp:post_id>
 		<wp:post_date><![CDATA[2024-01-09 02:18:00]]></wp:post_date>
 		<wp:post_date_gmt><![CDATA[2024-01-09 07:18:00]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-30 18:53:24]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-30 18:53:24]]></wp:post_modified_gmt>
+		<wp:post_modified><![CDATA[2024-01-09 02:18:00]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2024-01-09 07:18:00]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[on-the-dashboard-show-the-list-first]]></wp:post_name>
@@ -925,23 +724,23 @@ The settings page is not something that you use often, it could be the last sub-
 		<wp:post_type><![CDATA[idea]]></wp:post_type>
 		<wp:post_password><![CDATA[]]></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
-		<category domain="idea-status" nicename="new-idea"><![CDATA[New Idea]]></category>
+										<category domain="idea-status" nicename="closed"><![CDATA[Closed]]></category>
+		<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
 		<wp:meta_value><![CDATA[3]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_5]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_9f65c8ebf1db4662174c983d49dd3251]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -981,14 +780,39 @@ The settings page is not something that you use often, it could be the last sub-
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_2bec3f6a394880bc1853f9849ee754ed]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
+		<title><![CDATA[Roadmap shortcode]]></title>
+		<link>https://roadmapwp.com/?post_type=idea&#038;p=553</link>
+		<pubDate></pubDate>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
+		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=553</guid>
+		<description></description>
+		<content:encoded><![CDATA[There is no indication of what happens if I use the [roadmap] shortcode without any parameters.]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>553</wp:post_id>
+		<wp:post_date><![CDATA[2024-01-04 18:19:58]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[0000-00-00 00:00:00]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2024-01-04 18:19:58]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[0000-00-00 00:00:00]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[]]></wp:post_name>
+		<wp:status><![CDATA[pending]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[idea]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+										<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
+						</item>
+					<item>
 		<title><![CDATA[roadmap_tabs shortcode doesn't work]]></title>
-		<link>https://playground.wordpress.net/?idea=roadmap_tabs-doesnt-work</link>
+		<link>https://roadmapwp.com/idea/roadmap_tabs-doesnt-work/</link>
 		<pubDate>Thu, 04 Jan 2024 23:31:37 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=554</guid>
 		<description></description>
 		<content:encoded><![CDATA[If I add the roadmap_tabs shortcode on a page it will only display the shortcode on the front-end. I use the theme twentysixteen.]]></content:encoded>
@@ -996,8 +820,8 @@ The settings page is not something that you use often, it could be the last sub-
 		<wp:post_id>554</wp:post_id>
 		<wp:post_date><![CDATA[2024-01-04 18:31:37]]></wp:post_date>
 		<wp:post_date_gmt><![CDATA[2024-01-04 23:31:37]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-01-04 18:31:37]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-01-04 23:31:37]]></wp:post_modified_gmt>
+		<wp:post_modified><![CDATA[2024-01-07 19:58:22]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2024-01-08 00:58:22]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[roadmap_tabs-doesnt-work]]></wp:post_name>
@@ -1011,7 +835,7 @@ The settings page is not something that you use often, it could be the last sub-
 		<category domain="idea-status" nicename="closed"><![CDATA[Closed]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -1055,7 +879,7 @@ The settings page is not something that you use often, it could be the last sub-
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_1]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -1063,44 +887,44 @@ The settings page is not something that you use often, it could be the last sub-
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_f51249ba7a86e810d05b149e2e09da8f]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_6f114627b03549824a12cec0fb143ae6]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_fa04b722adbca9b38ae691e4c72a3a15]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_8ac61c4fa0c0c284bb655e6865f3f1e6]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:comment>
-			<wp:comment_id>12</wp:comment_id>
-			<wp:comment_author><![CDATA[john]]></wp:comment_author>
-			<wp:comment_author_email><![CDATA[admin@roadmapwpdemo.com]]></wp:comment_author_email>
+			<wp:comment_id>2</wp:comment_id>
+			<wp:comment_author><![CDATA[james]]></wp:comment_author>
+			<wp:comment_author_email><![CDATA[johndoe@email.com]]></wp:comment_author_email>
 			<wp:comment_author_url>https://roadmapwp.com</wp:comment_author_url>
 			<wp:comment_author_IP><![CDATA[204.144.199.67]]></wp:comment_author_IP>
 			<wp:comment_date><![CDATA[2024-01-04 18:32:45]]></wp:comment_date>
 			<wp:comment_date_gmt><![CDATA[2024-01-04 23:32:45]]></wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[I just tested in twenty sixteen and it worked fine. Can you show me a screenshot of your implementation?]]></wp:comment_content>
-			<wp:comment_approved><![CDATA[admin]]></wp:comment_approved>
+			<wp:comment_approved><![CDATA[1]]></wp:comment_approved>
 			<wp:comment_type><![CDATA[comment]]></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>1</wp:comment_user_id>
 							</wp:comment>
 					<wp:comment>
-			<wp:comment_id>13</wp:comment_id>
-			<wp:comment_author><![CDATA[john]]></wp:comment_author>
-			<wp:comment_author_email><![CDATA[admin@roadmapwpdemo.com]]></wp:comment_author_email>
+			<wp:comment_id>5</wp:comment_id>
+			<wp:comment_author><![CDATA[james]]></wp:comment_author>
+			<wp:comment_author_email><![CDATA[johndoe@email.com]]></wp:comment_author_email>
 			<wp:comment_author_url>https://roadmapwp.com</wp:comment_author_url>
 			<wp:comment_author_IP><![CDATA[174.228.36.145]]></wp:comment_author_IP>
 			<wp:comment_date><![CDATA[2024-01-09 02:20:26]]></wp:comment_date>
 			<wp:comment_date_gmt><![CDATA[2024-01-09 07:20:26]]></wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Blocks are a pro only feature.]]></wp:comment_content>
-			<wp:comment_approved><![CDATA[admin]]></wp:comment_approved>
+			<wp:comment_approved><![CDATA[1]]></wp:comment_approved>
 			<wp:comment_type><![CDATA[comment]]></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>1</wp:comment_user_id>
@@ -1108,9 +932,9 @@ The settings page is not something that you use often, it could be the last sub-
 					</item>
 					<item>
 		<title><![CDATA[Change Statuses/Column Names]]></title>
-		<link>https://playground.wordpress.net/?idea=change-statuses-column-names</link>
+		<link>https://roadmapwp.com/idea/change-statuses-column-names/</link>
 		<pubDate>Mon, 08 Jan 2024 05:19:40 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=587</guid>
 		<description></description>
 		<content:encoded><![CDATA[As a product manager, I want to change the names of the columns/statuses, so I can align them with our development process. 
@@ -1139,7 +963,7 @@ Ideal: Change, add, and remove status names and column names independently, and 
 		<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -1183,16 +1007,16 @@ Ideal: Change, add, and remove status names and column names independently, and 
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_1]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:comment>
-			<wp:comment_id>14</wp:comment_id>
-			<wp:comment_author><![CDATA[john]]></wp:comment_author>
-			<wp:comment_author_email><![CDATA[admin@roadmapwpdemo.com]]></wp:comment_author_email>
+			<wp:comment_id>3</wp:comment_id>
+			<wp:comment_author><![CDATA[james]]></wp:comment_author>
+			<wp:comment_author_email><![CDATA[johndoe@email.com]]></wp:comment_author_email>
 			<wp:comment_author_url>https://roadmapwp.com</wp:comment_author_url>
 			<wp:comment_author_IP><![CDATA[204.144.199.67]]></wp:comment_author_IP>
 			<wp:comment_date><![CDATA[2024-01-08 00:21:39]]></wp:comment_date>
@@ -1206,7 +1030,7 @@ The roadmap and roadmap_tabs blocks will automatically detect all existing terms
 Also, if you want to control the order of the columns you can use the shortcode instead of the block, and the columns will appear in the order in which you type them in.
 
 So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will appear in order from left to right, Up Next, then On Roadmap, then Closed.]]></wp:comment_content>
-			<wp:comment_approved><![CDATA[admin]]></wp:comment_approved>
+			<wp:comment_approved><![CDATA[1]]></wp:comment_approved>
 			<wp:comment_type><![CDATA[comment]]></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>1</wp:comment_user_id>
@@ -1214,9 +1038,9 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 					</item>
 					<item>
 		<title><![CDATA[See if an idea has already been submitted]]></title>
-		<link>https://playground.wordpress.net/?idea=see-if-an-idea-has-already-been-submitted</link>
+		<link>https://roadmapwp.com/idea/see-if-an-idea-has-already-been-submitted/</link>
 		<pubDate>Thu, 11 Jan 2024 00:31:05 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=667</guid>
 		<description></description>
 		<content:encoded><![CDATA[Adding some kind of ajax fuzzy search to see if an idea has been suggested already would be great for cutting down on duplicate ideas.]]></content:encoded>
@@ -1239,7 +1063,7 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 		<category domain="idea-status" nicename="on-roadmap"><![CDATA[On Roadmap]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_10]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -1247,7 +1071,7 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
@@ -1291,18 +1115,18 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_9087c6b797cdc92c0d190edb8fff3049]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_1e50a01323753a207340ffc062db07d3]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Add a class to "vote" buttons if already upvoted]]></title>
-		<link>https://playground.wordpress.net/?idea=add-a-class-to-vote-buttons-if-already-upvoted</link>
+		<link>https://roadmapwp.com/idea/add-a-class-to-vote-buttons-if-already-upvoted/</link>
 		<pubDate>Thu, 11 Jan 2024 00:30:55 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[johndoe@email.com]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=668</guid>
 		<description></description>
 		<content:encoded><![CDATA[Adding a class to a "vote" button if it has already been upvoted would allow for additional styling to quickly see which have already been voted on by a user.]]></content:encoded>
@@ -1325,7 +1149,7 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 		<category domain="idea-tag" nicename="styling"><![CDATA[Styling]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -1365,7 +1189,7 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_10]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[idea_votes]]></wp:meta_key>
@@ -1377,18 +1201,18 @@ So if you type [roadmap status="Up Next, On Roadmap, Closed"] the columns will a
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_user_1]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[voted_guest_6c9aa74fe5a577b4196882b6997ef21a]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 					<item>
 		<title><![CDATA[Add A "Theme" to the Colors]]></title>
-		<link>https://playground.wordpress.net/?idea=add-a-theme-to-the-colors</link>
+		<link>https://roadmapwp.com/idea/add-a-theme-to-the-colors/</link>
 		<pubDate>Wed, 17 Jan 2024 16:00:27 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
+		<dc:creator><![CDATA[james]]></dc:creator>
 		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=752</guid>
 		<description></description>
 		<content:encoded><![CDATA[It would be nice to have default theme color sets for quick and easy application of colors. 
@@ -1413,7 +1237,7 @@ Maybe have a button with all the color codes, then when you click it, it automat
 		<category domain="idea-status" nicename="not-now"><![CDATA[Not Now]]></category>
 						<wp:postmeta>
 		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
 		<wp:meta_key><![CDATA[_aioseo_title]]></wp:meta_key>
@@ -1456,64 +1280,8 @@ Maybe have a button with all the color codes, then when you click it, it automat
 		<wp:meta_value><![CDATA[0]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
-					<item>
-		<title><![CDATA[Navigation]]></title>
-		<link>https://playground.wordpress.net/?p=915</link>
-		<pubDate>Tue, 26 Mar 2024 02:23:29 +0000</pubDate>
-		<dc:creator><![CDATA[admin]]></dc:creator>
-		<guid isPermaLink="false">http://wproadmap.lndo.site/2024/03/26/navigation/</guid>
-		<description></description>
-		<content:encoded><![CDATA[<!-- wp:page-list /-->]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>915</wp:post_id>
-		<wp:post_date><![CDATA[2024-03-26 02:23:29]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-03-26 02:23:29]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-26 02:23:29]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-26 02:23:29]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[navigation]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[wp_navigation]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-														</item>
-					<item>
-		<title><![CDATA[Roadmap shortcode]]></title>
-		<link>https://playground.wordpress.net/?idea=roadmap-shortcode</link>
-		<pubDate>Sat, 30 Mar 2024 18:53:47 +0000</pubDate>
-		<dc:creator><![CDATA[steve@yahoomail.com]]></dc:creator>
-		<guid isPermaLink="false">https://roadmapwp.com/?post_type=idea&#038;p=553</guid>
-		<description></description>
-		<content:encoded><![CDATA[There is no indication of what happens if I use the [roadmap] shortcode without any parameters.]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>919</wp:post_id>
-		<wp:post_date><![CDATA[2024-03-30 18:53:47]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-03-30 18:53:47]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-03-30 18:53:47]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-03-30 18:53:47]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[open]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[roadmap-shortcode]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[idea]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="idea-tag" nicename="feature-request"><![CDATA[Feature Request]]></category>
-		<category domain="idea-status" nicename="maybe"><![CDATA[Maybe]]></category>
-						<wp:postmeta>
-		<wp:meta_key><![CDATA[_edit_last]]></wp:meta_key>
-		<wp:meta_value><![CDATA[admin]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
-		<wp:meta_value><![CDATA[2024-01-04]]></wp:meta_value>
-		</wp:postmeta>
-							</item>
+					
+					
 				</channel>
 </rss>
 	
