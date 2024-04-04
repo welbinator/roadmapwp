@@ -286,13 +286,7 @@ add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\custom_styles' );
  * Enqueue custom styles for LearnDash.
  */
 function custom_styles() {
-	// wp_enqueue_style(
-	// 	'rmwp-custom-styles',
-	// 	plugin_dir_url( __FILE__ ) . '../../app/assets/css/customizer-styles.css',
-	// 	array(),
-	// 	filemtime( plugin_dir_path( __FILE__ ) . '../../app/assets/css/customizer-styles.css' )
-	// );
-
+	
 	 // Correctly resolve the path to the stylesheet.
 	 $css_file_path = plugin_dir_path( __FILE__ ) . 'assets/css/customizer-styles.css'; // Adjusted path
 
@@ -304,15 +298,17 @@ function custom_styles() {
 		 wp_enqueue_style(
 			 'rmwp-custom-styles',
 			 $css_file_url,
-			 array(),
-			 filemtime( $css_file_path )
+			 array(), 
+			 RMWP_PLUGIN_VERSION
 		 );
 	 } else {
 		 // Optionally handle the case where the file does not exist.
 		 wp_enqueue_style(
 			 'rmwp-custom-styles',
-			 $css_file_url
-			 // You could specify a static version number or omit the version if the file doesn't exist.
+			 $css_file_url,
+			 array(), 
+			 RMWP_PLUGIN_VERSION
+			 
 		 );
 	 }
 
