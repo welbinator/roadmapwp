@@ -92,7 +92,7 @@ function roadmap_shortcode( $atts ) {
 							?>
 							<div class="border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden m-2 wp-roadmap-idea">
 								<div class="p-6">
-								<h4 class="idea-title"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h4>									<p class="text-gray-500 mt-2 mb-0 text-sm"><?php echo esc_html( get_the_date() ); ?></p>
+								<h4 class="rmwp__idea-title"><a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html(get_the_title()); ?></a></h4>									<p class="text-gray-500 mt-2 mb-0 text-sm"><?php echo esc_html( get_the_date() ); ?></p>
 									<div class="flex flex-wrap space-x-2 mt-2 idea-tags">
 									<?php
 									$terms = wp_get_post_terms( $idea_id, $taxonomies );

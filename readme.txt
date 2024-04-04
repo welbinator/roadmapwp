@@ -36,6 +36,10 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.2.6 =
+* Namespaced CSS classes to avoid conflicting with other plugins/themes
+* Fixed broken link
+
 = 1.2.5 =
 * Plugin automatically creates Submit Idea and Roadmap pages on activation
 * Minor code improvements
