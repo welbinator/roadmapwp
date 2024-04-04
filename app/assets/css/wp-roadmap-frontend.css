@@ -1,159 +1,89 @@
 /* new idea form */
-.flex-outer {
+.rmwp__flex-outer {
     list-style-type: none;
     padding: 0;
 }
 
-.flex-outer {
+.rmwp__flex-outer {
     max-width: 800px;
 }
 
-.flex-outer li {
+.rmwp__flex-outer li {
     display: flex;
     flex-wrap: wrap;
     /* align-items: center; */
 }
 
-.flex-outer>li:not(:last-child) {
+.rmwp__flex-outer>li:not(:last-child) {
     margin-bottom: 20px;
 }
 
-.flex-outer>li>label,
-.flex-outer li p {
+.rmwp__flex-outer>li>label,
+.rmwp__flex-outer li p {
     flex: 1 0 120px;
     max-width: 140px;
 }
 
-.flex-outer>li>label+* {
+.rmwp__flex-outer>li>label+* {
     flex: 1 0 220px;
 }
 
-.flex-outer li p {
+.rmwp__flex-outer li p {
     margin: 0;
 }
 
-.flex-outer li button {
+.rmwp__flex-outer li button {
     margin-left: auto;
     padding: 8px 16px;
     border-radius: 2px;
 }
-.new_idea_form_input input {
+.rmwp__new_idea_form_input input {
     border-radius: 5px;
 }
-.new_idea_form_input textarea {
+.rmwp__new_idea_form_input textarea {
     min-height: 200px;
     border-radius: 5px;
 }
 /* ideas shortcode */
-.filters-inner {
+.rmwp__filters-inner {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     
 }
-.filters-wrapper {
+.rmwp__filters-wrapper {
     background-color: #f5f5f5;
     padding: 30px;
 }
 
-h3.idea-title a {
+h3.rmwp__idea-title a {
     text-decoration: none!important;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 5 columns */
-    gap: 20px; /* Gap between columns */
-    padding: 20px;
-}
-
-.grid-item {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.wp-roadmap-ideas-filter {
-    margin-block: 50px;
-}
-.wp-roadmap-ideas-filter-taxonomy {
+.rmwp__ideas-filter-taxonomy {
     padding-right: 30px;
     /* flex-shrink: 0; */
 }
-.taxonomy-term-labels {
+.rmwp__taxonomy-term-labels {
     display: flex;
     flex-wrap: wrap;
 }
-.taxonomy-term-label {
+.rmwp__taxonomy-term-label {
     padding: 10px;
     display: flex;
     gap: 5px;
     align-items: center;
 }
 
-.filter-match-type {
+.rmwp__filter-match-type {
     margin-top: 10px;
 }
 
-.filter-match-type label {
+.rmwp__filter-match-type label {
     display: unset;
 }
 
-.wp-roadmap-ideas-list {
+.rmwp__ideas-list {
     padding: 30px;
 }
 
-.card {
-    text-align: center;
-}
-
-.card p {
-    text-align: left;
-}
-
-.card-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0;
-    text-align: left;
-}
-
-.card-date {
-    font-size: 14px;
-    color: #888;
-}
-
-.card-meta {
-    font-size: 14px;
-    color: #888;
-}
-
-.card-description {
-    font-size: 16px;
-    margin-top: 10px;
-}
-.idea-header {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-}
-.idea-wrapper {
-    padding-left: 130px;
-}
-
-
-/* roadmap shortcode */
-
-form.idea-status-update-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Media query for responsiveness */
-@media screen and (max-width: 768px) {
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns for smaller screens */
-    }
-}

@@ -25,7 +25,7 @@ function settings_page() {
 
 	?>
 	<div class="wrap">
-		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+		<h1 class="rmwp-h1"><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<form action="options.php" method="post">
 		<?php
 		settings_fields( 'wp_roadmap_settings' );
@@ -160,14 +160,14 @@ function taxonomies_page() {
 	}
 	$pro_feature = apply_filters( 'wp_roadmap_pro_add_taxonomy_feature', '' );
 
-	echo '<h2>Add Custom Taxonomy</h2>';
+	echo '<h2 class="rmwp-h2">Add Custom Taxonomy</h2>';
 
 	if ( $pro_feature ) {
 		echo wp_kses_post ( $pro_feature );
-		echo '<h2>Existing Taxonomies</h2>';
+		echo '<h2 class="rmwp-h2">Existing Taxonomies</h2>';
 	} else {
 		echo '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>';
-		echo '<h2>Existing Taxonomies</h2>';
+		echo '<h2 class="rmwp-h2">Existing Taxonomies</h2>';
 	}
 
 	$taxonomies = get_taxonomies( array( 'object_type' => array( 'idea' ) ), 'objects' );
@@ -180,7 +180,7 @@ function taxonomies_page() {
 			continue;
 		}
 
-		echo '<h3>' . esc_html( $taxonomy->labels->name ) . '</h3>';
+		echo '<h3 class="rmwp-h3">' . esc_html( $taxonomy->labels->name ) . '</h3>';
 
 		if ( array_key_exists( $taxonomy->name, $custom_taxonomies ) ) {
 			echo '<ul><li data-taxonomy-slug="' . esc_attr( $taxonomy->name ) . '">';
@@ -203,7 +203,7 @@ function taxonomies_page() {
 				echo '</li>';
 			}
 			echo '</ul>';
-			echo '<input type="submit" value="Delete Selected Terms" class="button delete-terms-button">';
+			echo '<input type="submit" value="Delete Selected Terms" class="button rmwp__delete-terms-button">';
 			echo '</form>';
 		} else {
 			echo '<p>No terms found for ' . esc_html( $taxonomy->labels->name ) . '.</p>';
@@ -226,9 +226,9 @@ function free_help_page() {
 	?>
 	<div class="wrap">
 	
-		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+		<h1 class="rmwp-h1"><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<div class="container px-4 md:px-6 mt-6">
-		<h2 class="text-xl font-bold tracking-tight mb-2"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/getting-started/" target="_blank">Getting Started</a></h2>
+		<h2 class="rmwp-h2" class="text-xl font-bold tracking-tight mb-2"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/getting-started/" target="_blank">Getting Started</a></h2>
 		A roadmap consists of 3 main parts:
 		<ol>
 			<li>
@@ -246,21 +246,21 @@ function free_help_page() {
 		</div>
 		<div class="container px-4 md:px-6 mt-6">
 		
-		<h2 class="text-xl font-bold tracking-tight mb-2"><a class="text-slate-600" href="https://roadmapwp.com/kb_category/shortcodes/" target="_blank">Shortcodes</a></h2>
+		<h2 class="rmwp-h2" class="text-xl font-bold tracking-tight mb-2"><a class="text-slate-600" href="https://roadmapwp.com/kb_category/shortcodes/" target="_blank">Shortcodes</a></h2>
 		
 			<div class="grid gap-6">
 				<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-					<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/new-idea-form-shortcode/" target="_blank">[new_idea_form]</a><span class="copy-tooltip" data-text="[new_idea_form]"><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
+					<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/new-idea-form-shortcode/" target="_blank">[new_idea_form]</a><span class="copy-tooltip" data-text="[new_idea_form]"><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
 					<p class="text-gray-500 leading-6 m-0">Displays form for submitting ideas</p>
 				</div>
 
 				<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-					<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/display-ideas-shortcode/" target="_blank">[display_ideas]</a><span class="copy-tooltip" data-text="[display_ideas]"><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
+					<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/display-ideas-shortcode/" target="_blank">[display_ideas]</a><span class="copy-tooltip" data-text="[display_ideas]"><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
 					<p class="text-gray-500 leading-6 m-0">Displays grid filled with published ideas</p>
 				</div>
 
 				<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-					<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-shortcode/" target=_blank">[roadmap status=""]</a><span class="copy-tooltip" data-text='[roadmap status=""]'><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
+					<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-shortcode/" target=_blank">[roadmap status=""]</a><span class="copy-tooltip" data-text='[roadmap status=""]'><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
 					<p class="text-gray-500 leading-6 m-0">Displays columns filled with ideas based on statuses entered in the status parameter</p>
 					<p class="text-gray-500 leading-6 m-0">Use "status" parameter to choose which status or statuses to display Example: [roadmap status="Up Next, On Roadmap"]</p>
 					<p class="text-gray-500 leading-6 m-0">Values included in free status parameter (Pro users can change these on the Taxonomies page):</p>
@@ -275,7 +275,7 @@ function free_help_page() {
 				</div>
 
 				<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-					<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-with-tabs-shortcode/" target="_blank">[roadmap_tabs status=""]</a><span class="copy-tooltip" data-text='[roadmap_tabs status=""]'><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
+					<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-with-tabs-shortcode/" target="_blank">[roadmap_tabs status=""]</a><span class="copy-tooltip" data-text='[roadmap_tabs status=""]'><span class="no-underline text-gray-500 dashicons dashicons-admin-page cursor-pointer"></span></span></h3>
 					<p class="text-gray-500 leading-6 m-0">Displays tabs based on statuses entered in the status parameter. Clicking a tab displays corresponding ideas</p>
 					<p class="text-gray-500 leading-6 m-0">Use "status" parameter to choose which status or statuses to display Example: [roadmap_tabs status="Up Next, On Roadmap"]</p>
 					<p class="text-gray-500 leading-6 m-0">Values included in free status parameter (Pro users can change these on the Taxonomies page):</p>
@@ -290,20 +290,20 @@ function free_help_page() {
 				</div>                
 		</div><!-- grid gap-6 -->
 		
-		<h2 class="text-xl font-bold tracking-tight mt-6 mb-2"><a class="text-slate-600" href="https://roadmapwp.com/kb_category/blocks/" target="_blank">Blocks (pro only)</a></h2>
+		<h2 class="rmwp-h2" class="text-xl font-bold tracking-tight mt-6 mb-2"><a class="text-slate-600" href="https://roadmapwp.com/kb_category/blocks/" target="_blank">Blocks (pro only)</a></h2>
 		<div class="grid gap-6">
 			<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-				<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/new-idea-form-block/" target="_target">New Idea Form</a> </h3>
+				<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/new-idea-form-block/" target="_target">New Idea Form</a> </h3>
 				<p class="text-gray-500 leading-6 m-0">Displays form for submitting ideas</p>
 			</div>
 
 			<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-				<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/display-ideas-block/" target="_blank">Display Ideas</a> </h3>
+				<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/display-ideas-block/" target="_blank">Display Ideas</a> </h3>
 				<p class="text-gray-500 leading-6 m-0">Displays grid filled with published ideas</p>
 			</div>
 
 			<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-				<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-block/" target="_blank">Roadmap</a> </h3>
+				<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-block/" target="_blank">Roadmap</a> </h3>
 				<p class="text-gray-500 leading-6 m-0">Displays columns filled with ideas based on statuses selected.</p>
 				<p class="text-gray-500 leading-6 m-0">After adding the block to the page, in the block editor choose which statuses you want to display.</p>
 				<p class="text-gray-500 leading-6 m-0">Values included in free status parameter (Pro users can change these on the Taxonomies page):</p>
@@ -318,7 +318,7 @@ function free_help_page() {
 			</div>
 
 			<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
-				<h3 class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-tabs-block/" target="_blank">Roadmap Tabs</a> </h3>
+				<h3 class="rmwp-h3" class="font-semibold text-lg m-0"><a class="text-slate-600" href="https://roadmapwp.com/kb_article/roadmap-tabs-block/" target="_blank">Roadmap Tabs</a> </h3>
 				<p class="text-gray-500 leading-6 m-0">Displays tabs based on statuses selected. Clicking a tab displays corresponding ideas</p>
 				<p class="text-gray-500 leading-6 m-0">After adding the block to the page, in the block editor choose which statuses you want to display.</p>
 				<p class="text-gray-500 leading-6 m-0">Values included in free status parameter (Pro users can change these on the Taxonomies page):</p>

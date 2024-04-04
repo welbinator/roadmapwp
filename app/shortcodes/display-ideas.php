@@ -62,12 +62,12 @@ function display_ideas_shortcode() {
 				endif;
 			endforeach;
 
-			// Conditionally render the filters-wrapper div
+			// Conditionally render the rmwp__filters-wrapper div
 			if ( $show_filters ) :
 				?>
-				<div class="filters-wrapper">
+				<div class="rmwp__filters-wrapper">
 					<h4>Filters:</h4>
-					<div class="filters-inner">
+					<div class="rmwp__filters-inner">
 						<?php
 						// Reiterate through taxonomies to build the filters UI
 						foreach ( $taxonomies as $taxonomy_slug ) :
@@ -80,19 +80,19 @@ function display_ideas_shortcode() {
 									)
 								);
 								?>
-								<div class="wp-roadmap-ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr( $taxonomy_slug ); ?>">
+								<div class="rmwp__ideas-filter-taxonomy" data-taxonomy="<?php echo esc_attr( $taxonomy_slug ); ?>">
 									<label><?php echo esc_html( $taxonomy->labels->singular_name ); ?>:</label>
-									<div class="taxonomy-term-labels">
+									<div class="rmwp__taxonomy-term-labels">
 										<?php
 										foreach ( $terms as $term ) {
-											echo '<label class="taxonomy-term-label">';
+											echo '<label class="rmwp__taxonomy-term-label">';
 											echo '<input type="checkbox" name="idea_taxonomies[' . esc_attr( $taxonomy->name ) . '][]" value="' . esc_attr( $term->slug ) . '"> ';
 											echo esc_html( $term->name );
 											echo '</label>';
 										}
 										?>
 									</div>
-									<div class="filter-match-type">
+									<div class="rmwp__filter-match-type">
 										<label><input type="radio" name="match_type_<?php echo esc_attr( $taxonomy->name ); ?>" value="any" checked> Any</label>
 										<label><input type="radio" name="match_type_<?php echo esc_attr( $taxonomy->name ); ?>" value="all"> All</label>
 									</div>
@@ -109,7 +109,7 @@ function display_ideas_shortcode() {
 
 		</div>
 
-		<div class="wp-roadmap-ideas-list">
+		<div class="rmwp__ideas-list">
 
 		<?php
 		$args  = array(

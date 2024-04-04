@@ -328,14 +328,14 @@ function custom_styles() {
         background-color: ' . get_theme_mod( 'tags_background_color', '' ) . '!important;
 		color: ' . get_theme_mod( 'tags_text_color', '' ) . '!important;
     }
-    .new_idea_form_input input[type="submit"] { 
+    .rmwp__new_idea_form_input input[type="submit"] { 
         background-color: ' . get_theme_mod( 'submit_idea_button_background_color', '' ) . '!important;
 		color: ' . get_theme_mod( 'submit_idea_button_text_color', '' ) . '!important;
     }
-    .filters-wrapper { 
+    .rmwp__filters-wrapper { 
         background-color: ' . get_theme_mod( 'filter_box_background_color', '' ) . '!important;
     }
-    .filters-wrapper * { 
+    .rmwp__filters-wrapper * { 
 		color: ' . get_theme_mod( 'filter_box_text_color', '' ) . '!important;
     }
 	';

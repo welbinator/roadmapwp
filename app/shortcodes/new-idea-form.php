@@ -33,12 +33,12 @@ function new_idea_form_shortcode() {
         $form_action = esc_url_raw($_SERVER['REQUEST_URI']);
         ?>
         <form action="<?php echo esc_url($form_action); ?>" method="post">
-            <ul class="flex-outer">
-                <li class="new_idea_form_input">
+            <ul class="rmwp__flex-outer">
+                <li class="rmwp__new_idea_form_input">
                     <label for="idea_title">Title:</label>
                     <input type="text" name="idea_title" id="idea_title" required>
                 </li>
-                <li class="new_idea_form_input">
+                <li class="rmwp__new_idea_form_input">
                     <label for="idea_description">Description:</label>
                     <textarea name="idea_description" id="idea_description" required></textarea>
                 </li>
@@ -54,11 +54,11 @@ function new_idea_form_shortcode() {
                         );
 
                         if ( ! empty( $terms ) && ! is_wp_error( $terms ) ): ?>
-                            <li class="new_idea_form_input">
+                            <li class="rmwp__new_idea_form_input">
                                 <label><?php echo esc_html( $taxonomy->labels->singular_name ); ?>:</label>
-                                <div class="taxonomy-term-labels">
+                                <div class="rmwp__taxonomy-term-labels">
                                     <?php foreach ( $terms as $term ): ?>
-                                        <label class="taxonomy-term-label">
+                                        <label class="rmwp__taxonomy-term-label">
                                             <input type="checkbox" name="idea_taxonomies[<?php echo esc_attr( $taxonomy->name ); ?>][]" value="<?php echo esc_attr( $term->term_id ); ?>"> <?php echo esc_html( $term->name ); ?>
                                         </label>
                                     <?php endforeach; ?>
@@ -70,7 +70,7 @@ function new_idea_form_shortcode() {
                 ?>
                 <?php $form_submission_nonce = wp_create_nonce('wp_roadmap_new_idea'); ?>
                 <input type="hidden" name="wp_roadmap_new_idea_nonce" value="<?php echo esc_attr($form_submission_nonce); ?>">
-                <li class="new_idea_form_input">
+                <li class="rmwp__new_idea_form_input">
                     <input type="submit" value="Submit Idea">
                 </li>
             </ul>
