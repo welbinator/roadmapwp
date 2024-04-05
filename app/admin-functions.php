@@ -90,9 +90,7 @@ function check_for_shortcode_or_block_presence(): bool
         if (has_shortcode($post->post_content, 'new_idea_form') ||
             has_shortcode($post->post_content, 'display_ideas') ||
             has_shortcode($post->post_content, 'roadmap') ||
-            has_block('wp-roadmap/new-idea-form', $post) ||
-            has_block('wp-roadmap/display-ideas', $post) ||
-            has_block('wp-roadmap/roadmap', $post) ||
+            has_shortcode($post->post_content, 'roadmap_tabs') ||
             is_singular('idea')) {
             return true;
         }

@@ -36,9 +36,13 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.2.8 =
+* Hotfix to add some files that were mistakingly not included in previous release
+
 = 1.2.7 =
 * Added version number to css/js files to avoid caching issues after updates
 * Added filter to allow force enqueuing of scripts
+* Added custom headings features
 
 = 1.2.6 =
 * Namespaced CSS classes to avoid conflicting with other plugins/themes
