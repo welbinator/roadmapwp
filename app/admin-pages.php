@@ -38,20 +38,10 @@ function settings_page() {
 			?>
 
 			<table class="form-table">
-				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'roadmapwp-free' ); ?></th>
-					<td>
-						<?php				
-							$allow_comments = isset( $options['allow_comments'] ) ? $options['allow_comments'] : '';
-							$html = '<input type="checkbox" name="wp_roadmap_settings[allow_comments]" value="1"' . checked( 1, $allow_comments, false ) . '/>';
-							echo $html;
-						?>
-					</td>
-				</tr>
-				
+								
 				<!-- Default Status Setting -->
 				<tr valign="top">
-				<th scope="row"><?php esc_html_e( 'Set Default Status Term for New Ideas', 'roadmapwp-pro' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Set Default Status Term for New Ideas', 'roadmapwp-free' ); ?></th>
 				<td>
 					<select name="wp_roadmap_settings[default_status_term]">
 						<?php foreach ( $status_terms as $term ) : ?>
@@ -65,14 +55,15 @@ function settings_page() {
 				
 
 				<tr valign="top">
-					<th scope="row"><?php esc_html_e( 'Set Published/Pending/Draft', 'roadmapwp-pro' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Set Published/Pending/Draft', 'roadmapwp-free' ); ?></th>
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-pro' ) . '</a>' ) );
+						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
 						?>
 					</td>
 				</tr>
+
 				<tr valign="top">
 					<th scope="row"><?php esc_html_e( 'Single Idea Template', 'roadmapwp-free' ); ?></th>
 					<td>
@@ -82,6 +73,18 @@ function settings_page() {
 						?>
 					</td>
 				</tr>
+
+				<tr valign="top">
+					<th scope="row"><?php esc_html_e( 'Allow Comments on Ideas', 'roadmapwp-free' ); ?></th>
+					<td>
+						<?php				
+							$allow_comments = isset( $options['allow_comments'] ) ? $options['allow_comments'] : '';
+							$html = '<input type="checkbox" name="wp_roadmap_settings[allow_comments]" value="1"' . checked( 1, $allow_comments, false ) . '/>';
+							echo $html;
+						?>
+					</td>
+				</tr>
+				
 				<tr valign="top" id="single_idea_page_setting" style="display: none;">
 					<th scope="row"><?php esc_html_e( 'Set page for single idea', 'roadmapwp-free' ); ?></th>
 					<td>
@@ -103,16 +106,17 @@ function settings_page() {
 					<td>
 						<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo wp_kses_post( apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
+						echo apply_filters( 'wp_roadmap_hide_custom_idea_heading_setting', 'roadmapwp-free' );
 						?>
 					</td>
 				</tr>
+
 				<tr valign="top">
 					<th scope="row"><?php esc_html_e( 'Custom "Browse Ideas" Heading', 'roadmapwp-free' ); ?></th>
 					<td>
-						<?php
+					<?php
 						// Filter hook to allow the Pro version to override this setting
-						echo wp_kses_post( apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
+						echo apply_filters( 'wp_roadmap_hide_display_ideas_heading_setting', 'roadmapwp-free' );
 						?>
 					</td>
 				</tr>

@@ -46,6 +46,9 @@ require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/new-idea-form.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap-tabs.php';
 require_once plugin_dir_path( __FILE__ ) . 'app/customizer-styles.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/settings/display-ideas-custom-heading.php';
+require_once plugin_dir_path( __FILE__ ) . 'app/settings/submit-idea-custom-heading.php';
+
 
 
 function on_activation() {
