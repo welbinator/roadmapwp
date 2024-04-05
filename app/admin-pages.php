@@ -84,6 +84,18 @@ function settings_page() {
 						?>
 					</td>
 				</tr>
+
+				<tr valign="top">
+					<th scope="row"><?php esc_html_e( 'Restrict Voting to Logged-in Users', 'roadmapwp-free' ); ?></th>
+					<td>
+						<?php
+						$restrict_voting = isset($options['restrict_voting']) ? $options['restrict_voting'] : '';
+						?>
+						<input type="checkbox" name="wp_roadmap_settings[restrict_voting]" value="1" <?php checked(1, $restrict_voting, true); ?>/>
+						
+					</td>
+				</tr>
+
 				
 				<tr valign="top" id="single_idea_page_setting" style="display: none;">
 					<th scope="row"><?php esc_html_e( 'Set page for single idea', 'roadmapwp-free' ); ?></th>

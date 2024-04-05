@@ -4,6 +4,25 @@ namespace RoadMapWP\Free\ClassVoting;
 
 class VotingHandler {
 
+/**
+ * Checks if a user is allowed to vote.
+ *
+ * @param int $user_id The ID of the user attempting to vote.
+ * @return bool True if the user can vote, false otherwise.
+ */
+public static function can_user_vote($user_id) {
+    $options = get_option('wp_roadmap_settings');
+    // Check if the restrict voting setting is enabled
+    if (isset($options['restrict_voting']) && $options['restrict_voting']) {
+        // Return true if user is logged in, false otherwise
+        return is_user_logged_in();
+    }
+
+    // If the setting is not enabled or doesn't exist, apply any other filters or default logic
+    return apply_filters('roadmapwp_can_user_vote', true, $user_id);
+}
+
+
     /**
      * Handles the process of voting for an idea.
      *

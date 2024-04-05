@@ -20,6 +20,12 @@ function handle_vote() {
 	$post_id = intval( $_POST['post_id'] );
 	$user_id = get_current_user_id();
 
+	// Check if the user is allowed to vote
+    if (!\RoadMapWP\Free\ClassVoting\VotingHandler::can_user_vote($user_id)) {
+        wp_send_json_error(['message' => 'You are not allowed to vote.']);
+        wp_die();
+    }
+
 	// Generate a unique key for non-logged-in user
 	$remote_addr = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field($_SERVER['REMOTE_ADDR']) : '';
 	$http_user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : '';
