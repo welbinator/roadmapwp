@@ -13,6 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 };
 
 function roadmap_shortcode( $atts ) {
+
+	$user_id = get_current_user_id();
+	$display_shortcode = true;
+    $display_shortcode = apply_filters('roadmapwp_pro_roadmap_shortcode', $display_shortcode, $user_id);
+
+    if (!$display_shortcode) {
+        return '';
+    }
+	
 	// Flag to indicate the roadmap shortcode is loaded
 	update_option( 'wp_roadmap_roadmap_shortcode_loaded', true );
 
