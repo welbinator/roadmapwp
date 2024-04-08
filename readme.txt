@@ -36,6 +36,12 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.3.1 =
+* Added filters to each shortcode allowing users to hide them
+
+= 1.3.0 =
+* Added filter to restrict voting
+
 = 1.2.8 =
 * Hotfix to add some files that were mistakingly not included in previous release
 
