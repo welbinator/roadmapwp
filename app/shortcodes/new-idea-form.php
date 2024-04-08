@@ -13,6 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 };
 
 function new_idea_form_shortcode() {
+
+    $user_id = get_current_user_id();
+	$display_shortcode = true;
+    $display_shortcode = apply_filters('roadmapwp_pro_new_idea_form_shortcode', $display_shortcode, $user_id);
+
+    if (!$display_shortcode) {
+        return '';
+    }
+    
 	ob_start();
     // Flag to indicate the new idea form shortcode is loaded
     update_option( 'wp_roadmap_new_idea_shortcode_loaded', true );
