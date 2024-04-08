@@ -44,9 +44,10 @@ function display_ideas_shortcode() {
 	// Check if the pro version is installed and settings are enabled
 	$hide_display_ideas_heading = apply_filters( 'wp_roadmap_hide_display_ideas_heading', false );
 	$new_display_ideas_heading  = apply_filters( 'wp_roadmap_custom_display_ideas_heading_text', 'Browse Ideas' );
-
-	$output .= '<div class="roadmap_wrapper container mx-auto">';
-	$output .= '<div class="browse_ideas_frontend">';
+?>
+	<div class="roadmap_wrapper container mx-auto">
+	<div class="browse_ideas_frontend">
+	<?php
 	$output .= '<h2>' . esc_html( $new_display_ideas_heading ) . '</h2>';
 	if ( ! $hide_display_ideas_heading ) {
 		echo wp_kses_post( $output );
