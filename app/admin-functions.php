@@ -249,8 +249,9 @@ function get_idea_class_with_votes($idea_id) {
  * roadmapwp_roadmap_shortcode
  * roadmapwp_new_idea_form_shortcode
  * roadmapwp_display_ideas_shortcode
+*/
 
-// add_filter('roadmapwp_roadmap_tabs_shortcode', function ($display_shortcode, $user_id) {
+//  add_filter('roadmapwp_roadmap_tabs_shortcode', function ($display_shortcode, $user_id) {
 // 	$user_info = get_userdata($user_id);
 // 	if ( $user_info && $user_info->user_login === 'james' ) {
 // 	return true;
