@@ -16,7 +16,7 @@ function roadmap_shortcode( $atts ) {
 
 	$user_id = get_current_user_id();
 	$display_shortcode = true;
-    $display_shortcode = apply_filters('roadmapwp_pro_roadmap_shortcode', $display_shortcode, $user_id);
+    $display_shortcode = apply_filters('roadmapwp_roadmap_shortcode', $display_shortcode, $user_id);
 
     if (!$display_shortcode) {
         return '';

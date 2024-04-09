@@ -240,3 +240,21 @@ function get_idea_class_with_votes($idea_id) {
 
     return $idea_class;
 }
+
+/**
+ * Example of how to use the filter to hide shortcodes
+ * 
+ * Avaiable filters:
+ * roadmapwp_roadmap_tabs_shortcode
+ * roadmapwp_roadmap_shortcode
+ * roadmapwp_new_idea_form_shortcode
+ * roadmapwp_display_ideas_shortcode
+
+// add_filter('roadmapwp_roadmap_tabs_shortcode', function ($display_shortcode, $user_id) {
+// 	$user_info = get_userdata($user_id);
+// 	if ( $user_info && $user_info->user_login === 'james' ) {
+// 	return true;
+// 	} else {
+// 	return false;
+// 	}
+//    }, 10, 3);
