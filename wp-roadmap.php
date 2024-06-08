@@ -13,6 +13,11 @@ Text Domain: roadmapwp-free
 
 namespace RoadMapWP\Free;
 
+defined('ABSPATH') or die('No script kiddies please!');
+
+define('RMWP_PLUGIN_VERSION', '1.3.2');
+
+// Function to run on plugin activation
 function free_activate() {
     include_once(ABSPATH . 'wp-admin/includes/plugin.php');
     if (is_plugin_active('roadmapwp-pro/wp-roadmap-pro.php')) {
@@ -23,71 +28,83 @@ function free_activate() {
         wp_redirect(admin_url('plugins.php'));
         exit;
     }
-    // Additional activation code for Free version goes here...
+
+    // Store the current version in the database
+    update_option('rmwp_plugin_version', RMWP_PLUGIN_VERSION);
+
+    // Register default idea taxonomies and add terms
+    \RoadMapWP\Free\CPT\register_default_taxonomies();
+    $status_terms = array('New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed');
+    foreach ($status_terms as $term) {
+        if (!term_exists($term, 'idea-status')) {
+            $result = wp_insert_term($term, 'idea-status');
+            if (is_wp_error($result)) {
+                error_log('Error inserting term ' . $term . ': ' . $result->get_error_message());
+            }
+        }
+    }
+
+    // Create pages
+    create_pages();
+
+    // Flush rewrite rules
+    flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, __NAMESPACE__ . '\\free_activate');
 
+// Function to check version and flush permalinks if updated
+function free_check_version() {
+    // Get the stored version
+    $stored_version = get_option('rmwp_plugin_version');
+
+    // Check if the current version is different from the stored version
+    if ($stored_version !== RMWP_PLUGIN_VERSION) {
+        // Update the stored version
+        update_option('rmwp_plugin_version', RMWP_PLUGIN_VERSION);
+
+        // Flush rewrite rules
+        flush_rewrite_rules();
+    }
+}
+add_action('admin_init', __NAMESPACE__ . '\\free_check_version');
+
+// Function to display admin notices
 function admin_notice() {
     echo '<div class="notice notice-warning is-dismissible"><p>RoadMapWP Pro is already installed. The free version has been deactivated.</p></div>';
 }
 
-
-defined('ABSPATH') or die('No script kiddies please!');
-
-define('RMWP_PLUGIN_VERSION', '1.3.1');
-
 // Include necessary files
-require_once plugin_dir_path( __FILE__ ) . 'app/admin-functions.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/cpt-ideas.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/ajax-handlers.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/admin-pages.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/display-ideas.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/new-idea-form.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/shortcodes/roadmap-tabs.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/customizer-styles.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/settings/display-ideas-custom-heading.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/settings/submit-idea-custom-heading.php';
-require_once plugin_dir_path( __FILE__ ) . 'app/class-voting.php';
+require_once plugin_dir_path(__FILE__) . 'app/admin-functions.php';
+require_once plugin_dir_path(__FILE__) . 'app/cpt-ideas.php';
+require_once plugin_dir_path(__FILE__) . 'app/ajax-handlers.php';
+require_once plugin_dir_path(__FILE__) . 'app/admin-pages.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/display-ideas.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/new-idea-form.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap.php';
+require_once plugin_dir_path(__FILE__) . 'app/shortcodes/roadmap-tabs.php';
+require_once plugin_dir_path(__FILE__) . 'app/customizer-styles.php';
+require_once plugin_dir_path(__FILE__) . 'app/settings/display-ideas-custom-heading.php';
+require_once plugin_dir_path(__FILE__) . 'app/settings/submit-idea-custom-heading.php';
+require_once plugin_dir_path(__FILE__) . 'app/class-voting.php';
 
+// Function to handle custom template for single ideas
+function custom_template($template) {
+    global $post;
 
+    if ('idea' === $post->post_type) {
+        $options = get_option('wp_roadmap_settings');
+        $chosen_idea_template = isset($options['single_idea_template']) ? $options['single_idea_template'] : 'plugin';
 
-function on_activation() {
-    // Directly call the function that registers your taxonomies here
-    \RoadMapWP\Free\CPT\register_default_taxonomies();
+        if ($chosen_idea_template === 'plugin' && file_exists(plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php')) {
+            return plugin_dir_path(__FILE__) . 'app/templates/template-single-idea.php';
+        }
+    }
 
-    // Now add the terms
-    $status_terms = array( 'New Idea', 'Maybe', 'Up Next', 'On Roadmap', 'Not Now', 'Closed' );
-	foreach ( $status_terms as $term ) {
-		if ( ! term_exists( $term, 'idea-status' ) ) {
-			$result = wp_insert_term( $term, 'idea-status' );
-			if ( is_wp_error( $result ) ) {
-				error_log( 'Error inserting term ' . $term . ': ' . $result->get_error_message() );
-			}
-		}
-	}
-    flush_rewrite_rules();
+    return $template;
 }
+add_filter('single_template', __NAMESPACE__ . '\\custom_template');
 
-register_activation_hook(__FILE__, __NAMESPACE__ . '\\on_activation');
-
-function custom_template( $template ) {
-	global $post;
-
-	if ( 'idea' === $post->post_type ) {
-		$options          = get_option( 'wp_roadmap_settings' );
-		$chosen_idea_template = isset( $options['single_idea_template'] ) ? $options['single_idea_template'] : 'plugin';
-
-		if ( $chosen_idea_template === 'plugin' && file_exists( plugin_dir_path( __FILE__ ) . 'app/templates/template-single-idea.php' ) ) {
-			return plugin_dir_path( __FILE__ ) . 'app/templates/template-single-idea.php';
-		}
-	}
-
-	return $template;
-}
-
-add_filter( 'single_template', __NAMESPACE__ . '\\custom_template' );
-
+// Function to create necessary pages on activation
 function create_pages() {
     // Define the pages and their corresponding details
     $pages = array(
@@ -133,6 +150,4 @@ function create_pages() {
         }
     }
 }
-
-
 register_activation_hook(__FILE__, __NAMESPACE__ . '\\create_pages');

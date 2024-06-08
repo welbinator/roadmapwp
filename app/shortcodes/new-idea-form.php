@@ -16,7 +16,7 @@ function new_idea_form_shortcode() {
 
     $user_id = get_current_user_id();
 	$display_shortcode = true;
-    $display_shortcode = apply_filters('roadmapwp_pro_new_idea_form_shortcode', $display_shortcode, $user_id);
+    $display_shortcode = apply_filters('roadmapwp_new_idea_form_shortcode', $display_shortcode, $user_id);
 
     if (!$display_shortcode) {
         return '';
