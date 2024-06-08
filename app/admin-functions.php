@@ -49,6 +49,10 @@ function enqueue_admin_styles($hook): void
             )
         );
     }
+	if ( $hook === 'roadmap_page_wp-roadmap-help' ) {
+        $js_url = plugin_dir_url( __FILE__ ) . 'assets/js/admin.js';
+        wp_enqueue_script( 'wp-roadmap-admin-js', $js_url, array(), null, true );
+    }
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_styles');
 
@@ -168,7 +172,7 @@ function add_admin_menu(): void {
 		'manage_options',
 		'wp-roadmap-help',
 		// @phpstan-ignore-next-line
-		'RoadMapWP\Free\Admin\Pages\free_help_page'
+		'RoadMapWP\Free\Admin\Pages\display_help_page'
 	);
 
 	remove_submenu_page( 'roadmapwp-free', 'roadmapwp-free' );
