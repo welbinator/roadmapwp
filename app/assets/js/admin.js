@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const taxonomiesContent = document.getElementById('taxonomies-content');
     const stylesToggle = document.getElementById('styles-toggle');
     const stylesContent = document.getElementById('styles-content');
+    const filtersToggle = document.getElementById('filters-toggle');
+    const filtersContent = document.getElementById('filters-content');
     
 
     shortcodesToggle.addEventListener('click', function() {
@@ -27,5 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
     stylesToggle.addEventListener('click', function() {
         stylesContent.classList.toggle('hidden');
         stylesToggle.textContent = stylesContent.classList.contains('hidden') ? 'expand' : 'collapse';
+    });
+
+    filtersToggle.addEventListener('click', function() {
+        filtersContent.classList.toggle('hidden');
+        filtersToggle.textContent = filtersContent.classList.contains('hidden') ? 'expand' : 'collapse';
     });
 });

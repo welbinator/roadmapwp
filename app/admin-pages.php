@@ -385,6 +385,50 @@ function display_help_page() {
            
 				</div><!-- grid gap-6 -->
 			</div>
+
+			<h2 class="text-xl font-bold tracking-tight mb-2 cursor-pointer">
+				Filters/Hooks <span id="filters-toggle" class="cursor-pointer" style="font-size:.6em;">expand</span>
+			</h2>
+			
+			<div id="filters-content" class="hidden">
+				<div class="grid gap-6">
+					<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
+						<h3 class="font-semibold text-lg">Filters/Hooks</h3>
+						<h4 class="text-gray-500 leading-6"><strong>The following filters can be used to conditionally hide RoadMapWP shortcodes:</strong></h4>
+						<ul class="ml-4">
+							<li>roadmapwp_roadmap_shortcode</li>
+							<li>roadmapwp_roadmap_tabs_shortcode</li>
+							<li>roadmapwp_new_idea_form_shortcode</li>
+							<li>roadmapwp_display_ideas_shortcode</li>
+							<li>roadmapwp_single_idea_shortcode</li>
+						</ul>
+						
+						<h4 class="text-gray-500 leading-6"><strong>The following filters can be used to conditionally hide RoadMapWP blocks:</strong></h4>
+						<ul class="ml-4">
+							<li>roadmapwp_roadmap_block</li>
+							<li>roadmapwp_roadmap_tabs_block</li>
+							<li>roadmapwp_new_idea_form_block</li>
+							<li>roadmapwp_display_ideas_block</li>
+							<li>roadmapwp_single_idea_block</li>
+						</ul>
+
+						<h4 class="text-gray-500 leading-6"><strong>Example:</strong></h4>
+
+<pre style="background:#e0e0e0;padding:10px;">add_filter('roadmapwp_display_ideas_shortcode', function ($display_shortcode, $attributes, $user_id) {
+	
+	$user_info = get_userdata($user_id);
+
+	if ($user_info && $user_info->user_login === 'david') {
+		return true;
+	} else {
+		return false;
+	}
+}, 10, 3);</pre>
+<p class="text-gray-500 leading-6">This snippet will check if the user has a username of "david". If they do they can see the shortcode content, if not the shortcode will not display</p>
+					</div>
+		
+				</div><!-- grid gap-6 -->
+			</div>
 		</div><!-- container px-4 md:px-6 mt-6 -->
 
 	</div><!-- wrap -->
