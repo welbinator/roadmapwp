@@ -3,12 +3,12 @@ jQuery(document).ready(function($) {
         var post_id = $(this).closest('.idea-vote-box').data('idea-id');
 
         $.ajax({
-            url: wpRoadMapVoting.ajax_url,
+            url: RoadMapWPVotingAjax.ajax_url,
             type: 'post',
             data: {
                 action: 'wp_roadmap_handle_vote',
                 post_id: post_id,
-                nonce: wpRoadMapVoting.nonce
+                nonce: RoadMapWPVotingAjax.nonce
             },
             success: function(response) {
                 if (response.success) {

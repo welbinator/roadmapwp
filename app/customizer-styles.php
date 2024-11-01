@@ -299,7 +299,7 @@ function custom_styles() {
 			 'rmwp-custom-styles',
 			 $css_file_url,
 			 array(), 
-			 RMWP_PLUGIN_VERSION
+			 RMWP_FREE_PLUGIN_VERSION
 		 );
 	 } else {
 		 // Optionally handle the case where the file does not exist.
@@ -307,7 +307,7 @@ function custom_styles() {
 			 'rmwp-custom-styles',
 			 $css_file_url,
 			 array(), 
-			 RMWP_PLUGIN_VERSION
+			 RMWP_FREE_PLUGIN_VERSION
 			 
 		 );
 	 }

@@ -145,6 +145,8 @@ function settings_page() {
  * This function allows adding terms to the "Tags" taxonomy.
  */
 function taxonomies_page() {
+	
+
 	// Check if the current user has the 'manage_options' capability.
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'roadmapwp-free' ) );
@@ -174,17 +176,15 @@ function taxonomies_page() {
 			echo 'term already exists';
 		}
 	}
-	$pro_feature = apply_filters( 'wp_roadmap_pro_add_taxonomy_feature', '' );
+	
+	
 
-	echo '<h2 class="rmwp-h2">Add Custom Taxonomy</h2>';
 
-	if ( $pro_feature ) {
-		echo wp_kses_post ( $pro_feature );
-		echo '<h2 class="rmwp-h2">Existing Taxonomies</h2>';
-	} else {
-		echo '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>';
-		echo '<h2 class="rmwp-h2">Existing Taxonomies</h2>';
-	}
+	echo '<h2 class="rmwp-h2">Add Custom Taxonomy (free) </h2>';
+
+	// do_action( 'roadmapwp_custom_taxonomies' );
+
+	\RoadMapWP\Pro\Settings\Taxonomies\custom_taxonomy_content();
 
 	$taxonomies = get_taxonomies( array( 'object_type' => array( 'idea' ) ), 'objects' );
 
@@ -219,7 +219,7 @@ function taxonomies_page() {
 				echo '</li>';
 			}
 			echo '</ul>';
-			echo '<input type="submit" value="Delete Selected Terms" class="button rmwp__delete-terms-button">';
+			echo '<input type="submit" value="Delete Selected Tags" class="button rmwp__delete-terms-button">';
 			echo '</form>';
 		} else {
 			echo '<p>No terms found for ' . esc_html( $taxonomy->labels->name ) . '.</p>';
@@ -380,7 +380,7 @@ function display_help_page() {
 				<div class="grid gap-6">
 					<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
 						<h3 class="font-semibold text-lg">Styles</h3>
-						<p class="text-gray-500 leading-6">Style settings can be found in the <a href="http://wproadmap.lndo.site/wp-admin/customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Dwp-roadmap-help">WordPress Customizer</a> in the RoadMap Styles section</p>
+						<p class="text-gray-500 leading-6">Style settings can be found in the <a href="/wp-admin/customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Dwp-roadmap-help">WordPress Customizer</a> in the RoadMap Styles section</p>
 					</div>
            
 				</div><!-- grid gap-6 -->

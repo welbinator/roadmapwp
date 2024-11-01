@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     var tabs = document.querySelectorAll('.roadmap-tab');
     var ideasContainer = document.querySelector('.roadmap-ideas-container');
-    var ajaxurl = wpRoadMapAjax.ajax_url;
-    var nonce = wpRoadMapAjax.nonce;
+    var ajaxurl = roadmapwpAjax.ajax_url;
+    var nonce = roadmapwpAjax.nonce;
 
     // Function to reset all tabs to inactive
     function resetTabs() {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadIdeas(status) {
         var formData = new FormData();
         formData.append('action', 'load_ideas_for_status');
-        formData.append('status', status);
+        formData.append('idea-status', status);
         formData.append('nonce', nonce);
 
         fetch(ajaxurl, {

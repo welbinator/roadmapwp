@@ -97,7 +97,7 @@ function roadmap_tabs_shortcode( $atts ) {
 			class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
 			style="animation-duration: 0s;"
 		>
-		<div class="grid md:grid-cols-2 gap-4 mt-2 roadmap-ideas-container">
+		<div class="roadmap-columns roadmap-ideas-container grid gap-4 md:grid-cols-3 lg:grid-cols-4">
 			<!-- Ideas will be loaded here via JavaScript -->
 		</div>
 	</div>

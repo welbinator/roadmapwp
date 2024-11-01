@@ -44,7 +44,7 @@
     min-height: 200px;
     border-radius: 5px;
 }
-/* ideas shortcode */
+/* display ideas shortcode */
 .rmwp__filters-inner {
     display: flex;
     flex-wrap: wrap;
@@ -60,6 +60,9 @@ h3.rmwp__idea-title a {
     text-decoration: none!important;
 }
 
+.rmwp__ideas-filter {
+    margin-block: 50px;
+}
 .rmwp__ideas-filter-taxonomy {
     padding-right: 30px;
     /* flex-shrink: 0; */
@@ -85,5 +88,21 @@ h3.rmwp__idea-title a {
 
 .rmwp__ideas-list {
     padding: 30px;
+}
+
+/* roadmap shortcode */
+.rmwp__status-select {
+    min-height: 145px;
+}
+
+form.rmwp__idea-status-update-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* roadmap tabs block */
+.roadmap-tab[data-state="active"] {
+   transform:scale(1.3);
 }
 

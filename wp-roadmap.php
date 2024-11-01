@@ -11,30 +11,12 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: roadmapwp-free
 */
 
-namespace RoadMapWP\Free;
-
-function free_activate() {
-    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
-    if (is_plugin_active('roadmapwp-pro/wp-roadmap-pro.php')) {
-        // Schedule the admin notice
-        add_action('admin_notices', __NAMESPACE__ . '\\admin_notice');
-
-        // Redirect back to plugins page
-        wp_redirect(admin_url('plugins.php'));
-        exit;
-    }
-    // Additional activation code for Free version goes here...
-}
-register_activation_hook(__FILE__, __NAMESPACE__ . '\\free_activate');
-
-function admin_notice() {
-    echo '<div class="notice notice-warning is-dismissible"><p>RoadMapWP Pro is already installed. The free version has been deactivated.</p></div>';
-}
+namespace RoadMapWP;
 
 
 defined('ABSPATH') or die('No script kiddies please!');
 
-define('RMWP_PLUGIN_VERSION', '1.3.1');
+define('RMWP_FREE_PLUGIN_VERSION', '1.3.1');
 
 // Include necessary files
 require_once plugin_dir_path( __FILE__ ) . 'app/admin-functions.php';
