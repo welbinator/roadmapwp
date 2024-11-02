@@ -109,45 +109,57 @@ function check_for_shortcode_or_block_presence(): bool
  * This function creates a top-level menu item 'RoadMap' in the admin dashboard,
  * along with several submenu pages like Settings, Ideas, and Taxonomies.
  */
-function add_admin_menu(): void
-{
-    add_menu_page(
-        __('RoadMap', 'roadmapwp-free'),
-        __('RoadMap', 'roadmapwp-free'),
-        'manage_options',
-        'roadmapwp-free',
-        'RoadMapWP\\Free\\Admin\\Functions\\wp_roadmap_redirect_to_post_type',
-        'dashicons-chart-line',
-        6
-    );
+function add_admin_menu(): void {
 
-    add_submenu_page(
-        'roadmapwp-free',
-        __('Ideas', 'roadmapwp-free'),
-        __('Ideas', 'roadmapwp-free'),
-        'manage_options',
-        'edit.php?post_type=idea'
-    );
+	add_menu_page(
+		__( 'RoadMap', 'roadmapwp-free' ),
+		__( 'RoadMap', 'roadmapwp-free' ),
+		'manage_options',
+		'roadmapwp-free',
+		'RoadMapWP\Free\Admin\Functions\wp_roadmap_redirect_to_post_type',
+		'dashicons-chart-line',
+		6
+	);
 
-    add_submenu_page(
-        'roadmapwp-free',
-        __('Settings', 'roadmapwp-free'),
-        __('Settings', 'roadmapwp-free'),
-        'manage_options',
-        'wp-roadmap-settings',
-        'RoadMapWP\\Free\\Admin\\Pages\\settings_page'
-    );
+	add_submenu_page(
+		'roadmapwp-free',
+		__( 'Ideas', 'roadmapwp-free' ),
+		__( 'Ideas', 'roadmapwp-free' ),
+		'manage_options',
+		'edit.php?post_type=idea'
+	);
 
-    add_submenu_page(
-        'roadmapwp-free',
-        __('Taxonomies', 'roadmapwp-free'),
-        __('Taxonomies', 'roadmapwp-free'),
-        'manage_options',
-        'wp-roadmap-taxonomies',
-        'RoadMapWP\\Free\\Admin\\Pages\\taxonomies_page'
-    );
+	add_submenu_page(
+		'roadmapwp-free',
+		__( 'Settings', 'roadmapwp-free' ),
+		__( 'Settings', 'roadmapwp-free' ),
+		'manage_options',
+		'wp-roadmap-settings',
+		// @phpstan-ignore-next-line
+		'RoadMapWP\Free\Admin\Pages\settings_page'
+	);
 
-    remove_submenu_page( 'roadmapwp-free', 'roadmapwp-free' );
+	add_submenu_page(
+		'roadmapwp-free',
+		__( 'Taxonomies', 'roadmapwp-free' ),
+		__( 'Taxonomies', 'roadmapwp-free' ),
+		'manage_options',
+		'wp-roadmap-taxonomies',
+		// @phpstan-ignore-next-line
+		'RoadMapWP\Free\Admin\Pages\taxonomies_page'
+	);
+
+	add_submenu_page(
+		'roadmapwp-free',
+		__( 'Help', 'roadmapwp-free' ),
+		__( 'Help', 'roadmapwp-free' ),
+		'manage_options',
+		'wp-roadmap-help',
+		// @phpstan-ignore-next-line
+		'RoadMapWP\Free\Admin\Pages\display_help_page'
+	);
+
+	remove_submenu_page( 'roadmapwp-free', 'roadmapwp-free' );
 
     do_action('add_pro_admin_menu'); // Allow the pro version to add additional menu items
 }

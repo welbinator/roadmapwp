@@ -99,7 +99,7 @@ function handle_new_idea_submission() {
             $description = sanitize_textarea_field($_POST['idea_description']);
 
             $options = get_option('wp_roadmap_settings', array());
-            $default_idea_status = apply_filters('roadmapwp_new_idea_default_status', 'pending');
+            $default_idea_status = apply_filters('roadmapwp_new_idea_default_status', 'New Idea');
 
             $idea_id = wp_insert_post([
                 'post_title' => $title,

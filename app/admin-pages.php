@@ -67,10 +67,19 @@ function settings_page() {
 				<tr valign="top">
 					<th scope="row"><?php esc_html_e( 'Single Idea Template', 'roadmapwp-free' ); ?></th>
 					<td>
-						<?php
-						// This filter will be handled in choose-idea-template.php
-						echo wp_kses_post(apply_filters('wp_roadmap_single_idea_template_setting', '<a target="_blank" href="' . esc_url('https://roadmapwp.com/#pricing') . '" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'roadmapwp-free') . '</a>' ) );
+					<?php
+						if ( function_exists( 'RoadMapWP\Pro\Settings\ChooseTemplate\single_idea_template_setting' ) ) {
+							echo wp_kses_post(
+								apply_filters(
+									'wp_roadmap_single_idea_template_setting', 
+									RoadMapWP\Pro\Settings\ChooseTemplate\single_idea_template_setting('')
+								)
+							);
+						} else {
+							echo '<a target="_blank" href="' . esc_url('https://roadmapwp.com/#pricing') . '" class="button button-primary" style="text-decoration: none;">' . esc_html__('Available in Pro', 'roadmapwp-free') . '</a>';
+						}
 						?>
+
 					</td>
 				</tr>
 
@@ -368,7 +377,7 @@ function display_help_page() {
 				<div class="grid gap-6">
 					<div class="border-2 border-gray-200 border-solid rounded-lg p-4">
 						<h3 class="font-semibold text-lg">Styles</h3>
-						<p class="text-gray-500 leading-6">Style settings can be found in the <a href="/wp-admin/customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Dwp-roadmap-help">WordPress Customizer</a> in the RoadMap Styles section</p>
+						<p class="text-gray-500 leading-6">Style settings can be found in the <a href="http://wproadmap.lndo.site/wp-admin/customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Dwp-roadmap-help">WordPress Customizer</a> in the RoadMap Styles section</p>
 					</div>
            
 				</div><!-- grid gap-6 -->
