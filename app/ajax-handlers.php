@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 };
 
+
 /**
  * Handles voting functionality via AJAX.
  */
@@ -193,3 +194,33 @@ function load_ideas_for_status() {
 
 add_action( 'wp_ajax_load_ideas_for_status', __NAMESPACE__ . '\\load_ideas_for_status' );
 add_action( 'wp_ajax_nopriv_load_ideas_for_status', __NAMESPACE__ . '\\load_ideas_for_status' );
+
+// delete taxonomy terms
+add_action( 'wp_ajax_delete_selected_terms', __NAMESPACE__ . '\\delete_selected_terms_callback' );
+
+function delete_selected_terms_callback() {
+	
+    // Check if nonce is valid
+    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'wp_roadmap_delete_terms_nonce' ) ) {
+        wp_send_json_error( array( 'message' => 'Nonce verification failed.' ) );
+    }
+
+    // Check for taxonomy and terms
+    if ( empty( $_POST['taxonomy'] ) || empty( $_POST['terms'] ) ) {
+        wp_send_json_error( array( 'message' => 'Invalid taxonomy or terms.' ) );
+    }
+
+    $taxonomy = sanitize_text_field( $_POST['taxonomy'] );
+    $terms = array_map( 'intval', $_POST['terms'] ); // Sanitize term IDs
+
+    // Loop through terms and delete them
+    foreach ( $terms as $term_id ) {
+        $result = wp_delete_term( $term_id, $taxonomy );
+        if ( is_wp_error( $result ) ) {
+            wp_send_json_error( array( 'message' => $result->get_error_message() ) );
+        }
+    }
+
+    // If successful, return a success message
+    wp_send_json_success( array( 'message' => 'Terms deleted successfully.' ) );
+}
