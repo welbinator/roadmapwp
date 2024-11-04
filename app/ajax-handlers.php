@@ -71,11 +71,12 @@ function filter_ideas() {
 	check_ajax_referer( 'wp-roadmap-idea-filter-nonce', 'nonce' );
 
 	$filter_data = isset($_POST['filter_data']) ? (array) $_POST['filter_data'] : array();
+	$search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
 	$tax_query   = array();
 
 	$custom_taxonomies  = get_option( 'wp_roadmap_custom_taxonomies', array() );
-	$display_taxonomies = array_merge( array( 'idea-tag' ), array_keys( $custom_taxonomies ) );
-
+	$taxonomies = array_merge( array( 'idea-tag' ), array_keys( $custom_taxonomies ) );
+	
 	foreach ($filter_data as $taxonomy => $data) {
 		// Sanitize taxonomy to ensure it's a valid taxonomy name
 		$taxonomy = sanitize_key($taxonomy);
@@ -96,20 +97,21 @@ function filter_ideas() {
 			);
 		}
 	}
-	
 
 	if ( count( $tax_query ) > 1 ) {
 		$tax_query['relation'] = 'AND';
 	}
-
 	$args = array(
-		'post_type'      => 'idea',
-		'posts_per_page' => -1,
-		'tax_query'      => $tax_query,
-	);
+        'post_type'      => 'idea',
+        'posts_per_page' => -1,
+        'tax_query'      => $tax_query,
+        's'              => $search_term,
+		'post_status'    => 'publish',
+    );
+	
 
 	$query = new \WP_Query( $args );
-
+	
 	if ( $query->have_posts() ) : ?>
 		<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 px-6 py-8">
 			<?php
@@ -119,47 +121,17 @@ function filter_ideas() {
 
 				// Retrieve the correct vote count for each idea
 				$vote_count = intval( get_post_meta( $idea_id, 'idea_votes', true ) );
+                $idea_class = Functions\get_idea_class_with_votes($idea_id);
+				
 				?>
 	
 				<div class="wp-roadmap-idea border bg-card text-card-foreground rounded-lg shadow-lg overflow-hidden <?php echo esc_attr($idea_class); ?>" data-v0-t="card">
-					<div class="p-6">
-						<h2 class="text-2xl font-bold"><a href="<?php echo esc_url( get_permalink() ); ?>"><?php echo esc_html( get_the_title() ); ?></a></h2>
-	
-						<p class="text-gray-500 mt-2 text-sm"><?php esc_html_e( 'Submitted on:', 'roadmapwp-free' ); ?> <?php echo esc_html( get_the_date() ); ?></p>
-						<div class="flex flex-wrap space-x-2 mt-2 idea-tags">
-							<?php
-							$terms = wp_get_post_terms( $idea_id, $display_taxonomies );
-							foreach ( $terms as $term ) :
-								$term_link = get_term_link( $term );
-								if ( ! is_wp_error( $term_link ) ) :
-									?>
-									<a href="<?php echo esc_url( $term_link ); ?>" class="inline-flex items-center border font-semibold bg-blue-500 px-3 py-1 rounded-full text-sm !no-underline text-white"><?php echo esc_html( $term->name ); ?></a>
-									<?php
-								endif;
-							endforeach;
-							?>
-						</div>
-	
-						
-						<p class="text-gray-700 mt-4 break-all">
-							<?php
-								$trimmed_excerpt = wp_trim_words( get_the_excerpt(), 20 );
-								echo esc_html( $trimmed_excerpt ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '" rel="ugc">read more...</a>';
-							?>
-						</p>
-
-	
-						<div class="flex items-center justify-between mt-6">
-							
-						<?php
-							\RoadMapWP\Free\ClassVoting\VotingHandler::render_vote_button($idea_id, $vote_count);
-						?>
-					</div>
+					<?php include plugin_dir_path( __FILE__ ) . 'includes/display-ideas-grid.php'; ?>
 				</div>
 			<?php endwhile; ?>
 		</div>
 	<?php else : ?>
-		<p><?php esc_html_e( 'No ideas found.', 'roadmapwp-free' ); ?></p>
+		<p><?php esc_html_e( 'No ideas found.', 'roadmapwp-pro' ); ?></p>
 		<?php
 	endif;
 
