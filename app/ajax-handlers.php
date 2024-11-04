@@ -168,19 +168,22 @@ function load_ideas_for_status() {
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			$idea_id = get_the_ID();
-			$vote_count = intval( get_post_meta( $idea_id, 'idea_votes', true ) );
+			// Retrieve all taxonomies associated with the 'idea' post type, excluding 'idea-status'
+			$idea_taxonomies     = get_object_taxonomies( 'idea', 'names' );
+			
+			$custom_taxonomies  = get_option( 'wp_roadmap_custom_taxonomies', array() );
+			$taxonomies = array_merge( array( 'idea-tag' ), array_keys( $custom_taxonomies ) );
+
 			$idea_class = Functions\get_idea_class_with_votes($idea_id);
 
-			echo '<div class="wp-roadmap-idea rounded-lg border bg-card text-card-foreground shadow-sm ' . esc_attr($idea_class) . '" data-v0-t="card">';
-			echo '<div class="flex flex-col space-y-1.5 p-6">';
-			echo '<h3 class="text-2xl font-semibold leading-none tracking-tight"><a href="' . esc_url( get_permalink( $idea_id ) ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
-			echo '</div>';
-			echo '<div class="p-6">';
-			echo '<p class="text-gray-700 mt-4 break-all">' . esc_html( wp_trim_words( get_the_excerpt(), 20 ) ) . ' <a class="text-blue-500 hover:underline" href="' . esc_url( get_permalink() ) . '">read more...</a></p>';
-			echo '</div>';
+			$vote_count = intval( get_post_meta( $idea_id, 'idea_votes', true ) );
+			?>
+			<div class="wut wp-roadmap-idea rounded-lg border bg-card text-card-foreground shadow-lg <?php echo esc_attr($idea_class); ?>" data-v0-t="card">
+				<?php include plugin_dir_path(__FILE__) . 'includes/display-ideas-grid.php'; ?>
+				
+			</div>
 
-			\RoadMapWP\Free\ClassVoting\VotingHandler::render_vote_button($idea_id, $vote_count);
-			echo '</div>';
+			<?php
 		}
 	} else {
 		echo '<p>No ideas found for this status.</p>';
