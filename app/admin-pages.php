@@ -72,7 +72,7 @@ function settings_page() {
 							echo wp_kses_post(
 								apply_filters(
 									'wp_roadmap_single_idea_template_setting', 
-									RoadMapWP\Pro\Settings\ChooseTemplate\single_idea_template_setting('')
+									\RoadMapWP\Pro\Settings\ChooseTemplate\single_idea_template_setting('')
 								)
 							);
 						} else {
