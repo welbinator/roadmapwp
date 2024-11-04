@@ -36,11 +36,15 @@ function display_ideas_shortcode() {
 
     <div class="roadmap_wrapper container mx-auto">
         <div class="browse_ideas_frontend">
+           
+        <?php
+        if (!$hide_display_ideas_heading && $show_filters) { ?>
             <h2><?php echo esc_html($new_display_ideas_heading); ?></h2>
             <?php
-            if (!$hide_display_ideas_heading && $show_filters) {
+        }
+           
                 render_filters($taxonomies); // Render filters
-            }
+            
             ?>
         </div>
 
