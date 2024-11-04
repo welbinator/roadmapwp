@@ -43,13 +43,10 @@ function settings_page() {
 				<tr valign="top">
 				<th scope="row"><?php esc_html_e( 'Set Default Status Term for New Ideas', 'roadmapwp-free' ); ?></th>
 				<td>
-					<select name="wp_roadmap_settings[default_status_term]">
-						<?php foreach ( $status_terms as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>" <?php selected( $default_status_term, $term->slug ); ?>>
-								<?php echo esc_html( $term->name ); ?>
-							</option>
-						<?php endforeach; ?>
-					</select>
+				<?php
+						// Filter hook to allow the Pro version to override this setting
+						echo wp_kses_post( apply_filters( 'wp_roadmap_default_idea_status_term_setting', '<a target="_blank" href="https://roadmapwp.com/#pricing" class="button button-primary" style="text-decoration: none;">' . esc_html__( 'Available in Pro', 'roadmapwp-free' ) . '</a>' ) );
+						?>
 				</td>
 			</tr>
 				
