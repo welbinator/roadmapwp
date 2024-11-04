@@ -115,14 +115,14 @@ function add_admin_menu(): void {
 		__( 'RoadMap', 'roadmapwp-free' ),
 		__( 'RoadMap', 'roadmapwp-free' ),
 		'manage_options',
-		'roadmapwp-free',
+		'roadmapwp-menu',
 		'RoadMapWP\Free\Admin\Functions\wp_roadmap_redirect_to_post_type',
 		'dashicons-chart-line',
 		6
 	);
 
 	add_submenu_page(
-		'roadmapwp-free',
+		'roadmapwp-menu',
 		__( 'Ideas', 'roadmapwp-free' ),
 		__( 'Ideas', 'roadmapwp-free' ),
 		'manage_options',
@@ -130,7 +130,7 @@ function add_admin_menu(): void {
 	);
 
 	add_submenu_page(
-		'roadmapwp-free',
+		'roadmapwp-menu',
 		__( 'Settings', 'roadmapwp-free' ),
 		__( 'Settings', 'roadmapwp-free' ),
 		'manage_options',
@@ -140,7 +140,7 @@ function add_admin_menu(): void {
 	);
 
 	add_submenu_page(
-		'roadmapwp-free',
+		'roadmapwp-menu',
 		__( 'Taxonomies', 'roadmapwp-free' ),
 		__( 'Taxonomies', 'roadmapwp-free' ),
 		'manage_options',
@@ -150,7 +150,7 @@ function add_admin_menu(): void {
 	);
 
 	add_submenu_page(
-		'roadmapwp-free',
+		'roadmapwp-menu',
 		__( 'Help', 'roadmapwp-free' ),
 		__( 'Help', 'roadmapwp-free' ),
 		'manage_options',
@@ -159,9 +159,10 @@ function add_admin_menu(): void {
 		'RoadMapWP\Free\Admin\Pages\display_help_page'
 	);
 
-	remove_submenu_page( 'roadmapwp-free', 'roadmapwp-free' );
+	// Remove Free Settings page to ensure Pro version takes precedence
+    remove_submenu_page( 'roadmapwp-menu', 'roadmapwp-menu' );
 
-    do_action('add_pro_admin_menu'); // Allow the pro version to add additional menu items
+    do_action('add_pro_admin_menu');
 }
 add_action('admin_menu', __NAMESPACE__ . '\\add_admin_menu');
 
