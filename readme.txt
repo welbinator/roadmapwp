@@ -36,6 +36,12 @@ Check out our [Getting Started](https://roadmapwp.com/kb_article/getting-started
 
 == Changelog ==
 
+= 1.3.3 =
+* Fixed filtered ideas layout
+
+= 1.3.2 =
+* minor updates
+
 = 1.3.1 =
 * Added filters to each shortcode allowing users to hide them
 
