@@ -9,6 +9,7 @@ Author URI:  https://apexbranding.design
 License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: roadmapwp-free
+Tested up to: 6.7
 */
 
 namespace RoadMapWP\Free;
