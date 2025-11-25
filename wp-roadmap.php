@@ -89,6 +89,25 @@ function custom_template( $template ) {
 
 add_filter( 'single_template', __NAMESPACE__ . '\\custom_template' );
 
+function pro_is_free_admin_notice() {
+	?>
+	<div class="notice notice-info is-dismissible">
+		<p>
+			🎉 
+			<?php
+			printf(
+				/* translators: %s: link to The Repo */
+				esc_html__( 'RoadMapWP Pro is now Free! Visit %s to download!', 'roadmapwp-free' ),
+				'<a href="' . esc_url( 'https://therepo.org/plugin_repo/roadmapwp/' ) . '" target="_blank">' . esc_html__( 'The Repo', 'roadmapwp-free' ) . '</a>'
+			);
+			?>
+			 🎉
+		</p>
+	</div>
+	<?php
+}
+add_action( 'admin_notices', __NAMESPACE__ . '\\pro_is_free_admin_notice' );
+
 function create_pages() {
     // Define the pages and their corresponding details
     $pages = array(
